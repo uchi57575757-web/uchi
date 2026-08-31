@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200, user-scalable=yes" />
+    <meta name="theme-color" content="#fefcfc" />
+    <title>UCHI OFFICIAL | 업보</title>
+    <meta name="description" content="우치(UCHI) 업보 — 시청자별 업보 기록 · UCHI OFFICIAL" />
+    <meta property="og:title" content="UCHI OFFICIAL | 업보" />
+    <meta property="og:description" content="우치(UCHI) 업보 — 시청자별 업보 기록 · UCHI OFFICIAL" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/uc/uchi5757/uchi5757.jpg" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+      try { if (window.self !== window.top) document.body.classList.add('embed'); }
+      catch (e) { document.body.classList.add('embed'); }
+    </script>
+
+    <a class="open-full" href="./" target="_blank" rel="noreferrer">전체 화면 ↗</a>
+
+    <div class="fit-outer" id="fitOuter">
+      <div class="fit-inner" id="fitInner">
+        <main class="page-shell page-shell--sub wrap">
+          <header class="topbar" aria-label="메인 메뉴">
+            <div class="topbar-actions">
+              <a class="square-button square-button--dark" id="navSoop" href="https://www.sooplive.com/station/uchi5757" target="_blank" rel="noreferrer" aria-label="우치 SOOP 방송국">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="8" r="3.3" />
+                  <path d="M5.2 20c.5-4.4 2.8-6.7 6.8-6.7s6.3 2.3 6.8 6.7" />
+                </svg>
+                <img class="nav-av" id="navAvatar" alt="" referrerpolicy="no-referrer" />
+              </a>
+              <button class="square-button square-button--light" id="dkbox" type="button" aria-label="다크 모드" title="다크 모드">
+                <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z" /></svg>
+                <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" /></svg>
+              </button>
+            </div>
+
+            <nav class="category-nav" aria-label="카테고리">
+              <a href="../">메인</a>
+              <a href="../profile/">프로필</a>
+              <a href="../notice/">공지</a>
+              <a class="is-current" href="../work/" aria-current="page">업보</a>
+              <a href="../dress/">옷장</a>
+            </nav>
+
+            <div class="member-actions">
+              <button class="member-button member-button--fill" type="button" onclick="openAsk()">문의하기</button>
+            </div>
+          </header>
+
+          <div class="page-heading">
+            <span class="hd-kicker" id="hd-kicker">RECORD</span>
+            <h1 class="page-title"><span id="hd-title">업보</span><span class="hd-sub" id="hd-sub"></span></h1>
+            <p class="page-lead" id="page-lead">방송에서 쌓인 기록이에요. 카드를 누르면 종류별로 볼 수 있어요.</p>
+          </div>
+
+          <div class="toolbar">
+            <input class="input" id="search" placeholder="닉네임 또는 아이디 검색" />
+            <span class="meta" id="update-date"></span>
+          </div>
+          <div id="grid"><div class="spinner"></div></div>
+
+
+          <footer>© 2026 UCHI OFFICIAL.<br />문의는 상단 문의 버튼을 이용해 주세요</footer>
+        </main>
+      </div>
+    </div>
+
+    <div class="ov" id="ov" aria-hidden="true">
+      <div class="ovbox" role="dialog" aria-modal="true" aria-label="업보 상세">
+        <div class="card-title" id="modal-top" style="align-items:center;gap:12px"></div>
+        <div id="modal-body"></div>
+        <button class="m-close" type="button" onclick="closeModal()">닫기</button>
+      </div>
+    </div>
+
+    <div class="askmask" id="askmask" aria-hidden="true">
+      <div class="askmodal" role="dialog" aria-modal="true" aria-label="문의하기">
+        <h3>문의하기</h3>
+        <p class="hint">남긴 내용은 관리자만 확인합니다.</p>
+        <div class="form-field">
+          <input class="input" id="asknick" placeholder="닉네임 (선택)" maxlength="20" />
+        </div>
+        <textarea class="input" id="askmsg" rows="5" placeholder="문의 내용"></textarea>
+        <div class="ask-actions">
+          <button class="btn" type="button" onclick="closeAsk()">닫기</button>
+          <button class="btn btn-primary" type="button" onclick="sendAsk()">보내기</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../supabase.js"></script>
+    <script src="../site.js"></script>
+    <script>
+      (function () {
+        var viewers = [], types = [], counts = [];
+
+        function ready() { document.body.classList.add('ready'); fitShell(); }
+
+        function viewerTotal(vid) {
+          return counts.filter(function (c) { return c.viewer_id === vid && c.count > 0; })
+            .reduce(function (s, c) { return s + c.count; }, 0);
+        }
+
+        function avHtml(v, cls) {
+          var av = soopAvatar(v.soop_id);
+          var ini = esc(String(v.nickname || '?').charAt(0));
+          return av
+            ? '<img class="' + cls + '" src="' + av + '" alt="" referrerpolicy="no-referrer" ' +
+              'onerror="this.outerHTML=\'<div class=&quot;' + cls + '-fb&quot;>' + ini + '</div>\'">'
+            : '<div class="' + cls + '-fb">' + ini + '</div>';
+        }
+
+        function render(list) {
+          var grid = document.getElementById('grid');
+          if (!list.length) {
+            grid.innerHTML = '<div class="empty"><span class="empty-icon">✦</span>표시할 시청자가 없어요</div>';
+            fitShell();
+            return;
+          }
+          grid.innerHTML = '<div class="viewer-grid">' + list.map(function (v) {
+            return '<div class="viewer-card" data-vid="' + v.id + '">' + avHtml(v, 'viewer-av') +
+              '<div class="viewer-nick">' + esc(v.nickname) + '</div>' +
+              (v.soop_id ? '<div class="viewer-id">(' + esc(v.soop_id) + ')</div>' : '<div class="viewer-id">&nbsp;</div>') +
+              '<span class="viewer-total">업보 ' + viewerTotal(v.id) + '</span></div>';
+          }).join('') + '</div>';
+          grid.querySelectorAll('.viewer-card').forEach(function (el) {
+            el.addEventListener('click', function () { openModal(Number(el.dataset.vid)); });
+          });
+          enableIframeAutoHeight();
+          fitShell();
+        }
+
+        window.openModal = function (vid) {
+          var v = viewers.filter(function (x) { return x.id === vid; })[0];
+          if (!v) return;
+          document.getElementById('modal-top').innerHTML = avHtml(v, 'modal-av') +
+            '<div><div class="modal-nick">' + esc(v.nickname) + '</div>' +
+            (v.soop_id ? '<div class="modal-id">(' + esc(v.soop_id) + ')</div>' : '') + '</div>' +
+            '<button class="modal-x" type="button" onclick="closeModal()" aria-label="닫기">✕</button>';
+          var my = {};
+          counts.filter(function (c) { return c.viewer_id === vid; }).forEach(function (c) { my[c.type_id] = c.count; });
+          var rows = types.filter(function (t) { return (my[t.id] || 0) > 0; }).map(function (t) {
+            return '<div class="upbo-row"><span class="nm">' + esc(t.name) + '</span>' +
+              (t.category === '이벤트' ? '<span class="ev">이벤트</span>' : '<span></span>') +
+              '<span class="ct">×' + my[t.id] + '</span></div>';
+          }).join('');
+          document.getElementById('modal-body').innerHTML = rows || '<div class="modal-empty">아직 쌓인 업보가 없어요</div>';
+          var ov = document.getElementById('ov');
+          ov.classList.add('show');
+          placeOverlay(ov);
+        };
+
+        window.closeModal = function () { document.getElementById('ov').classList.remove('show'); };
+
+        async function init() {
+          var r = await Promise.all([
+            fetchAll('viewers', { order: 'sort_order', asc: true }),
+            fetchAll('upbo_types', { order: 'sort_order', asc: true }),
+            fetchAll('upbo_counts', { order: 'id', asc: true })
+          ]);
+          viewers = r[0]; types = r[1]; counts = r[2];
+          var latest = counts.reduce(function (m, c) {
+            return (c.updated_at && c.updated_at > m) ? c.updated_at : m;
+          }, '');
+          document.getElementById('update-date').textContent = latest ? '갱신일 ' + latest.slice(0, 10) : '';
+          render(viewers);
+        }
+
+        document.getElementById('search').addEventListener('input', function (e) {
+          var q = e.target.value.trim().toLowerCase();
+          render(viewers.filter(function (v) {
+            return String(v.nickname || '').toLowerCase().indexOf(q) !== -1 ||
+                   String(v.soop_id || '').toLowerCase().indexOf(q) !== -1;
+          }));
+        });
+
+        document.getElementById('ov').addEventListener('click', function (e) {
+          if (e.target.id === 'ov') closeModal();
+        });
+
+        wireHeading('work');
+        init().catch(function () { render([]); }).then(ready, ready);
+        setTimeout(ready, 1200);
+      })();
+    </script>
+    <script src="../fx.js"></script>
+    <script>
+      (function () {
+        var a = document.getElementById('navSoop');
+        if (!a || typeof window.fxHearts !== 'function') return;
+        a.addEventListener('click', function (e) { window.fxHearts(e.clientX, e.clientY, 8); });
+      })();
+    </script>
+  </body>
+</html>

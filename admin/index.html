@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UCHI OFFICIAL | 관리자</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/uc/uchi5757/uchi5757.jpg" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+      :root { --uc-line: #ece2e4; --uc-dim: #7a7074; }
+      body { background: #faf6f7; font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif; }
+      .uc-shell { max-width: 1180px; margin: 0 auto; padding: 22px 20px 80px; }
+
+      .uc-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 16px 20px; margin-bottom: 18px; border-radius: 20px; background: #fff; box-shadow: 0 8px 22px rgba(60, 45, 52, .09); }
+      .uc-bar h1 { margin: 0; font-size: 19px; font-weight: 900; letter-spacing: -.03em; }
+      .uc-bar .who { color: var(--uc-dim); font-size: 12px; font-weight: 700; }
+      .uc-bar .sp { margin-left: auto; }
+      .uc-bar .dirty { color: #d5486a; font-size: 12px; font-weight: 800; }
+
+      .uc-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+      .uc-tab { height: 40px; padding: 0 16px; border-radius: 999px; background: #fff; color: #5a5057; font-size: 13.5px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 12px rgba(60, 45, 52, .07); }
+      .uc-tab.on { color: #fff; background: var(--main, #fd8495); }
+
+      .tab-panel { display: none; }
+      .tab-panel.on { display: block; }
+
+      .card { padding: 22px 24px; margin-bottom: 16px; border: 1px solid var(--uc-line); border-radius: 20px; background: #fff; box-shadow: 0 6px 18px rgba(60, 45, 52, .06); }
+      .card-title { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; font-size: 16.5px; font-weight: 900; letter-spacing: -.03em; }
+      .card-title small { color: var(--main-deep, #b34a5c); font-size: 10.5px; font-weight: 900; letter-spacing: .18em; }
+      .card-title .sp { margin-left: auto; }
+      .where { margin: 0 0 16px; color: var(--uc-dim); font-size: 12px; font-weight: 700; line-height: 1.6; }
+
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+      .grid.two { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+      .field { min-width: 0; margin-bottom: 4px; }
+      .field > label { display: block; margin-bottom: 5px; font-size: 12px; font-weight: 850; }
+      .hint { margin: 5px 0 0; color: var(--uc-dim); font-size: 11.5px; line-height: 1.6; word-break: break-all; }
+      .input { width: 100%; box-sizing: border-box; height: 42px; padding: 0 13px; border: 1.6px solid var(--uc-line); border-radius: 12px; background: #fff; color: #232022; font-family: inherit; font-size: 13.5px; }
+      textarea.input { height: auto; padding: 11px 13px; line-height: 1.65; resize: vertical; }
+      select.input { height: 42px; }
+      .input:focus { outline: none; border-color: var(--main, #fd8495); }
+
+      .btn { display: inline-grid; height: 40px; padding: 0 18px; place-items: center; border-radius: 999px; background: #f0e9eb; color: #4b4247; font-size: 13px; font-weight: 850; cursor: pointer; }
+      .btn.solid { color: #fff; background: var(--main, #fd8495); }
+      .btn.sm { height: 34px; padding: 0 14px; font-size: 12px; }
+      .btn.danger { color: #fff; background: #d5486a; }
+      .btn[disabled] { opacity: .5; cursor: default; }
+
+      .row-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+      .table-wrap { overflow-x: auto; margin-top: 14px; }
+      .table-wrap table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      .table-wrap th { padding: 10px 12px; border-bottom: 1.6px solid var(--uc-line); background: #faf5f6; color: #5a5057; text-align: left; font-size: 11.5px; font-weight: 900; letter-spacing: .06em; white-space: nowrap; }
+      .table-wrap td { padding: 10px 12px; border-bottom: 1px solid var(--uc-line); vertical-align: middle; }
+      .table-wrap th:last-child, .table-wrap td:last-child { width: 74px; text-align: center; }
+      .table-wrap .cell-in { width: 100%; box-sizing: border-box; height: 34px; padding: 0 9px; border: 1.4px solid var(--uc-line); border-radius: 9px; font-family: inherit; font-size: 12.5px; }
+
+      .pill { display: inline-grid; height: 24px; padding: 0 10px; place-items: center; border-radius: 999px; background: var(--main-light, #ffe8e7); color: var(--main-deep, #b34a5c); font-size: 11px; font-weight: 900; }
+
+      .daybox { display: flex; flex-wrap: wrap; gap: 8px; }
+      .daybox label { display: inline-flex; align-items: center; gap: 7px; height: 40px; padding: 0 15px; border: 1.6px solid var(--uc-line); border-radius: 999px; font-size: 13px; font-weight: 800; cursor: pointer; }
+      .daybox input { accent-color: var(--main, #fd8495); }
+
+      .thumb { margin-top: 10px; height: 104px; display: none; border: 1px solid var(--uc-line); border-radius: 12px; background: #f6eff1 center / contain no-repeat; }
+      .thumb.on { display: block; }
+      .thumb.err { display: flex; align-items: center; justify-content: center; padding: 0 12px; color: #d5486a; text-align: center; font-size: 11.5px; background-image: none; }
+
+      .palgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+      .pal-row { display: flex; align-items: center; gap: 10px; padding: 11px 13px; border: 1px solid var(--uc-line); border-radius: 14px; }
+      .pal-row input[type=color] { width: 44px; height: 38px; padding: 0; border: 0; border-radius: 9px; background: none; cursor: pointer; }
+      .pal-row .nm { flex: 1; min-width: 0; }
+      .pal-row .nm b { display: block; font-size: 12.5px; font-weight: 850; }
+      .pal-row .nm span { color: var(--uc-dim); font-size: 11px; }
+      .pal-row .hexin { width: 92px; height: 34px; padding: 0 8px; border: 1.4px solid var(--uc-line); border-radius: 9px; font-family: ui-monospace, monospace; font-size: 12px; }
+
+      .preset-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 4px; }
+      .preset { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; border: 1.6px solid var(--uc-line); border-radius: 999px; font-size: 12.5px; font-weight: 850; cursor: pointer; background: #fff; }
+      .preset i { display: block; width: 15px; height: 15px; border-radius: 50%; }
+
+      .ct-list { display: grid; gap: 8px; margin-top: 12px; }
+      .ct-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px; padding: 10px 13px; border: 1px solid var(--uc-line); border-radius: 12px; font-size: 12.5px; }
+      .ct-item .v { font-family: ui-monospace, monospace; font-weight: 800; }
+      .ct-ok { color: #2e7d4f; font-weight: 900; }
+      .ct-warn { color: #b8791e; font-weight: 900; }
+      .ct-bad { color: #d5486a; font-weight: 900; }
+
+      .tsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+      .tsgrid .t { padding: 14px 16px; border: 1px solid var(--uc-line); border-radius: 14px; }
+      .tsgrid .t .n { color: var(--main-deep, #b34a5c); font-size: 10.5px; font-weight: 900; letter-spacing: .16em; }
+      .tsgrid .t .u { margin: 5px 0 11px; color: var(--uc-dim); font-size: 11.5px; line-height: 1.6; }
+      .tsgrid .t .ctl { display: flex; align-items: center; gap: 10px; }
+      .tsgrid .t input[type=range] { flex: 1; accent-color: var(--main, #fd8495); }
+      .tsgrid .t .v { min-width: 44px; text-align: right; font-size: 14px; font-weight: 800; }
+      .tsprev { margin-top: 16px; padding: 22px 20px; border: 1px solid var(--uc-line); border-radius: 14px; }
+      .tsprev .p-disp { font-size: calc(44px * var(--pv-display, 1)); font-weight: 900; letter-spacing: -.05em; line-height: 1; }
+      .tsprev .p-lbl { margin-top: 14px; color: var(--main-deep, #b34a5c); font-size: calc(10px * var(--pv-label, 1)); font-weight: 900; letter-spacing: .22em; }
+      .tsprev .p-title { margin-top: 4px; font-size: calc(24px * var(--pv-title, 1)); font-weight: 900; }
+      .tsprev .p-body { margin-top: 8px; color: var(--uc-dim); font-size: calc(14px * var(--pv-body, 1)); }
+
+      details { margin-top: 12px; }
+      details summary { cursor: pointer; font-size: 12.5px; font-weight: 800; }
+      details .table-wrap { margin-top: 10px; }
+
+      .gate-wrap { display: grid; place-items: center; min-height: 78vh; padding: 20px; }
+      .gate-box { width: 100%; max-width: 380px; padding: 30px 28px; border-radius: 24px; background: #fff; box-shadow: 0 16px 40px rgba(60, 45, 52, .13); }
+      .gate-box h1 { margin: 0 0 4px; font-size: 21px; font-weight: 900; letter-spacing: -.04em; }
+      .gate-box p { margin: 0 0 18px; color: var(--uc-dim); font-size: 12.5px; }
+      .gate-box .field { margin-bottom: 12px; }
+      .gate-err { margin-top: 12px; color: #d5486a; font-size: 12.5px; font-weight: 800; min-height: 18px; }
+
+      .uc-off { display: none !important; }
+      .empty { padding: 26px 0; color: var(--uc-dim); text-align: center; font-size: 13px; }
+      .toast { position: fixed; left: 50%; bottom: 26px; z-index: 1000; padding: 12px 22px; border-radius: 999px; color: #fff; background: rgba(35, 32, 34, .93); font-size: 13px; font-weight: 700; opacity: 0; pointer-events: none; transition: opacity .25s; transform: translateX(-50%); }
+      .toast.show { opacity: 1; }
+    </style>
+  </head>
+  <body>
+    <div id="ucDiag" style="position:relative;display:none;margin:12px;padding:14px 16px;border:2px solid #d5486a;border-radius:14px;background:#fff;color:#3a3033;font-family:sans-serif;font-size:13px;line-height:1.7;word-break:break-all;overflow-wrap:anywhere"></div>
+    <script>
+      /* Self-check runs before everything else: if a shared file 404s the admin still opens
+         but cannot save, and the console is the only clue without this. */
+      (function () {
+        var box = document.getElementById('ucDiag');
+        var lines = [];
+        function add(msg) {
+          lines.push(String(msg));
+          box.style.display = 'block';
+          box.innerHTML = '<b>관리자 진단</b><br>' + lines.map(function (l) {
+            return l.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+          }).join('<br>');
+        }
+        window.__ucDiagAdd = add;
+        window.addEventListener('error', function (e) {
+          if (!e.target || e.target === window) return;
+          var src = e.target.src || e.target.href || '';
+          if (!src || /pretendard|fonts\./i.test(src)) return;   /* font CDN only affects looks */
+          add('파일을 못 불러왔습니다 — ' + src);
+        }, true);
+        function measure(el) {
+          if (!el) return '요소 없음';
+          var cs = getComputedStyle(el);
+          return '높이 ' + Math.round(el.getBoundingClientRect().height) + ' · display ' + cs.display +
+            ' · opacity ' + cs.opacity + ' · visibility ' + cs.visibility + ' · class ' + (el.className || '-');
+        }
+        setTimeout(function () {
+          var g = document.getElementById('ucGate'), a = document.getElementById('ucApp');
+          var gv = g && !g.classList.contains('uc-off') && g.getBoundingClientRect().height > 20;
+          var av = a && !a.classList.contains('uc-off') && a.getBoundingClientRect().height > 20;
+          if (gv || av) return;
+          add('로그인 화면이 그려지지 않았습니다.');
+          add('gate → ' + measure(g));
+          add('app → ' + measure(a));
+          add('style.css ' + (getComputedStyle(document.body).getPropertyValue('--main').trim() ? 'O' : 'X') +
+              ' / supabase.js ' + (typeof fetchAll === 'function' ? 'O' : 'X') +
+              ' / 라이브러리 ' + (typeof supabase !== 'undefined' ? 'O' : 'X'));
+          add('광고 차단 확장을 끄고 새로고침해 보세요.');
+        }, 2500);
+      })();
+    </script>
+
+    <div class="gate-wrap" id="ucGate">
+      <form class="gate-box" id="ucGateForm">
+        <h1>UCHI OFFICIAL 관리자</h1>
+        <p>Supabase에 등록된 관리자 계정으로 로그인합니다.</p>
+        <div class="field">
+          <label for="gEmail">이메일</label>
+          <input class="input" id="gEmail" type="email" autocomplete="username" />
+          <p class="hint">Supabase → Authentication → Users 에 등록한 이메일</p>
+        </div>
+        <div class="field">
+          <label for="gPass">비밀번호</label>
+          <input class="input" id="gPass" type="password" autocomplete="current-password" />
+          <p class="hint">같은 화면에서 설정한 비밀번호. 분실하면 Supabase에서 재설정</p>
+        </div>
+        <button class="btn solid" id="gBtn" type="submit" style="width:100%">로그인</button>
+        <div class="gate-err" id="gErr"></div>
+      </form>
+    </div>
+
+    <div class="uc-shell uc-off" id="ucApp">
+      <div class="uc-bar">
+        <h1>UCHI OFFICIAL 관리자</h1>
+        <span class="who" id="ucWho"></span>
+        <span class="sp"></span>
+        <span class="dirty" id="act-dirty"></span>
+        <a class="btn sm" id="act-view" href="../" target="_blank" rel="noreferrer">페이지 보기 ↗</a>
+        <button class="btn sm" id="act-backup" type="button">백업</button>
+        <label class="btn sm" for="act-restore-file">복원</label>
+        <input id="act-restore-file" type="file" accept="application/json" hidden />
+        <button class="btn sm" id="act-logout" type="button">로그아웃</button>
+      </div>
+
+      <div class="uc-tabs" id="ucTabs"></div>
+
+      <section class="tab-panel" id="tab-main" data-auto="main"></section>
+
+      <section class="tab-panel" id="tab-profile" data-auto="profile">
+        <div class="card">
+          <div class="card-title"><small>VOD</small>다시보기<span class="sp"></span>
+            <button class="btn sm solid" type="button" id="vod-add">추가</button>
+          </div>
+          <p class="where">나오는 곳 — 프로필 페이지 다시보기 카드. 등록이 0개면 카드가 숨겨집니다</p>
+          <div class="grid two">
+            <div class="field"><label for="vod-title">제목</label>
+              <input class="input" id="vod-title" placeholder="예: 데뷔 방송" />
+              <p class="hint">목록에 표시할 이름</p>
+            </div>
+            <div class="field"><label for="vod-id">VOD 번호</label>
+              <input class="input" id="vod-id" placeholder="예: 123456789" />
+              <p class="hint">SOOP 다시보기 주소 vod.sooplive.co.kr/player/<b>번호</b> 의 숫자만</p>
+            </div>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>제목</th><th>VOD 번호</th><th>삭제</th></tr></thead><tbody id="vod-rows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="tab-notice">
+        <div class="card">
+          <div class="card-title"><small>NOTICE</small>공지 등록<span class="sp"></span>
+            <button class="btn sm solid" type="button" id="nt-add">등록</button>
+          </div>
+          <p class="where">나오는 곳 — 공지 페이지 목록</p>
+          <div class="grid two">
+            <div class="field"><label for="nt-title">제목</label>
+              <input class="input" id="nt-title" placeholder="예: 방송 일정 안내" />
+              <p class="hint">목록에 보이는 한 줄</p>
+            </div>
+            <div class="field"><label for="nt-pin">고정</label>
+              <select class="input" id="nt-pin"><option value="0">보통</option><option value="1">맨 위 고정</option></select>
+              <p class="hint">고정하면 목록 맨 앞에 표시</p>
+            </div>
+          </div>
+          <div class="field"><label for="nt-content">내용</label>
+            <textarea class="input" id="nt-content" rows="5" placeholder="공지 내용"></textarea>
+            <p class="hint">줄바꿈 그대로 반영</p>
+          </div>
+          <div class="field"><label for="nt-images">이미지 주소</label>
+            <textarea class="input" id="nt-images" rows="3" placeholder="https://stimg.sooplive.com/..."></textarea>
+            <p class="hint">한 줄에 하나. 이미지 우클릭 → 이미지 주소 복사로 얻은 주소(글 주소 아님)</p>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>제목</th><th>고정</th><th>날짜</th><th>삭제</th></tr></thead><tbody id="nt-rows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="tab-work">
+        <div class="card">
+          <div class="card-title"><small>VIEWERS</small>시청자<span class="sp"></span>
+            <button class="btn sm solid" type="button" id="vw-add">추가</button>
+          </div>
+          <p class="where">나오는 곳 — 업보 페이지 카드 그리드</p>
+          <div class="grid">
+            <div class="field"><label for="vw-nick">닉네임</label>
+              <input class="input" id="vw-nick" placeholder="예: 뭄치" />
+              <p class="hint">카드에 표시할 이름</p>
+            </div>
+            <div class="field"><label for="vw-soop">SOOP 아이디</label>
+              <input class="input" id="vw-soop" placeholder="예: uchi5757" />
+              <p class="hint">아이디를 넣으면 프사가 자동으로 붙습니다. 비우면 첫 글자</p>
+            </div>
+            <div class="field"><label for="vw-order">순서</label>
+              <input class="input" id="vw-order" type="number" value="0" />
+              <p class="hint">숫자가 작을수록 앞</p>
+            </div>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>닉네임</th><th>아이디</th><th>순서</th><th>삭제</th></tr></thead><tbody id="vw-rows"></tbody></table></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><small>TYPES</small>업보 종류<span class="sp"></span>
+            <button class="btn sm solid" type="button" id="tp-add">추가</button>
+          </div>
+          <p class="where">나오는 곳 — 업보 상세 모달의 항목 이름</p>
+          <div class="grid">
+            <div class="field"><label for="tp-name">이름</label>
+              <input class="input" id="tp-name" placeholder="예: 지각" />
+              <p class="hint">항목 이름</p>
+            </div>
+            <div class="field"><label for="tp-cat">분류</label>
+              <select class="input" id="tp-cat"><option>일반</option><option>이벤트</option></select>
+              <p class="hint">이벤트로 두면 상세에 배지가 붙습니다</p>
+            </div>
+            <div class="field"><label for="tp-order">순서</label>
+              <input class="input" id="tp-order" type="number" value="0" />
+              <p class="hint">숫자가 작을수록 앞</p>
+            </div>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>이름</th><th>분류</th><th>순서</th><th>삭제</th></tr></thead><tbody id="tp-rows"></tbody></table></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><small>COUNTS</small>업보 횟수<span class="sp"></span>
+            <button class="btn sm solid" type="button" id="ct-save">이 시청자 저장</button>
+          </div>
+          <p class="where">나오는 곳 — 카드의 업보 합계 배지 + 상세 모달의 ×횟수. 0은 상세에서 숨겨집니다</p>
+          <div class="field"><label for="ct-viewer">시청자</label>
+            <select class="input" id="ct-viewer"></select>
+            <p class="hint">고르면 아래에 종류별 횟수가 나옵니다</p>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>종류</th><th>분류</th><th>횟수</th></tr></thead><tbody id="ct-rows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="tab-dress">
+        <div class="card">
+          <div class="card-title"><small>WARDROBE</small>옷장 등록<span class="sp"></span>
+            <button class="btn sm solid" type="button" id="dr-add">등록</button>
+          </div>
+          <p class="where">나오는 곳 — 옷장 페이지. 새 옷은 포스터, 나머지는 앨범 그리드</p>
+          <div class="grid">
+            <div class="field"><label for="dr-cat">분류</label>
+              <select class="input" id="dr-cat"><option value="hair">헤어</option><option value="outfit">의상</option><option value="lens">렌즈</option></select>
+              <p class="hint">옷장 페이지의 분류 탭과 같은 값</p>
+            </div>
+            <div class="field"><label for="dr-name">이름</label>
+              <input class="input" id="dr-name" placeholder="예: 반창고 트윈테일" />
+              <p class="hint">포스터에 크게 나오는 이름</p>
+            </div>
+            <div class="field"><label for="dr-order">순서</label>
+              <input class="input" id="dr-order" type="number" value="0" />
+              <p class="hint">숫자가 작을수록 앞</p>
+            </div>
+          </div>
+          <div class="field"><label for="dr-desc">설명</label>
+            <input class="input" id="dr-desc" placeholder="예: 데뷔 헤어" />
+            <p class="hint">포스터 아래 두 줄까지 표시</p>
+          </div>
+          <div class="field"><label for="dr-img">이미지 주소</label>
+            <input class="input" id="dr-img" placeholder="https://stimg.sooplive.com/..." />
+            <p class="hint">세로 3:4 (예 900×1200). 이미지 우클릭 → 이미지 주소 복사</p>
+          </div>
+          <div class="field">
+            <label><input type="checkbox" id="dr-new" /> 새 옷으로 올리기</label>
+            <p class="hint">체크하면 badges에 NEW가 붙어 새 옷 탭의 포스터로 나옵니다</p>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>이름</th><th>분류</th><th>새 옷</th><th>순서</th><th>삭제</th></tr></thead><tbody id="dr-rows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="tab-words" data-auto="words">
+        <div class="card">
+          <div class="card-title"><small>FIND</small>문구 찾기</div>
+          <p class="where">각 페이지 위쪽 머리글을 여기서 고칩니다. 비우면 아래 안내에 적힌 기본 문구가 그대로 나옵니다</p>
+          <input class="input" id="wordFind" placeholder="문구 검색" />
+        </div>
+      </section>
+
+      <section class="tab-panel" id="tab-theme">
+        <div class="card">
+          <div class="card-title"><small>PALETTE</small>팔레트<span class="sp"></span>
+            <button class="btn sm" type="button" id="pal-reset">기본값으로</button>
+            <button class="btn sm solid" type="button" data-save="profile">저장</button>
+          </div>
+          <p class="where">나오는 곳 — 전 페이지. 배경·카드·버튼·포인트색이 이 일곱 색에서 나옵니다</p>
+          <div class="preset-row" id="pal-presets"></div>
+          <div class="palgrid" id="pal-grid" style="margin-top:14px"></div>
+          <div class="ct-list" id="pal-contrast"></div>
+          <p class="hint">글자는 4.5, 아이콘·선은 3 이상이 기준입니다. 흰 글자 / 포인트 버튼은 승인 시안의 분홍 그대로라 기준보다 낮습니다</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><small>TYPE SCALE</small>글자 크기<span class="sp"></span>
+            <button class="btn sm" type="button" id="ts-reset">기본값으로</button>
+            <button class="btn sm solid" type="button" data-save="profile">저장</button>
+          </div>
+          <p class="where">나오는 곳 — 전 페이지. 1.0이 기본, 1.2면 20% 크게</p>
+          <div class="tsgrid" id="tsgrid"></div>
+          <div class="tsprev" id="tsprev">
+            <div class="p-disp">우치 UCHI</div>
+            <div class="p-lbl">DOSSIER</div>
+            <div class="p-title">우치 파일</div>
+            <div class="p-body">이 문장 크기가 본문 크기입니다.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="tab-ask">
+        <div class="card">
+          <div class="card-title"><small>INBOX</small>받은 문의<span class="sp"></span>
+            <button class="btn sm" type="button" id="iq-reload">새로고침</button>
+          </div>
+          <p class="where">사이트 상단 문의 버튼으로 들어온 내용. 열람은 관리자만 가능합니다</p>
+          <div class="table-wrap"><table><thead><tr><th>날짜</th><th>닉네임</th><th>내용</th><th>삭제</th></tr></thead><tbody id="iq-rows"></tbody></table></div>
+        </div>
+      </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../supabase.js"></script>
+    <script>
+      /* Field registry: profileKeys, the input boxes and the page hooks all come from here,
+         so the three sets cannot drift apart. Adding a key means adding one row below. */
+      var GROUPS = [
+        { tab: 'main', title: '메인 사진', kicker: 'IMAGES',
+          where: '나오는 곳 — 메인 화면. 비우면 레포에 들어 있는 기본 이미지가 그대로 나옵니다',
+          fields: [
+            ['main-hero', '히어로 캐릭터 (라이트)', 'image', '메인 오른쪽 큰 이미지. 가로 682×476 기준'],
+            ['main-hero-dark', '히어로 캐릭터 (누끼)', 'image', '배경을 지운 PNG. 라이트에서는 배너 밖으로 나온 부분, 다크에서는 전체가 이 이미지입니다. 위를 바꾸면 이것도 같이 바꿉니다'],
+            ['main-photo-1', '왼쪽 사진 1', 'image', '세로 3:4 (예 660×1000)'],
+            ['main-photo-2', '왼쪽 사진 2', 'image', '세로 3:4 (예 660×1000)'],
+            ['main-port-1', '가운데 사진 1', 'image', '가로 약 1:1 (예 640×620)'],
+            ['main-port-2', '가운데 사진 2', 'image', '가로 약 1:1 (예 640×580)']
+          ] },
+        { tab: 'main', title: '메인 문구', kicker: 'COPY',
+          where: '나오는 곳 — 메인 화면',
+          fields: [
+            ['main-title', '큰 제목', 'text', '기본 문구 — 어서 와요'],
+            ['main-lead', '소개 두 줄', 'textarea', '줄바꿈 그대로 반영. 기본 문구 — 게임하고 소통하는 우치의 아지트예요 / 만나서 반가워요, 뭄치!'],
+            ['main-link', '더 알아보기 글자', 'text', '기본 문구 — 더 알아보기'],
+            ['main-quick-title', '바로가기 제목', 'text', '기본 문구 — 바로가기'],
+            ['main-cap-profile', '프로필 카드 설명', 'textarea', '기본 문구 — 우치의 소개와 이야기를 확인해요'],
+            ['main-cap-notice', '공지 카드 설명', 'textarea', '기본 문구 — 새로운 소식과 방송 안내를 확인해요'],
+            ['main-cap-dress', '옷장 카드 설명', 'textarea', '기본 문구 — 지금까지의 의상을 한눈에 만나보세요']
+          ] },
+
+        { tab: 'profile', title: '프로필 사진', kicker: 'AVATAR',
+          where: '나오는 곳 — 프로필 큰 프사 + 전 페이지 상단 왼쪽 버튼',
+          fields: [
+            ['soop-id', 'SOOP 아이디', 'text', '아이디만 입력하면 SOOP 프사가 자동으로 붙습니다'],
+            ['avatar', '직접 이미지 주소', 'image', '넣으면 SOOP 프사보다 우선. 움짤(.gif)도 가능']
+          ] },
+        { tab: 'profile', title: '프로필 정보', kicker: 'DOSSIER',
+          where: '나오는 곳 — 프로필 페이지 우치 파일 카드. 비운 항목은 줄 자체가 숨겨집니다',
+          fields: [
+            ['info-name', '이름', 'text', '기본값 — 우치'],
+            ['info-reading', '읽는 법', 'text', '기본값 — 우치 / UCHI'],
+            ['info-catchphrase', '입버릇', 'text', '프사 아래 분홍 알약에도 함께 나옵니다'],
+            ['info-debut', '데뷔', 'text', '기본값 — 2026.07.25'],
+            ['info-birth', '생일', 'text', '생일까지 D-day 계산에 씁니다. 예 12월 20일'],
+            ['info-fandom', '팬 애칭', 'text', '기본값 — 뭄치'],
+            ['info-agency', '소속', 'text', '기본값 — 개인세'],
+            ['info-mbti', 'MBTI', 'text', '비우면 줄이 숨겨집니다'],
+            ['info-airtime', '방송 시간', 'text', '기본값 — 오후 2시'],
+            ['info-game', '주력 게임', 'text', '가운뎃점(·)으로 구분'],
+            ['info-content', '방송 콘텐츠', 'text', '가운뎃점(·)으로 구분'],
+            ['info-song', '노래', 'text', '기본값 — 가끔 함'],
+            ['info-item', '시그니처', 'text', '기본값 — 반창고 머리핀']
+          ] },
+        { tab: 'profile', title: '키워드', kicker: 'TAGS',
+          where: '나오는 곳 — 프로필 우치 파일 카드 아래 태그',
+          fields: [['info-tags', '태그', 'text', '쉼표로 구분. 비우면 태그 줄이 사라집니다']] },
+        { tab: 'profile', title: '한마디 · 하고픈 말', kicker: 'VOICE',
+          where: '나오는 곳 — 한마디는 프사 아래 알약 / 하고픈 말은 ABOUT 카드 / 지금 하는 것은 NOW 카드',
+          fields: [
+            ['quote', '한마디', 'text', '짧은 한 줄'],
+            ['msg', '하고픈 말', 'textarea', '줄바꿈 그대로 반영. 3줄 권장'],
+            ['now', '지금 하는 것', 'textarea', '비우면 NOW 카드가 숨겨집니다']
+          ] },
+        { tab: 'profile', title: '좋아 / 안 좋아', kicker: 'TASTE',
+          where: '나오는 곳 — 프로필 LIKE · DISLIKE 카드. 비우면 그 카드가 숨겨집니다',
+          fields: [
+            ['like-list', '좋아하는 것', 'text', '쉼표로 구분'],
+            ['dislike-list', '안 좋아하는 것', 'text', '쉼표로 구분']
+          ] },
+        { tab: 'profile', title: '능력치 · 목표', kicker: 'STATUS',
+          where: '나오는 곳 — 프로필 STATUS · GOAL 카드. 비우면 그 카드가 숨겨집니다',
+          fields: [
+            ['stats', '능력치', 'textarea', '한 줄에 하나, 이름:숫자 (0~100). 예 승부욕:97'],
+            ['milestones', '목표', 'textarea', '한 줄에 하나, 상태|내용. 상태가 달성이면 취소선. 예 달성|첫 방송 켜기']
+          ] },
+        { tab: 'profile', title: '해본 게임', kicker: 'PLAYED',
+          where: '나오는 곳 — 프로필 PLAYED 카드. 비우면 카드가 숨겨집니다',
+          fields: [['game-list', '게임 목록', 'textarea', '한 줄에 하나. 게임이름 또는 게임이름|한줄평. 예 마인크래프트|건축만 함']] },
+        { tab: 'profile', title: 'TMI', kicker: 'TMI',
+          where: '나오는 곳 — 프로필 TMI 카드. 비우면 카드가 숨겨집니다',
+          fields: [['tmi-list', 'TMI 목록', 'textarea', '한 줄에 하나. 라벨|내용 또는 내용만. 예 모티프|하트']] },
+        { tab: 'profile', title: '방송 요일', kicker: 'WEEK',
+          where: '나오는 곳 — 프로필 WEEK 카드. 아무것도 체크하지 않으면 일곱 칸이 모두 미정으로 표시됩니다',
+          fields: [['days', '방송하는 요일', 'days', '체크한 요일은 방송, 나머지는 휴방']] },
+        { tab: 'profile', title: '관련 링크', kicker: 'LINK',
+          where: '나오는 곳 — 프로필 LINK 카드 + 상단 프사 버튼(SOOP) + 메인 바로가기 팬카페',
+          fields: [
+            ['link-soop', 'SOOP 방송국', 'text', '비우면 기본 주소 유지'],
+            ['link-youtube', '유튜브', 'text', '비우면 기본 주소 유지'],
+            ['link-cafe', '팬카페', 'text', '메인 바로가기의 팬카페에도 함께 반영'],
+            ['link-etc', '방송 일정표', 'text', '비우면 기본 주소 유지'],
+            ['link-x', 'X (트위터)', 'text', '비우면 버튼이 숨겨집니다']
+          ] },
+
+        { tab: 'words', title: '프로필 머리글', kicker: 'PROFILE',
+          where: '나오는 곳 — 프로필 페이지 맨 위',
+          fields: [
+            ['profile-kicker', '영문 라벨', 'text', '기본 문구 — PROFILE'],
+            ['profile-title', '제목', 'text', '기본 문구 — 프로필'],
+            ['profile-sub', '제목 옆 작은 글자', 'text', '기본 문구 — 우치 / UCHI'],
+            ['profile-lead', '설명 한 줄', 'text', '기본 문구 — 우치가 어떤 사람인지, 무엇을 하고 노는지 모아 뒀어요']
+          ] },
+        { tab: 'words', title: '공지 머리글', kicker: 'NOTICE',
+          where: '나오는 곳 — 공지 페이지 맨 위',
+          fields: [
+            ['notice-kicker', '영문 라벨', 'text', '기본 문구 — NOTICE'],
+            ['notice-title', '제목', 'text', '기본 문구 — 공지'],
+            ['notice-sub', '제목 옆 작은 글자', 'text', '기본은 비어 있음'],
+            ['notice-lead', '설명 한 줄', 'text', '기본 문구 — 방송 안내와 새로 생긴 소식을 여기에 올려요']
+          ] },
+        { tab: 'words', title: '업보 머리글', kicker: 'RECORD',
+          where: '나오는 곳 — 업보 페이지 맨 위',
+          fields: [
+            ['work-kicker', '영문 라벨', 'text', '기본 문구 — RECORD'],
+            ['work-title', '제목', 'text', '기본 문구 — 업보'],
+            ['work-sub', '제목 옆 작은 글자', 'text', '기본은 비어 있음'],
+            ['work-lead', '설명 한 줄', 'text', '기본 문구 — 방송에서 쌓인 기록이에요. 카드를 누르면 종류별로 볼 수 있어요']
+          ] },
+        { tab: 'words', title: '옷장 머리글', kicker: 'WARDROBE',
+          where: '나오는 곳 — 옷장 페이지 맨 위',
+          fields: [
+            ['dress-kicker', '영문 라벨', 'text', '기본 문구 — WARDROBE'],
+            ['dress-title', '제목', 'text', '기본 문구 — 옷장'],
+            ['dress-sub', '제목 옆 작은 글자', 'text', '기본은 비어 있음'],
+            ['dress-lead', '설명 한 줄', 'text', '기본 문구 — 지금까지 입은 옷과 바꾼 헤어를 한 칸에 모아 뒀어요']
+          ] }
+      ];
+
+      var PAL = [
+        ['theme-main', '포인트', '버튼 · 강조 · 아이콘', '#fd8495'],
+        ['theme-main-dark', '진한 포인트', '밑줄 · 작은 라벨', '#fa7186'],
+        ['theme-main-deep', '가장 진한 색', '아이콘 글자 · 배지 글자', '#b34a5c'],
+        ['theme-main-light', '연한 배경', '칩 · 아이콘 배경', '#ffe8e7'],
+        ['theme-sub', '서브', '히어로 그라데이션 끝 색', '#f9b7ba'],
+        ['theme-bg', '배경', '페이지 바탕', '#fefcfc'],
+        ['theme-logo', '로고', '상단 로고 글자', '#202331']
+      ];
+
+      var PRESETS = [
+        ['우치 기본', ['#fd8495', '#fa7186', '#b34a5c', '#ffe8e7', '#f9b7ba', '#fefcfc', '#202331']],
+        ['코랄', ['#ff8f70', '#f2765a', '#b2482f', '#ffe9e1', '#ffc4b0', '#fffaf8', '#26201e']],
+        ['라벤더', ['#b79ae0', '#9f7ed1', '#6a4b9c', '#f0e9fb', '#d6c6f0', '#fdfbff', '#241f2e']],
+        ['민트', ['#6fc9b6', '#4fb3a0', '#2c7466', '#e2f6f1', '#b6e5da', '#f9fdfc', '#1e2b28']],
+        ['버터', ['#f2c14e', '#dda92f', '#96701a', '#fdf3d9', '#f6dfa2', '#fffdf6', '#2a2418']]
+      ];
+
+      var TS = [
+        ['type-display', '디스플레이', '페이지 맨 위 큰 제목'],
+        ['type-title', '섹션 제목', '카드 제목 · 메뉴'],
+        ['type-body', '본문', '설명 · 값 · 목록'],
+        ['type-label', '작은 라벨', '영문 라벨 · 캡션']
+      ];
+
+      var TABS = [
+        ['main', '🏠 메인', '../'],
+        ['profile', '🎀 프로필', '../profile/'],
+        ['notice', '📢 공지', '../notice/'],
+        ['work', '😈 업보', '../work/'],
+        ['dress', '👗 옷장', '../dress/'],
+        ['words', '✏️ 문구', '../'],
+        ['theme', '🎨 테마', '../'],
+        ['ask', '📮 문의', '../']
+      ];
+
+      var profileKeys = [];
+      GROUPS.forEach(function (g) { g.fields.forEach(function (f) { profileKeys.push(f[0]); }); });
+      PAL.forEach(function (p) { profileKeys.push(p[0]); });
+      TS.forEach(function (t) { profileKeys.push(t[0]); });
+
+      var IMG_FIELDS = [];
+      GROUPS.forEach(function (g) { g.fields.forEach(function (f) { if (f[2] === 'image') IMG_FIELDS.push(f[0]); }); });
+
+      var DAY_LABELS = ['월', '화', '수', '목', '금', '토', '일'];   /* days CSV is 0=Mon ... 6=Sun */
+
+      function escHtml(s) {
+        return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+      function el(id) { return document.getElementById(id); }
+      function toast(m) { if (typeof showToast === 'function') showToast(m); else alert(m); }
+
+      /* ---- render auto panels ---- */
+
+      function fieldHtml(f) {
+        var k = f[0], label = f[1], type = f[2], hint = f[3];
+        var body;
+        if (type === 'textarea') {
+          body = '<textarea class="input" id="f-' + k + '" rows="3"></textarea>';
+        } else if (type === 'days') {
+          body = '<div class="daybox" id="daybox">' + DAY_LABELS.map(function (d, i) {
+            return '<label><input type="checkbox" data-day="' + i + '" />' + d + '</label>';
+          }).join('') + '</div><input type="hidden" id="f-' + k + '" />';
+        } else {
+          body = '<input class="input" id="f-' + k + '" type="text" />';
+        }
+        return '<div class="field"><label for="f-' + k + '">' + escHtml(label) + '</label>' + body +
+          '<p class="hint">' + escHtml(hint) + '</p></div>';
+      }
+
+      function renderAuto() {
+        var byTab = {};
+        GROUPS.forEach(function (g) { (byTab[g.tab] = byTab[g.tab] || []).push(g); });
+        Object.keys(byTab).forEach(function (tab) {
+          var panel = el('tab-' + tab);
+          if (!panel) return;
+          var html = byTab[tab].map(function (g) {
+            var wide = g.fields.some(function (f) { return f[2] === 'textarea' || f[2] === 'image'; });
+            return '<div class="card"><div class="card-title"><small>' + escHtml(g.kicker) + '</small>' +
+              escHtml(g.title) + '<span class="sp"></span>' +
+              '<button class="btn sm solid" type="button" data-save="profile">저장</button></div>' +
+              '<p class="where">' + escHtml(g.where) + '</p>' +
+              '<div class="grid' + (wide ? ' two' : '') + '">' + g.fields.map(fieldHtml).join('') + '</div></div>';
+          }).join('');
+          panel.insertAdjacentHTML('afterbegin', html);
+        });
+      }
+    </script>
+    <script>
+      /* ---- tabs ---- */
+
+      function renderTabs() {
+        el('ucTabs').innerHTML = TABS.map(function (t, i) {
+          return '<button class="uc-tab' + (i === 0 ? ' on' : '') + '" type="button" data-tab="' + t[0] + '">' + t[1] + '</button>';
+        }).join('');
+        el('ucTabs').addEventListener('click', function (e) {
+          var b = e.target.closest('.uc-tab');
+          if (!b) return;
+          selectTab(b.dataset.tab);
+        });
+      }
+
+      function selectTab(name) {
+        document.querySelectorAll('.uc-tab').forEach(function (b) { b.classList.toggle('on', b.dataset.tab === name); });
+        document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.toggle('on', p.id === 'tab-' + name); });
+        var t = TABS.filter(function (x) { return x[0] === name; })[0];
+        if (t) el('act-view').href = t[2];
+        try { localStorage.setItem('uc-admin-tab', name); } catch (e) { }
+      }
+
+      /* ---- dirty ---- */
+
+      var DIRTY = false;
+      function markDirty() { DIRTY = true; el('act-dirty').textContent = '● 저장하지 않은 변경이 있습니다'; }
+      function clearDirty() { DIRTY = false; el('act-dirty').textContent = ''; }
+      window.addEventListener('beforeunload', function (e) { if (DIRTY) { e.preventDefault(); e.returnValue = ''; } });
+
+      /* ---- palette ---- */
+
+      function renderPalette() {
+        el('pal-grid').innerHTML = PAL.map(function (p) {
+          return '<div class="pal-row"><input type="color" id="c-' + p[0] + '" value="' + p[3] + '" />' +
+            '<span class="nm"><b>' + escHtml(p[1]) + '</b><span>' + escHtml(p[2]) + '</span></span>' +
+            '<input class="hexin" id="f-' + p[0] + '" value="' + p[3] + '" spellcheck="false" /></div>';
+        }).join('');
+        el('pal-presets').innerHTML = PRESETS.map(function (p, i) {
+          return '<button class="preset" type="button" data-preset="' + i + '">' +
+            p[1].slice(0, 4).map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('') +
+            escHtml(p[0]) + '</button>';
+        }).join('');
+
+        el('pal-grid').addEventListener('input', function (e) {
+          var id = e.target.id || '';
+          if (id.indexOf('c-theme-') === 0) {
+            var k = id.slice(2);
+            el('f-' + k).value = e.target.value;
+          } else if (id.indexOf('f-theme-') === 0) {
+            var k2 = id.slice(2);
+            if (/^#[0-9a-fA-F]{6}$/.test(e.target.value)) el('c-' + k2).value = e.target.value;
+          } else return;
+          previewPalette(); markDirty();
+        });
+
+        el('pal-presets').addEventListener('click', function (e) {
+          var b = e.target.closest('.preset'); if (!b) return;
+          var vals = PRESETS[Number(b.dataset.preset)][1];
+          PAL.forEach(function (p, i) { el('f-' + p[0]).value = vals[i]; el('c-' + p[0]).value = vals[i]; });
+          previewPalette(); markDirty();
+        });
+
+        el('pal-reset').addEventListener('click', function () {
+          PAL.forEach(function (p) { el('f-' + p[0]).value = p[3]; el('c-' + p[0]).value = p[3]; });
+          previewPalette(); markDirty();
+        });
+      }
+
+      var PAL_VAR = {
+        'theme-main': '--main', 'theme-main-dark': '--main-dark', 'theme-main-deep': '--main-deep',
+        'theme-main-light': '--main-light', 'theme-sub': '--sub', 'theme-bg': '--bg', 'theme-logo': '--logo'
+      };
+
+      function previewPalette() {
+        PAL.forEach(function (p) {
+          var v = String(el('f-' + p[0]).value || '').trim();
+          if (/^#[0-9a-fA-F]{6}$/.test(v)) document.documentElement.style.setProperty(PAL_VAR[p[0]], v);
+        });
+        renderContrast();
+      }
+
+      function _lum(hex) {
+        var m = /^#([0-9a-fA-F]{6})$/.exec(hex || '');
+        if (!m) return null;
+        var n = parseInt(m[1], 16);
+        var f = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) {
+          v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2];
+      }
+      function _ratio(a, b) {
+        var l1 = _lum(a), l2 = _lum(b);
+        if (l1 === null || l2 === null) return null;
+        return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+      }
+
+      function renderContrast() {
+        function v(k) { return String(el('f-' + k).value || '').trim(); }
+        /* Text pairs need 4.5:1, icons and lines 3:1. */
+        var pairs = [
+          ['본문 글자 / 배경', v('theme-logo'), v('theme-bg'), 4.5],
+          ['작은 라벨 / 카드', v('theme-main-deep'), '#ffffff', 4.5],
+          ['칩 글자 / 칩 배경', v('theme-main-deep'), v('theme-main-light'), 4.5],
+          ['흰 글자 / 포인트 버튼', '#ffffff', v('theme-main'), 4.5],
+          ['아이콘 · 밑줄 / 배경', v('theme-main-dark'), v('theme-bg'), 3]
+        ];
+        el('pal-contrast').innerHTML = pairs.map(function (p) {
+          var r = _ratio(p[1], p[2]);
+          var need = p[3];
+          var txt = r === null ? '-' : r.toFixed(2);
+          var cls = 'ct-bad', word = '안 읽힘';
+          if (r !== null && r >= need) { cls = 'ct-ok'; word = '좋음'; }
+          else if (r !== null && r >= need * 0.67) { cls = 'ct-warn'; word = '아슬함'; }
+          return '<div class="ct-item"><span>' + escHtml(p[0]) + '</span><span class="v">' + txt +
+            '</span><span class="' + cls + '">' + word + '</span></div>';
+        }).join('');
+      }
+
+      /* ---- type scale ---- */
+
+      function renderTypeScale() {
+        el('tsgrid').innerHTML = TS.map(function (t) {
+          return '<div class="t"><div class="n">' + escHtml(t[1]) + '</div><div class="u">' + escHtml(t[2]) + '</div>' +
+            '<div class="ctl"><input type="range" id="r-' + t[0] + '" min="0.8" max="1.4" step="0.05" value="1" />' +
+            '<span class="v" id="v-' + t[0] + '">1.00</span></div>' +
+            '<input type="hidden" id="f-' + t[0] + '" value="1" /></div>';
+        }).join('');
+        el('tsgrid').addEventListener('input', function (e) {
+          var r = e.target.closest('input[type=range]'); if (!r) return;
+          el('f-' + r.id.slice(2)).value = r.value;
+          tsPreview(); markDirty();
+        });
+        el('ts-reset').addEventListener('click', function () {
+          TS.forEach(function (t) { el('f-' + t[0]).value = '1'; });
+          tsPreview(); markDirty();
+        });
+      }
+
+      function tsPreview() {
+        TS.forEach(function (t) {
+          var v = parseFloat(el('f-' + t[0]).value) || 1;
+          el('r-' + t[0]).value = v;
+          el('v-' + t[0]).textContent = v.toFixed(2);
+          el('tsprev').style.setProperty('--pv-' + t[0].replace('type-', ''), v);
+        });
+      }
+
+      /* ---- image thumbnails ---- */
+
+      function setupThumbs() {
+        IMG_FIELDS.forEach(function (k) {
+          var input = el('f-' + k); if (!input) return;
+          var box = document.createElement('div');
+          box.className = 'thumb'; box.id = 'th-' + k;
+          input.parentElement.appendChild(box);
+          var probe = new Image();
+          function paint() {
+            var v = String(input.value || '').trim();
+            if (!v) { box.className = 'thumb'; box.textContent = ''; box.style.backgroundImage = ''; return; }
+            probe.onload = function () {
+              box.className = 'thumb on'; box.textContent = '';
+              box.style.backgroundImage = 'url("' + v.replace(/"/g, '%22') + '")';
+            };
+            probe.onerror = function () {
+              box.className = 'thumb on err'; box.style.backgroundImage = '';
+              box.textContent = '이 주소로는 이미지가 안 열립니다. 글 주소가 아닌 이미지 주소인지 확인하세요';
+            };
+            probe.referrerPolicy = 'no-referrer';
+            probe.src = v;
+          }
+          input.addEventListener('input', paint);
+          input._paintThumb = paint;
+        });
+      }
+
+      /* ---- days ---- */
+
+      function setupDays() {
+        var box = el('daybox'); if (!box) return;
+        box.addEventListener('change', function () {
+          var on = [];
+          box.querySelectorAll('input[data-day]').forEach(function (c) { if (c.checked) on.push(c.dataset.day); });
+          el('f-days').value = on.join(',');
+          markDirty();
+        });
+      }
+      function paintDays() {
+        var box = el('daybox'); if (!box) return;
+        var on = String(el('f-days').value || '').split(',').map(function (x) { return x.trim(); });
+        box.querySelectorAll('input[data-day]').forEach(function (c) { c.checked = on.indexOf(c.dataset.day) !== -1; });
+      }
+
+      /* ---- word search ---- */
+
+      function setupWordFind() {
+        el('wordFind').addEventListener('input', function () {
+          var q = this.value.trim().toLowerCase();
+          document.querySelectorAll('#tab-words .card').forEach(function (card) {
+            if (card.querySelector('#wordFind')) return;
+            var any = false;
+            card.querySelectorAll('.field').forEach(function (fd) {
+              var ok = !q || fd.textContent.toLowerCase().indexOf(q) >= 0;
+              fd.style.display = ok ? '' : 'none';
+              if (ok) any = true;
+            });
+            card.style.display = any ? '' : 'none';
+          });
+        });
+      }
+    </script>
+    <script>
+      /* ---- profile row (single JSON blob at id = 1) ---- */
+
+      var PROFILE = {};
+
+      async function loadProfile() {
+        try {
+          var r = await db.from('profile').select('data').eq('id', 1);
+          PROFILE = (r.data && r.data[0] && r.data[0].data) || {};
+        } catch (e) { PROFILE = {}; }
+        profileKeys.forEach(function (k) {
+          var input = el('f-' + k);
+          if (!input) return;
+          var v = PROFILE[k];
+          input.value = (typeof v === 'string' || typeof v === 'number') ? String(v) : '';
+        });
+        PAL.forEach(function (p) {
+          if (!el('f-' + p[0]).value) el('f-' + p[0]).value = p[3];
+          el('c-' + p[0]).value = el('f-' + p[0]).value;
+        });
+        TS.forEach(function (t) { if (!el('f-' + t[0]).value) el('f-' + t[0]).value = '1'; });
+        paintDays();
+        previewPalette();
+        tsPreview();
+        IMG_FIELDS.forEach(function (k) { var i = el('f-' + k); if (i && i._paintThumb) i._paintThumb(); });
+      }
+
+      async function saveProfile() {
+        var data = {};
+        profileKeys.forEach(function (k) {
+          var input = el('f-' + k);
+          data[k] = input ? String(input.value || '').trim() : '';
+        });
+        var r;
+        try {
+          r = await db.from('profile').upsert({ id: 1, data: data, updated_at: new Date().toISOString() });
+        } catch (e) { toast('저장 실패 — 서버에 연결하지 못했습니다'); return false; }
+        if (r.error) { toast('저장 실패 — ' + r.error.message); return false; }
+        PROFILE = data;
+        clearDirty();
+        toast('저장했습니다');
+        return true;
+      }
+
+      /* ---- backup / restore ---- */
+
+      function doBackup() {
+        var data = {};
+        profileKeys.forEach(function (k) { var i = el('f-' + k); data[k] = i ? i.value : ''; });
+        var blob = new Blob([JSON.stringify({ saved_at: new Date().toISOString(), profile: data }, null, 2)],
+          { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'uchi-profile-' + new Date().toISOString().slice(0, 10) + '.json';
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+      }
+
+      function doRestore(file) {
+        var fr = new FileReader();
+        fr.onload = function () {
+          try {
+            var j = JSON.parse(fr.result);
+            var p = j.profile || j;
+            profileKeys.forEach(function (k) {
+              var i = el('f-' + k);
+              if (i && typeof p[k] === 'string') i.value = p[k];
+            });
+            PAL.forEach(function (x) { el('c-' + x[0]).value = el('f-' + x[0]).value || x[3]; });
+            paintDays(); previewPalette(); tsPreview();
+            IMG_FIELDS.forEach(function (k) { var i = el('f-' + k); if (i && i._paintThumb) i._paintThumb(); });
+            markDirty();
+            toast('불러왔습니다. 저장 버튼을 눌러야 반영됩니다');
+          } catch (e) { toast('파일을 읽지 못했습니다'); }
+        };
+        fr.readAsText(file);
+      }
+
+      /* ---- notice ---- */
+
+      async function ntLoad() {
+        var rows = await fetchAll('notice', { order: 'created_at', asc: false });
+        el('nt-rows').innerHTML = rows.length ? rows.map(function (n) {
+          var d = new Date(n.created_at);
+          return '<tr><td>' + escHtml(n.title) + '</td><td>' + (n.pinned ? '<span class="pill">고정</span>' : '') +
+            '</td><td>' + (isNaN(d) ? '' : d.toISOString().slice(0, 10)) + '</td>' +
+            '<td><button class="btn sm danger" type="button" data-del="notice" data-id="' + n.id + '">삭제</button></td></tr>';
+        }).join('') : '<tr><td colspan="4" class="empty">등록된 공지가 없습니다</td></tr>';
+      }
+
+      async function ntAdd() {
+        var title = el('nt-title').value.trim();
+        if (!title) { toast('제목을 입력하세요'); return; }
+        var imgs = el('nt-images').value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+        var ok = await insertRow('notice', {
+          title: title, content: el('nt-content').value, pinned: el('nt-pin').value === '1', images: imgs
+        });
+        toast(ok ? '등록했습니다' : '등록 실패');
+        if (ok) { el('nt-title').value = ''; el('nt-content').value = ''; el('nt-images').value = ''; ntLoad(); }
+      }
+
+      /* ---- viewers / types / counts ---- */
+
+      var VIEWERS = [], TYPES = [], COUNTS = [];
+
+      async function vwLoad() {
+        VIEWERS = await fetchAll('viewers', { order: 'sort_order', asc: true });
+        el('vw-rows').innerHTML = VIEWERS.length ? VIEWERS.map(function (v) {
+          return '<tr><td>' + escHtml(v.nickname) + '</td><td>' + escHtml(v.soop_id || '') + '</td><td>' +
+            (v.sort_order || 0) + '</td><td><button class="btn sm danger" type="button" data-del="viewers" data-id="' +
+            v.id + '">삭제</button></td></tr>';
+        }).join('') : '<tr><td colspan="4" class="empty">등록된 시청자가 없습니다</td></tr>';
+        el('ct-viewer').innerHTML = VIEWERS.map(function (v) {
+          return '<option value="' + v.id + '">' + escHtml(v.nickname) + '</option>';
+        }).join('');
+        ctPaint();
+      }
+
+      async function tpLoad() {
+        TYPES = await fetchAll('upbo_types', { order: 'sort_order', asc: true });
+        el('tp-rows').innerHTML = TYPES.length ? TYPES.map(function (t) {
+          return '<tr><td>' + escHtml(t.name) + '</td><td>' + escHtml(t.category || '일반') + '</td><td>' +
+            (t.sort_order || 0) + '</td><td><button class="btn sm danger" type="button" data-del="upbo_types" data-id="' +
+            t.id + '">삭제</button></td></tr>';
+        }).join('') : '<tr><td colspan="4" class="empty">등록된 종류가 없습니다</td></tr>';
+        ctPaint();
+      }
+
+      async function ctLoad() {
+        COUNTS = await fetchAll('upbo_counts', { order: 'id', asc: true });
+        ctPaint();
+      }
+
+      function ctPaint() {
+        var vid = Number(el('ct-viewer').value || 0);
+        if (!TYPES.length) {
+          el('ct-rows').innerHTML = '<tr><td colspan="3" class="empty">업보 종류를 먼저 등록하세요</td></tr>';
+          return;
+        }
+        el('ct-rows').innerHTML = TYPES.map(function (t) {
+          var c = COUNTS.filter(function (x) { return x.viewer_id === vid && x.type_id === t.id; })[0];
+          return '<tr><td>' + escHtml(t.name) + '</td><td>' + escHtml(t.category || '일반') + '</td>' +
+            '<td><input class="cell-in" type="number" min="0" data-type="' + t.id + '" value="' +
+            (c ? c.count : 0) + '" /></td></tr>';
+        }).join('');
+      }
+
+      async function ctSave() {
+        var vid = Number(el('ct-viewer').value || 0);
+        if (!vid) { toast('시청자를 먼저 고르세요'); return; }
+        var inputs = el('ct-rows').querySelectorAll('input[data-type]');
+        var rows = [];
+        inputs.forEach(function (i) {
+          rows.push({ viewer_id: vid, type_id: Number(i.dataset.type), count: Number(i.value) || 0, updated_at: new Date().toISOString() });
+        });
+        var r;
+        try {
+          r = await db.from('upbo_counts').upsert(rows, { onConflict: 'viewer_id,type_id' });
+        } catch (e) { toast('저장 실패 — 서버에 연결하지 못했습니다'); return; }
+        toast(r.error ? '저장 실패 — ' + r.error.message : '저장했습니다');
+        if (!r.error) ctLoad();
+      }
+
+      /* ---- dress ---- */
+
+      var DRESS_CATS = ['hair', 'outfit', 'lens'];   /* same values as dress page CATS and select#dr-cat */
+      var DRESS_LABEL = { hair: '헤어', outfit: '의상', lens: '렌즈' };
+
+      async function drLoad() {
+        var rows = await fetchAll('dress_items', { order: 'sort_order', asc: true });
+        el('dr-rows').innerHTML = rows.length ? rows.map(function (d) {
+          var isNew = (d.badges || []).some(function (b) {
+            var l = (b && (b.label != null ? b.label : b)) || '';
+            return String(l).trim().toUpperCase() === 'NEW';
+          });
+          return '<tr><td>' + escHtml(d.name) + '</td><td>' + escHtml(DRESS_LABEL[d.category] || d.category) +
+            '</td><td>' + (isNew ? '<span class="pill">NEW</span>' : '') + '</td><td>' + (d.sort_order || 0) +
+            '</td><td><button class="btn sm danger" type="button" data-del="dress_items" data-id="' + d.id + '">삭제</button></td></tr>';
+        }).join('') : '<tr><td colspan="5" class="empty">등록된 항목이 없습니다</td></tr>';
+      }
+
+      async function drAdd() {
+        var name = el('dr-name').value.trim();
+        if (!name) { toast('이름을 입력하세요'); return; }
+        var ok = await insertRow('dress_items', {
+          category: el('dr-cat').value, name: name, description: el('dr-desc').value.trim(),
+          image_url: el('dr-img').value.trim(), badges: el('dr-new').checked ? [{ label: 'NEW' }] : [],
+          sort_order: Number(el('dr-order').value) || 0
+        });
+        toast(ok ? '등록했습니다' : '등록 실패');
+        if (ok) { el('dr-name').value = ''; el('dr-desc').value = ''; el('dr-img').value = ''; el('dr-new').checked = false; drLoad(); }
+      }
+
+      /* ---- vod ---- */
+
+      async function vodLoad() {
+        var rows = await fetchAll('original_songs', { order: 'id', asc: false });
+        el('vod-rows').innerHTML = rows.length ? rows.map(function (s) {
+          return '<tr><td>' + escHtml(s.title) + '</td><td>' + escHtml(s.vod_id || '') +
+            '</td><td><button class="btn sm danger" type="button" data-del="original_songs" data-id="' + s.id + '">삭제</button></td></tr>';
+        }).join('') : '<tr><td colspan="3" class="empty">등록된 다시보기가 없습니다</td></tr>';
+      }
+
+      async function vodAdd() {
+        var title = el('vod-title').value.trim();
+        var vid = el('vod-id').value.trim();
+        if (!title || !vid) { toast('제목과 VOD 번호를 모두 입력하세요'); return; }
+        var ok = await insertRow('original_songs', { title: title, vod_id: vid });
+        toast(ok ? '등록했습니다' : '등록 실패');
+        if (ok) { el('vod-title').value = ''; el('vod-id').value = ''; vodLoad(); }
+      }
+
+      /* ---- inquiries ---- */
+
+      async function iqLoad() {
+        var rows = await fetchAll('inquiries', { order: 'created_at', asc: false });
+        el('iq-rows').innerHTML = rows.length ? rows.map(function (q) {
+          var d = new Date(q.created_at);
+          return '<tr><td>' + (isNaN(d) ? '' : d.toISOString().slice(0, 10)) + '</td><td>' +
+            escHtml(q.nickname || '익명') + '</td><td style="white-space:pre-wrap">' + escHtml(q.message) +
+            '</td><td><button class="btn sm danger" type="button" data-del="inquiries" data-id="' + q.id + '">삭제</button></td></tr>';
+        }).join('') : '<tr><td colspan="4" class="empty">받은 문의가 없습니다</td></tr>';
+      }
+
+      var RELOAD = { notice: ntLoad, viewers: vwLoad, upbo_types: tpLoad, dress_items: drLoad, original_songs: vodLoad, inquiries: iqLoad };
+
+      /* ---- boot ---- */
+
+      function bindAll() {
+        el('act-backup').addEventListener('click', doBackup);
+        el('act-restore-file').addEventListener('change', function () { if (this.files[0]) doRestore(this.files[0]); this.value = ''; });
+        el('act-logout').addEventListener('click', async function () {
+          if (DIRTY && !confirm('저장하지 않은 변경이 있습니다. 그래도 로그아웃할까요?')) return;
+          try { await db.auth.signOut(); } catch (e) { }
+          location.reload();
+        });
+
+        document.addEventListener('click', function (e) {
+          var save = e.target.closest('[data-save="profile"]');
+          if (save) { saveProfile(); return; }
+          var del = e.target.closest('[data-del]');
+          if (del) {
+            var table = del.dataset.del;
+            if (!confirm('삭제할까요? 되돌릴 수 없습니다')) return;
+            deleteRow(table, del.dataset.id).then(function (ok) {
+              toast(ok ? '삭제했습니다' : '삭제 실패');
+              if (ok && RELOAD[table]) RELOAD[table]();
+            });
+          }
+        });
+
+        document.addEventListener('input', function (e) {
+          if (e.target.id && e.target.id.indexOf('f-') === 0) markDirty();
+        });
+
+        el('nt-add').addEventListener('click', ntAdd);
+        el('vw-add').addEventListener('click', async function () {
+          var n = el('vw-nick').value.trim();
+          if (!n) { toast('닉네임을 입력하세요'); return; }
+          var ok = await insertRow('viewers', { nickname: n, soop_id: el('vw-soop').value.trim(), sort_order: Number(el('vw-order').value) || 0 });
+          toast(ok ? '추가했습니다' : '추가 실패');
+          if (ok) { el('vw-nick').value = ''; el('vw-soop').value = ''; vwLoad(); }
+        });
+        el('tp-add').addEventListener('click', async function () {
+          var n = el('tp-name').value.trim();
+          if (!n) { toast('이름을 입력하세요'); return; }
+          var ok = await insertRow('upbo_types', { name: n, category: el('tp-cat').value, sort_order: Number(el('tp-order').value) || 0 });
+          toast(ok ? '추가했습니다' : '추가 실패');
+          if (ok) { el('tp-name').value = ''; tpLoad(); }
+        });
+        el('ct-viewer').addEventListener('change', ctPaint);
+        el('ct-save').addEventListener('click', ctSave);
+        el('dr-add').addEventListener('click', drAdd);
+        el('vod-add').addEventListener('click', vodAdd);
+        el('iq-reload').addEventListener('click', iqLoad);
+      }
+
+      async function openApp(session) {
+        el('ucGate').classList.add('uc-off');
+        var app = el('ucApp');
+        app.classList.remove('uc-off');
+        app.style.setProperty('display', 'block', 'important');
+        el('ucWho').textContent = (session && session.user && session.user.email) || '';
+        /* Ad blockers have hidden admin bodies before; re-assert visibility for a few seconds. */
+        var n = 0;
+        var iv = setInterval(function () {
+          app.style.setProperty('display', 'block', 'important');
+          if (++n > 6) clearInterval(iv);
+        }, 500);
+
+        await loadProfile();
+        await Promise.all([ntLoad(), vwLoad(), tpLoad(), ctLoad(), drLoad(), vodLoad(), iqLoad()]
+          .map(function (pr) { return Promise.resolve(pr).catch(function () { }); }));
+        clearDirty();
+        var last = 'main';
+        try { last = localStorage.getItem('uc-admin-tab') || 'main'; } catch (e) { }
+        selectTab(TABS.some(function (t) { return t[0] === last; }) ? last : 'main');
+      }
+
+      async function boot() {
+        renderAuto();
+        renderTabs();
+        renderPalette();
+        renderTypeScale();
+        setupThumbs();
+        setupDays();
+        setupWordFind();
+        bindAll();
+        selectTab('main');
+
+        if (!db) {
+          el('gErr').textContent = 'supabase.js 의 프로젝트 주소와 anon 키를 먼저 채워 주세요.';
+          if (window.__ucDiagAdd) window.__ucDiagAdd('supabase.js 의 SUPABASE_URL / SUPABASE_ANON 이 아직 기본값입니다.');
+          return;
+        }
+
+        el('ucGateForm').addEventListener('submit', async function (e) {
+          e.preventDefault();
+          el('gErr').textContent = '';
+          el('gBtn').disabled = true;
+          var r;
+          try {
+            r = await db.auth.signInWithPassword({ email: el('gEmail').value.trim(), password: el('gPass').value });
+          } catch (err) {
+            el('gBtn').disabled = false;
+            el('gErr').textContent = 'Supabase에 연결하지 못했습니다 — 인터넷 연결과 프로젝트 주소를 확인하세요';
+            return;
+          }
+          el('gBtn').disabled = false;
+          if (r.error) { el('gErr').textContent = '로그인 실패 — 이메일과 비밀번호를 확인하세요'; return; }
+          openApp(r.data.session);
+        });
+
+        try {
+          var s = await db.auth.getSession();
+          if (s.data && s.data.session) openApp(s.data.session);
+        } catch (e) { }
+      }
+
+      boot();
+    </script>
+  </body>
+</html>

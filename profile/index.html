@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200, user-scalable=yes" />
+    <meta name="theme-color" content="#fefcfc" />
+    <title>UCHI OFFICIAL | 프로필</title>
+    <meta name="description" content="우치(UCHI) 프로필 — 데뷔·생일·팬 애칭·방송 콘텐츠 · UCHI OFFICIAL" />
+    <meta property="og:title" content="UCHI OFFICIAL | 프로필" />
+    <meta property="og:description" content="우치(UCHI) 프로필 — 데뷔·생일·팬 애칭·방송 콘텐츠 · UCHI OFFICIAL" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/uc/uchi5757/uchi5757.jpg" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+      try { if (window.self !== window.top) document.body.classList.add('embed'); }
+      catch (e) { document.body.classList.add('embed'); }
+    </script>
+
+    <a class="open-full" href="./" target="_blank" rel="noreferrer">전체 화면 ↗</a>
+
+    <div class="fit-outer" id="fitOuter">
+      <div class="fit-inner" id="fitInner">
+        <main class="page-shell page-shell--sub wrap">
+          <header class="topbar" aria-label="메인 메뉴">
+            <div class="topbar-actions">
+              <a class="square-button square-button--dark" id="navSoop" href="https://www.sooplive.com/station/uchi5757" target="_blank" rel="noreferrer" aria-label="우치 SOOP 방송국">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="8" r="3.3" />
+                  <path d="M5.2 20c.5-4.4 2.8-6.7 6.8-6.7s6.3 2.3 6.8 6.7" />
+                </svg>
+                <img class="nav-av" id="navAvatar" alt="" referrerpolicy="no-referrer" />
+              </a>
+              <button class="square-button square-button--light" id="dkbox" type="button" aria-label="다크 모드" title="다크 모드">
+                <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z" /></svg>
+                <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" /></svg>
+              </button>
+            </div>
+
+            <nav class="category-nav" aria-label="카테고리">
+              <a href="../">메인</a>
+              <a class="is-current" href="../profile/" aria-current="page">프로필</a>
+              <a href="../notice/">공지</a>
+              <a href="../work/">업보</a>
+              <a href="../dress/">옷장</a>
+            </nav>
+
+            <div class="member-actions">
+              <button class="member-button member-button--fill" type="button" onclick="openAsk()">문의하기</button>
+            </div>
+          </header>
+
+          <div class="page-heading">
+            <span class="hd-kicker" id="hd-kicker">PROFILE</span>
+            <h1 class="page-title"><span id="hd-title">프로필</span><span class="hd-sub" id="hd-sub">우치 / UCHI</span></h1>
+            <p class="page-lead" id="page-lead">우치가 어떤 사람인지, 무엇을 하고 노는지 모아 뒀어요.</p>
+          </div>
+
+          <div class="stack">
+            <div class="pf-top">
+              <section class="card pf-idcard">
+                <div id="avatarWrap">
+                  <img class="avatar" id="avatarImg" alt="우치 프로필 사진" referrerpolicy="no-referrer" />
+                  <span class="avatar-fb" id="avatarEmoji">우</span>
+                </div>
+                <div class="pf-name" id="pf-name">우치</div>
+                <div class="pf-read" id="pf-read">UCHI</div>
+                <div class="pf-catch" id="quote">뭄</div>
+                <span class="badge badge-pink pf-dday" id="dday" style="display:none"></span>
+              </section>
+
+              <section class="card">
+                <h2 class="card-title"><small>DOSSIER</small>우치 파일</h2>
+                <div class="info-grid">
+                <div class="info-row" data-row="info-name"><dt>이름</dt><dd id="info-name">우치</dd></div>
+                <div class="info-row" data-row="info-reading"><dt>읽는 법</dt><dd id="info-reading">우치 / UCHI</dd></div>
+                <div class="info-row" data-row="info-catchphrase"><dt>입버릇</dt><dd id="info-catchphrase">뭄</dd></div>
+                <div class="info-row" data-row="info-debut"><dt>데뷔</dt><dd id="info-debut">2026.07.25</dd></div>
+                <div class="info-row" data-row="info-birth"><dt>생일</dt><dd id="info-birth">12월 20일</dd></div>
+                <div class="info-row" data-row="info-fandom"><dt>팬 애칭</dt><dd id="info-fandom">뭄치</dd></div>
+                <div class="info-row" data-row="info-agency"><dt>소속</dt><dd id="info-agency">개인세</dd></div>
+                <div class="info-row" data-row="info-mbti"><dt>MBTI</dt><dd id="info-mbti"></dd></div>
+                <div class="info-row" data-row="info-airtime"><dt>방송 시간</dt><dd id="info-airtime">오후 2시</dd></div>
+                <div class="info-row" data-row="info-game"><dt>주력 게임</dt><dd id="info-game">마인크래프트 · 롤 · 종합게임</dd></div>
+                <div class="info-row" data-row="info-content"><dt>방송 콘텐츠</dt><dd id="info-content">소통 · 종겜 · 풀트</dd></div>
+                <div class="info-row" data-row="info-song"><dt>노래</dt><dd id="info-song">가끔 함</dd></div>
+                <div class="info-row" data-row="info-item"><dt>시그니처</dt><dd id="info-item">반창고 머리핀</dd></div>
+                </div>
+                <div class="chip-row" id="info-tags" style="margin-top:18px"></div>
+              </section>
+            </div>
+
+            <section class="card" id="card-msg">
+              <h2 class="card-title"><small>ABOUT</small>하고픈 말</h2>
+              <p class="about-text" id="msg">바우치보다 유명해지고 싶은 우치입니다 +-+<br />게임하고, 떠들고, 같이 웃는 방송을 해요.</p>
+            </section>
+
+            <section class="card" id="card-now">
+              <h2 class="card-title"><small>NOW</small>지금 하는 것</h2>
+              <p class="quote-big" id="now"></p>
+            </section>
+
+            <div class="grid-2">
+              <section class="card" id="card-like">
+                <h2 class="card-title"><small>LIKE</small>좋아하는 것</h2>
+                <div class="chip-row" id="like-list"></div>
+              </section>
+              <section class="card" id="card-dislike">
+                <h2 class="card-title"><small>DISLIKE</small>안 좋아하는 것</h2>
+                <div class="chip-row" id="dislike-list"></div>
+              </section>
+            </div>
+
+            <section class="card" id="card-games">
+              <h2 class="card-title"><small>PLAYED</small>해본 게임</h2>
+              <div class="game-grid" id="game-list"></div>
+            </section>
+
+            <section class="card" id="card-days">
+              <h2 class="card-title"><small>WEEK</small>방송 요일</h2>
+              <div class="day-strip">
+                <div class="day-cell" id="day-0"><b>월</b><span>미정</span></div>
+                <div class="day-cell" id="day-1"><b>화</b><span>미정</span></div>
+                <div class="day-cell" id="day-2"><b>수</b><span>미정</span></div>
+                <div class="day-cell" id="day-3"><b>목</b><span>미정</span></div>
+                <div class="day-cell" id="day-4"><b>금</b><span>미정</span></div>
+                <div class="day-cell" id="day-5"><b>토</b><span>미정</span></div>
+                <div class="day-cell" id="day-6"><b>일</b><span>미정</span></div>
+              </div>
+            </section>
+
+            <div class="grid-2">
+              <section class="card" id="card-stats">
+                <h2 class="card-title"><small>STATUS</small>능력치</h2>
+                <div id="stats"></div>
+              </section>
+              <section class="card" id="card-milestones">
+                <h2 class="card-title"><small>GOAL</small>목표</h2>
+                <div id="milestones"></div>
+              </section>
+            </div>
+
+            <section class="card" id="card-tmi">
+              <h2 class="card-title"><small>TMI</small>사소한 것들</h2>
+              <div class="tmi-grid" id="tmi-list"></div>
+            </section>
+
+            <section class="card" id="songs-card" style="display:none">
+              <h2 class="card-title"><small>VOD</small>다시보기</h2>
+              <div class="ovod-grid" id="ovod-grid"></div>
+            </section>
+
+            <section class="card">
+              <h2 class="card-title"><small>LINK</small>관련 링크</h2>
+              <div class="link-row">
+              <a class="link-btn" id="link-soop" href="https://www.sooplive.com/station/uchi5757" target="_blank" rel="noreferrer">SOOP 방송국</a>
+              <a class="link-btn" id="link-youtube" href="https://www.youtube.com/@%EC%9A%B0%EC%B9%98UCHI" target="_blank" rel="noreferrer">유튜브</a>
+              <a class="link-btn" id="link-cafe" href="https://cafe.naver.com/mumchiagit" target="_blank" rel="noreferrer">팬카페</a>
+              <a class="link-btn" id="link-etc" href="https://jeripopo.kr/streamers/uchi/calendar" target="_blank" rel="noreferrer">방송 일정표</a>
+              <a class="link-btn" id="link-x" href="#" target="_blank" rel="noreferrer" hidden>X (트위터)</a>
+              </div>
+            </section>
+          </div>
+
+          <footer>© 2026 UCHI OFFICIAL.<br />문의는 상단 문의 버튼을 이용해 주세요</footer>
+        </main>
+      </div>
+    </div>
+
+    <div class="askmask" id="askmask" aria-hidden="true">
+      <div class="askmodal" role="dialog" aria-modal="true" aria-label="문의하기">
+        <h3>문의하기</h3>
+        <p class="hint">남긴 내용은 관리자만 확인합니다.</p>
+        <div class="form-field">
+          <input class="input" id="asknick" placeholder="닉네임 (선택)" maxlength="20" />
+        </div>
+        <textarea class="input" id="askmsg" rows="5" placeholder="문의 내용"></textarea>
+        <div class="ask-actions">
+          <button class="btn" type="button" onclick="closeAsk()">닫기</button>
+          <button class="btn btn-primary" type="button" onclick="sendAsk()">보내기</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../supabase.js"></script>
+    <script src="../site.js"></script>
+    <script>
+      (function () {
+        var defaults = {
+          'soop-id': 'uchi5757', avatar: '',
+          'info-tags': '소통, 종겜, 풀트, 마인크래프트, 롤, 하트, 반창고',
+          quote: '뭄', msg: '', now: '',
+          'like-list': '게임, 승리, 매운거',
+          'dislike-list': '야채, 운동, 패배',
+          stats: '', milestones: '', days: '',
+          'tmi-list': '모티프|하트\n시그니처 오브젝트|반창고 (x자)',
+          'game-list': '마인크래프트\n리그 오브 레전드'
+        };
+
+        var TEXT_KEYS = ['info-name', 'info-reading', 'info-catchphrase', 'info-debut', 'info-birth',
+          'info-fandom', 'info-agency', 'info-mbti', 'info-airtime', 'info-game', 'info-content',
+          'info-song', 'info-item'];
+
+        function txt(v) { return typeof v === 'string' ? v.trim() : ''; }
+
+        function renderChips(id, v, cls) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          var arr = Array.isArray(v) ? v : String(v == null ? '' : v).split(',');
+          el.innerHTML = arr.map(function (x) { return String(x).trim(); }).filter(Boolean)
+            .map(function (x) { return '<span class="' + cls + '">' + esc(x) + '</span>'; }).join('');
+        }
+
+        /* One item per line, "라벨|내용" (label optional). */
+        function renderPairs(id, v, cls) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          var lines = typeof v === 'string' ? v.split('\n') : (Array.isArray(v) ? v : []);
+          el.innerHTML = lines.map(function (l) {
+            var line = String(l == null ? '' : l).trim();
+            if (!line) return '';
+            var i = line.indexOf('|');
+            var label = i >= 0 ? line.slice(0, i).trim() : '';
+            var body = i >= 0 ? line.slice(i + 1).trim() : line;
+            if (!body) return '';
+            if (cls === 'game') {
+              return '<div class="game-cell"><b>' + esc(label || body) + '</b>' +
+                (label && body ? '<span>' + esc(body) + '</span>' : '') + '</div>';
+            }
+            return '<dl class="tmi-cell">' + (label ? '<dt>' + esc(label) + '</dt>' : '') +
+              '<dd>' + esc(body) + '</dd></dl>';
+          }).join('');
+        }
+
+        function renderStats(v) {
+          var el = document.getElementById('stats');
+          if (!el) return;
+          var lines = typeof v === 'string' ? v.split('\n') : (Array.isArray(v) ? v : []);
+          el.innerHTML = lines.map(function (l) {
+            var s = typeof l === 'string' ? l : (l && l.name ? l.name + ':' + l.value : '');
+            var parts = s.split(':');
+            var name = parts[0], num = parts[1];
+            if (!name || isNaN(parseInt(num, 10))) return '';
+            var pct = Math.max(0, Math.min(100, parseInt(num, 10)));
+            return '<div class="stat"><span class="sn">' + esc(name.trim()) + '</span>' +
+              '<span class="sb"><i style="width:' + pct + '%"></i></span>' +
+              '<span class="sv">' + pct + '</span></div>';
+          }).join('');
+        }
+
+        function renderMilestones(v) {
+          var el = document.getElementById('milestones');
+          if (!el) return;
+          var lines = typeof v === 'string' ? v.split('\n') : (Array.isArray(v) ? v : []);
+          el.innerHTML = lines.map(function (l) {
+            var s = String(l == null ? '' : l);
+            if (!s.trim()) return '';
+            var parts = s.split('|');
+            var st = parts.shift();
+            var done = st.trim() === '달성';
+            return '<div class="ms' + (done ? ' done' : '') + '"><span class="mst">' + esc(st.trim()) +
+              '</span><span class="msc">' + esc(parts.join('|').trim()) + '</span></div>';
+          }).join('');
+        }
+
+        /* Cards whose whole body comes from a renderer are hidden when the value is empty. */
+        function hideEmpty(pairs) {
+          pairs.forEach(function (pair) {
+            var card = document.getElementById(pair[0]);
+            var body = document.getElementById(pair[1]);
+            if (!card || !body) return;
+            var filled = body.children.length > 0 || (body.textContent || '').trim().length > 0;
+            card.style.display = filled ? '' : 'none';
+          });
+        }
+
+        function ready() { document.body.classList.add('ready'); fitShell(); }
+
+        function apply(saved) {
+          var d = Object.assign({}, defaults, saved || {});
+
+          var avatarUrl = txt(d.avatar) || soopAvatar(txt(d['soop-id']) || 'uchi5757');
+          var img = document.getElementById('avatarImg');
+          var fb = document.getElementById('avatarEmoji');
+          if (avatarUrl && img) {
+            img.onload = function () { img.style.display = 'block'; if (fb) fb.style.display = 'none'; };
+            img.src = avatarUrl;
+          }
+
+          TEXT_KEYS.forEach(function (k) {
+            var el = document.getElementById(k);
+            if (el && txt(d[k])) el.textContent = txt(d[k]);
+          });
+
+          var nameEl = document.getElementById('pf-name');
+          var readEl = document.getElementById('pf-read');
+          if (nameEl && txt(d['info-name'])) nameEl.textContent = txt(d['info-name']);
+          if (readEl && txt(d['info-reading'])) readEl.textContent = txt(d['info-reading']);
+
+          ['quote', 'msg', 'now'].forEach(function (k) {
+            var el = document.getElementById(k);
+            if (el && txt(d[k])) el.innerHTML = esc(txt(d[k])).replace(/\n/g, '<br>');
+          });
+
+          renderChips('info-tags', d['info-tags'], 'tag');
+          renderChips('like-list', d['like-list'], 'chip');
+          renderChips('dislike-list', d['dislike-list'], 'chip chip--plain');
+          renderStats(d.stats);
+          renderMilestones(d.milestones);
+          renderPairs('tmi-list', d['tmi-list'], 'tmi');
+          renderPairs('game-list', d['game-list'], 'game');
+
+          /* days CSV is 0=Mon ... 6=Sun, matching the admin checkboxes. */
+          var active = String(d.days || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+          for (var i = 0; i <= 6; i++) {
+            var cell = document.getElementById('day-' + i);
+            if (!cell) continue;
+            var on = active.indexOf(String(i)) !== -1;
+            cell.classList.toggle('on', on);
+            var lbl = cell.querySelector('span');
+            if (lbl) lbl.textContent = active.length ? (on ? '방송' : '휴방') : '미정';
+          }
+
+
+          ['link-soop', 'link-youtube', 'link-x', 'link-cafe', 'link-etc'].forEach(function (k) {
+            var a = document.getElementById(k);
+            if (!a) return;
+            if (txt(d[k])) { a.href = txt(d[k]); a.hidden = false; }
+            else if (!a.getAttribute('href') || a.getAttribute('href') === '#') a.hidden = true;
+          });
+
+          INFO_ROWS.forEach(function (k) {
+            var el = document.getElementById(k);
+            if (!el) return;
+            var row = el.closest('.info-row');
+            if (row) row.style.display = (el.textContent || '').trim() ? '' : 'none';
+          });
+
+          hideEmpty([['card-now', 'now'], ['card-like', 'like-list'], ['card-dislike', 'dislike-list'],
+            ['card-stats', 'stats'], ['card-milestones', 'milestones'], ['card-msg', 'msg'],
+            ['card-tmi', 'tmi-list'], ['card-games', 'game-list']]);
+
+          var birth = txt(d['info-birth']) || '12월 20일';
+          var n = siteDday(birth);
+          var dd = document.getElementById('dday');
+          if (dd && n !== null) {
+            dd.textContent = n === 0 ? '오늘 생일' : '생일까지 D-' + n;
+            dd.style.display = '';
+          }
+        }
+
+        var INFO_ROWS = ['info-name', 'info-reading', 'info-catchphrase', 'info-debut', 'info-birth',
+          'info-fandom', 'info-agency', 'info-mbti', 'info-airtime', 'info-game', 'info-content',
+          'info-song', 'info-item'];
+
+        async function loadVod() {
+          var card = document.getElementById('songs-card');
+          var grid = document.getElementById('ovod-grid');
+          if (!card || !grid) return;
+          var list = [];
+          try { list = await fetchAll('original_songs', { order: 'id', asc: false }); } catch (e) { list = []; }
+          if (!list.length) { card.style.display = 'none'; return; }
+          card.style.display = '';
+          grid.innerHTML = list.map(function (s) {
+            var vid = String(s.vod_id || '').trim();
+            return '<div class="ovod-card"><div class="ovod-embed">' +
+              '<iframe src="https://vod.sooplive.co.kr/player/' + encodeURIComponent(vid) +
+              '/embed?showChat=false&autoPlay=false&mutePlay=false" frameborder="0" allowfullscreen scrolling="no"></iframe>' +
+              '</div><div class="ovod-title">' + esc(s.title) + '</div></div>';
+          }).join('');
+        }
+
+        wireHeading('profile');
+        window.profileData
+          .then(function (d) { apply(d); })
+          .catch(function () { apply({}); })
+          .then(loadVod, loadVod)
+          .then(ready, ready);
+
+        setTimeout(ready, 1200);
+      })();
+    </script>
+    <script src="../fx.js"></script>
+    <script>
+      (function () {
+        var a = document.getElementById('navSoop');
+        if (!a || typeof window.fxHearts !== 'function') return;
+        a.addEventListener('click', function (e) { window.fxHearts(e.clientX, e.clientY, 8); });
+      })();
+    </script>
+  </body>
+</html>

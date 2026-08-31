@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200, user-scalable=yes" />
+    <meta name="theme-color" content="#fefcfc" />
+    <title>UCHI OFFICIAL | 메인</title>
+    <meta name="description" content="우치(UCHI) 방송 정보 · 공지 · 업보 · 옷장 — UCHI OFFICIAL" />
+    <meta property="og:title" content="UCHI OFFICIAL" />
+    <meta property="og:description" content="우치(UCHI) 방송 정보 · 공지 · 업보 · 옷장" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/uc/uchi5757/uchi5757.jpg" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+      try { if (window.self !== window.top) document.body.classList.add('embed'); }
+      catch (e) { document.body.classList.add('embed'); }
+    </script>
+
+    <a class="open-full" href="./" target="_blank" rel="noreferrer">전체 화면 ↗</a>
+
+    <div class="fit-outer" id="fitOuter">
+      <div class="fit-inner" id="fitInner">
+        <main class="page-shell page-shell--home wrap">
+          <header class="topbar" aria-label="메인 메뉴">
+            <div class="topbar-actions">
+              <a class="square-button square-button--dark" id="navSoop" href="https://www.sooplive.com/station/uchi5757" target="_blank" rel="noreferrer" aria-label="우치 SOOP 방송국">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="8" r="3.3" />
+                  <path d="M5.2 20c.5-4.4 2.8-6.7 6.8-6.7s6.3 2.3 6.8 6.7" />
+                </svg>
+                <img class="nav-av" id="navAvatar" alt="" referrerpolicy="no-referrer" />
+              </a>
+              <button class="square-button square-button--light" id="dkbox" type="button" aria-label="다크 모드" title="다크 모드">
+                <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z" /></svg>
+                <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" /></svg>
+              </button>
+            </div>
+
+            <nav class="category-nav" aria-label="카테고리">
+              <a class="is-current" href="./" aria-current="page">메인</a>
+              <a href="./profile/">프로필</a>
+              <a href="./notice/">공지</a>
+              <a href="./work/">업보</a>
+              <a href="./dress/">옷장</a>
+            </nav>
+
+            <div class="member-actions">
+              <button class="member-button member-button--fill" type="button" onclick="openAsk()">문의하기</button>
+            </div>
+          </header>
+
+          <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-copy">
+              <h1 id="main-title">어서 와요</h1>
+              <p class="hero-description" id="main-lead">
+                게임하고 소통하는 우치의 아지트예요.<br />만나서 반가워요, 뭄치!
+              </p>
+            </div>
+
+            <a class="hero-link" id="main-link" href="./profile/">더 알아보기</a>
+
+            <div class="hero-sparkles" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="hero-pagination" aria-hidden="true">
+              <span class="is-active"></span><span></span><span></span>
+            </div>
+          </section>
+
+          <figure class="hero-character-slot image-slot">
+            <img class="hero-plate" id="main-hero" src="./assets/hero.jpg" alt="" draggable="false" referrerpolicy="no-referrer" />
+            <img class="hero-cut" id="main-hero-dark" src="./assets/hero-dark.png" alt="우치" draggable="false" referrerpolicy="no-referrer" />
+          </figure>
+
+          <section class="home-grid" aria-label="메인 콘텐츠">
+            <div class="gallery-panel">
+              <div class="gallery-images">
+                <figure class="gallery-card image-slot">
+                  <img id="main-photo-1" src="./assets/gallery-1.jpg" alt="우치 이미지 1" draggable="false" referrerpolicy="no-referrer" />
+                </figure>
+                <figure class="gallery-card image-slot">
+                  <img id="main-photo-2" src="./assets/gallery-2.jpg" alt="우치 이미지 2" draggable="false" referrerpolicy="no-referrer" />
+                </figure>
+              </div>
+              <a class="wide-button" href="./dress/">더 보기 <span aria-hidden="true">›</span></a>
+            </div>
+
+            <section class="search-panel" aria-labelledby="quick-menu-title">
+              <div class="section-title-row">
+                <h2 id="main-quick-title">바로가기</h2>
+                <span class="round-mark" aria-hidden="true">×</span>
+              </div>
+              <div class="search-list">
+                <a class="search-pill search-pill--active" href="./profile/"><span class="search-icon"></span>프로필<span class="pill-x">×</span></a>
+                <a class="search-pill search-pill--active" href="./notice/"><span class="search-icon"></span>공지<span class="pill-x">×</span></a>
+                <a class="search-pill search-pill--active" href="./work/"><span class="search-icon"></span>업보<span class="pill-x">×</span></a>
+                <a class="search-pill" href="./dress/"><span class="search-icon"></span>옷장</a>
+                <a class="search-pill" id="link-cafe" href="https://cafe.naver.com/mumchiagit" target="_blank" rel="noreferrer"><span class="search-icon"></span>팬카페</a>
+              </div>
+            </section>
+
+            <div class="portrait-panel" aria-label="우치 미리보기">
+              <figure class="portrait-card image-slot">
+                <img id="main-port-1" src="./assets/portrait-1.jpg" alt="우치 미리보기 1" draggable="false" referrerpolicy="no-referrer" />
+              </figure>
+              <figure class="portrait-card image-slot">
+                <img id="main-port-2" src="./assets/portrait-2.jpg" alt="우치 미리보기 2" draggable="false" referrerpolicy="no-referrer" />
+              </figure>
+            </div>
+
+            <div class="feature-panel" aria-label="카테고리 안내">
+              <a class="feature-card" href="./profile/">
+                <span class="feature-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.3" /><path d="M5.3 20c.5-4.2 2.8-6.4 6.7-6.4s6.2 2.2 6.7 6.4" /></svg>
+                </span>
+                <span class="feature-copy"><strong>프로필</strong><small id="main-cap-profile">우치의 소개와 이야기를<br />확인해요.</small></span>
+                <span class="feature-arrow" aria-hidden="true">›</span>
+              </a>
+              <a class="feature-card" href="./notice/">
+                <span class="feature-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 7.2h14V20H5zM8 4v5M16 4v5M5 10.5h14" /><path d="M8.2 14h2M13.8 14h2M8.2 17.2h2M13.8 17.2h2" /></svg>
+                </span>
+                <span class="feature-copy"><strong>공지</strong><small id="main-cap-notice">새로운 소식과 방송 안내를<br />확인해요.</small></span>
+                <span class="feature-arrow" aria-hidden="true">›</span>
+              </a>
+              <a class="feature-card" href="./dress/">
+                <span class="feature-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M7 9.3 12 6l5 3.3V20H7zM9.2 7.8 12 3.8l2.8 4M10.3 13.2v4M13.7 13.2v4" /></svg>
+                </span>
+                <span class="feature-copy"><strong>옷장</strong><small id="main-cap-dress">지금까지의 의상을 한눈에<br />만나보세요.</small></span>
+                <span class="feature-arrow" aria-hidden="true">›</span>
+              </a>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="askmask" id="askmask" aria-hidden="true">
+      <div class="askmodal" role="dialog" aria-modal="true" aria-label="문의하기">
+        <h3>문의하기</h3>
+        <p class="hint">남긴 내용은 관리자만 확인합니다.</p>
+        <div class="form-field">
+          <input class="input" id="asknick" placeholder="닉네임 (선택)" maxlength="20" />
+        </div>
+        <textarea class="input" id="askmsg" rows="5" placeholder="문의 내용"></textarea>
+        <div class="ask-actions">
+          <button class="btn" type="button" onclick="closeAsk()">닫기</button>
+          <button class="btn btn-primary" type="button" onclick="sendAsk()">보내기</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="./supabase.js"></script>
+    <script src="./site.js"></script>
+    <script>
+      /* Main page loader. Keys must exist in admin profileKeys — see README. */
+      (function () {
+        var TEXT = ['main-title', 'main-link', 'main-quick-title'];
+        var HTMLKEYS = ['main-lead', 'main-cap-profile', 'main-cap-notice', 'main-cap-dress'];
+        var IMAGES = ['main-hero', 'main-hero-dark', 'main-photo-1', 'main-photo-2', 'main-port-1', 'main-port-2'];
+
+        function ready() { document.body.classList.add('ready'); fitShell(); }
+
+        window.profileData.then(function (d) {
+          TEXT.forEach(function (k) {
+            var el = document.getElementById(k);
+            if (el && typeof d[k] === 'string' && d[k].trim()) el.textContent = d[k].trim();
+          });
+          HTMLKEYS.forEach(function (k) {
+            var el = document.getElementById(k);
+            if (el && typeof d[k] === 'string' && d[k].trim()) el.innerHTML = esc(d[k].trim()).replace(/\n/g, '<br>');
+          });
+          IMAGES.forEach(function (k) {
+            var el = document.getElementById(k);
+            if (el && typeof d[k] === 'string' && d[k].trim()) el.src = d[k].trim();
+          });
+          var cafe = document.getElementById('link-cafe');
+          if (cafe && typeof d['link-cafe'] === 'string' && d['link-cafe'].trim()) cafe.href = d['link-cafe'].trim();
+        }).catch(function () { }).then(ready, ready);
+
+        setTimeout(ready, 1600);
+      })();
+    </script>
+    <script src="./fx.js"></script>
+    <script>
+      /* Standalone preview fallback. Must stay after fx.js: the guard needs fxHearts to exist. */
+      (function () {
+        if (typeof window.fxHearts === 'function') return;
+        var a = document.getElementById('navSoop');
+        if (a) a.style.cursor = 'pointer';
+      })();
+      (function () {
+        var a = document.getElementById('navSoop');
+        if (!a || typeof window.fxHearts !== 'function') return;
+        a.addEventListener('click', function (e) { window.fxHearts(e.clientX, e.clientY, 8); });
+      })();
+    </script>
+  </body>
+</html>

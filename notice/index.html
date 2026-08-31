@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200, user-scalable=yes" />
+    <meta name="theme-color" content="#fefcfc" />
+    <title>UCHI OFFICIAL | 공지</title>
+    <meta name="description" content="우치(UCHI) 공지 — 방송 안내와 새 소식 · UCHI OFFICIAL" />
+    <meta property="og:title" content="UCHI OFFICIAL | 공지" />
+    <meta property="og:description" content="우치(UCHI) 공지 — 방송 안내와 새 소식 · UCHI OFFICIAL" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/uc/uchi5757/uchi5757.jpg" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+      try { if (window.self !== window.top) document.body.classList.add('embed'); }
+      catch (e) { document.body.classList.add('embed'); }
+    </script>
+
+    <a class="open-full" href="./" target="_blank" rel="noreferrer">전체 화면 ↗</a>
+
+    <div class="fit-outer" id="fitOuter">
+      <div class="fit-inner" id="fitInner">
+        <main class="page-shell page-shell--sub wrap">
+          <header class="topbar" aria-label="메인 메뉴">
+            <div class="topbar-actions">
+              <a class="square-button square-button--dark" id="navSoop" href="https://www.sooplive.com/station/uchi5757" target="_blank" rel="noreferrer" aria-label="우치 SOOP 방송국">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="8" r="3.3" />
+                  <path d="M5.2 20c.5-4.4 2.8-6.7 6.8-6.7s6.3 2.3 6.8 6.7" />
+                </svg>
+                <img class="nav-av" id="navAvatar" alt="" referrerpolicy="no-referrer" />
+              </a>
+              <button class="square-button square-button--light" id="dkbox" type="button" aria-label="다크 모드" title="다크 모드">
+                <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z" /></svg>
+                <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" /></svg>
+              </button>
+            </div>
+
+            <nav class="category-nav" aria-label="카테고리">
+              <a href="../">메인</a>
+              <a href="../profile/">프로필</a>
+              <a class="is-current" href="../notice/" aria-current="page">공지</a>
+              <a href="../work/">업보</a>
+              <a href="../dress/">옷장</a>
+            </nav>
+
+            <div class="member-actions">
+              <button class="member-button member-button--fill" type="button" onclick="openAsk()">문의하기</button>
+            </div>
+          </header>
+
+          <div class="page-heading">
+            <span class="hd-kicker" id="hd-kicker">NOTICE</span>
+            <h1 class="page-title"><span id="hd-title">공지</span><span class="hd-sub" id="hd-sub"></span></h1>
+            <p class="page-lead" id="page-lead">방송 안내와 새로 생긴 소식을 여기에 올려요.</p>
+          </div>
+
+          <div class="toolbar">
+            <span class="badge badge-pink" id="count">불러오는 중</span>
+          </div>
+          <div id="notice-list"><div class="spinner"></div></div>
+
+          <footer>© 2026 UCHI OFFICIAL.<br />문의는 상단 문의 버튼을 이용해 주세요</footer>
+        </main>
+      </div>
+    </div>
+
+    <div class="askmask" id="askmask" aria-hidden="true">
+      <div class="askmodal" role="dialog" aria-modal="true" aria-label="문의하기">
+        <h3>문의하기</h3>
+        <p class="hint">남긴 내용은 관리자만 확인합니다.</p>
+        <div class="form-field">
+          <input class="input" id="asknick" placeholder="닉네임 (선택)" maxlength="20" />
+        </div>
+        <textarea class="input" id="askmsg" rows="5" placeholder="문의 내용"></textarea>
+        <div class="ask-actions">
+          <button class="btn" type="button" onclick="closeAsk()">닫기</button>
+          <button class="btn btn-primary" type="button" onclick="sendAsk()">보내기</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../supabase.js"></script>
+    <script src="../site.js"></script>
+    <script>
+      (function () {
+        function ready() { document.body.classList.add('ready'); fitShell(); }
+
+        async function init() {
+          var el = document.getElementById('notice-list');
+          var data = [];
+          try { data = await fetchAll('notice', { order: 'created_at', asc: false }); } catch (e) { data = []; }
+          var all = data.filter(function (n) { return n.pinned; })
+            .concat(data.filter(function (n) { return !n.pinned; }));
+          document.getElementById('count').textContent = '총 ' + all.length + '개의 공지';
+          if (!all.length) {
+            el.innerHTML = '<div class="empty"><span class="empty-icon">✦</span>아직 올라온 공지가 없어요</div>';
+            return;
+          }
+          el.innerHTML = all.map(function (n) {
+            var d = new Date(n.created_at);
+            var dateStr = isNaN(d) ? '' : d.getFullYear() + '.' +
+              String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0');
+            var imgs = (n.images && n.images.length) ? n.images : (n.image_url ? [n.image_url] : []);
+            return '<div class="notice-item' + (n.pinned ? ' pinned' : '') + '">' +
+              (n.pinned ? '<span class="notice-pin">고정</span>' : '<span></span>') +
+              '<span class="notice-title">' + esc(n.title) + '</span>' +
+              '<span class="notice-date">' + dateStr + '</span>' +
+              '<div class="notice-content">' +
+              imgs.map(function (u) {
+                return '<img src="' + esc(u) + '" class="post-img" referrerpolicy="no-referrer" loading="lazy" alt="">';
+              }).join('') +
+              esc(n.content || '').replace(/\n/g, '<br>') + '</div></div>';
+          }).join('');
+          el.querySelectorAll('.notice-item').forEach(function (item) {
+            item.addEventListener('click', function () {
+              item.classList.toggle('open');
+              enableIframeAutoHeight();
+              fitShell();
+            });
+          });
+        }
+
+        wireHeading('notice');
+        init().catch(function () { }).then(ready, ready);
+        setTimeout(ready, 1200);
+      })();
+    </script>
+    <script src="../fx.js"></script>
+    <script>
+      (function () {
+        var a = document.getElementById('navSoop');
+        if (!a || typeof window.fxHearts !== 'function') return;
+        a.addEventListener('click', function (e) { window.fxHearts(e.clientX, e.clientY, 8); });
+      })();
+    </script>
+  </body>
+</html>

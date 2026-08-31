@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200, user-scalable=yes" />
+    <meta name="theme-color" content="#fefcfc" />
+    <title>UCHI OFFICIAL | 옷장</title>
+    <meta name="description" content="우치(UCHI) 옷장 — 헤어·의상·렌즈 모아보기 · UCHI OFFICIAL" />
+    <meta property="og:title" content="UCHI OFFICIAL | 옷장" />
+    <meta property="og:description" content="우치(UCHI) 옷장 — 헤어·의상·렌즈 모아보기 · UCHI OFFICIAL" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/uc/uchi5757/uchi5757.jpg" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+      try { if (window.self !== window.top) document.body.classList.add('embed'); }
+      catch (e) { document.body.classList.add('embed'); }
+    </script>
+
+    <a class="open-full" href="./" target="_blank" rel="noreferrer">전체 화면 ↗</a>
+
+    <div class="fit-outer" id="fitOuter">
+      <div class="fit-inner" id="fitInner">
+        <main class="page-shell page-shell--sub wrap">
+          <header class="topbar" aria-label="메인 메뉴">
+            <div class="topbar-actions">
+              <a class="square-button square-button--dark" id="navSoop" href="https://www.sooplive.com/station/uchi5757" target="_blank" rel="noreferrer" aria-label="우치 SOOP 방송국">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="8" r="3.3" />
+                  <path d="M5.2 20c.5-4.4 2.8-6.7 6.8-6.7s6.3 2.3 6.8 6.7" />
+                </svg>
+                <img class="nav-av" id="navAvatar" alt="" referrerpolicy="no-referrer" />
+              </a>
+              <button class="square-button square-button--light" id="dkbox" type="button" aria-label="다크 모드" title="다크 모드">
+                <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z" /></svg>
+                <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" /></svg>
+              </button>
+            </div>
+
+            <nav class="category-nav" aria-label="카테고리">
+              <a href="../">메인</a>
+              <a href="../profile/">프로필</a>
+              <a href="../notice/">공지</a>
+              <a href="../work/">업보</a>
+              <a class="is-current" href="../dress/" aria-current="page">옷장</a>
+            </nav>
+
+            <div class="member-actions">
+              <button class="member-button member-button--fill" type="button" onclick="openAsk()">문의하기</button>
+            </div>
+          </header>
+
+          <div class="page-heading">
+            <span class="hd-kicker" id="hd-kicker">WARDROBE</span>
+            <h1 class="page-title"><span id="hd-title">옷장</span><span class="hd-sub" id="hd-sub"></span></h1>
+            <p class="page-lead" id="page-lead">지금까지 입은 옷과 바꾼 헤어를 한 칸에 모아 뒀어요.</p>
+          </div>
+
+          <div class="toolbar">
+            <div class="seg" id="mode-seg">
+              <button class="seg-btn active" type="button" data-mode="new">✨ 새 옷</button>
+              <button class="seg-btn" type="button" data-mode="old">🗂 기존 옷</button>
+            </div>
+          </div>
+          <div class="cat-tabs" id="cat-tabs"></div>
+          <div id="dress-body"><div class="spinner"></div></div>
+
+          <footer>© 2026 UCHI OFFICIAL.<br />문의는 상단 문의 버튼을 이용해 주세요</footer>
+        </main>
+      </div>
+    </div>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <div class="lb-inner">
+        <button class="lightbox-close" type="button" onclick="closeLb()" aria-label="닫기">✕</button>
+        <img id="lb-img" alt="" referrerpolicy="no-referrer" />
+        <div class="lb-name" id="lb-name"></div>
+        <div class="lb-desc" id="lb-desc"></div>
+      </div>
+    </div>
+
+    <div class="askmask" id="askmask" aria-hidden="true">
+      <div class="askmodal" role="dialog" aria-modal="true" aria-label="문의하기">
+        <h3>문의하기</h3>
+        <p class="hint">남긴 내용은 관리자만 확인합니다.</p>
+        <div class="form-field">
+          <input class="input" id="asknick" placeholder="닉네임 (선택)" maxlength="20" />
+        </div>
+        <textarea class="input" id="askmsg" rows="5" placeholder="문의 내용"></textarea>
+        <div class="ask-actions">
+          <button class="btn" type="button" onclick="closeAsk()">닫기</button>
+          <button class="btn btn-primary" type="button" onclick="sendAsk()">보내기</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../supabase.js"></script>
+    <script src="../site.js"></script>
+    <script>
+      (function () {
+        /* Categories live in three places: CATS here, admin select#dr-cat, admin DRESS_CATS. */
+        var CATS = [{ key: 'hair', label: '헤어' }, { key: 'outfit', label: '의상' }, { key: 'lens', label: '렌즈' }];
+        var LABELS = {};
+        CATS.forEach(function (c) { LABELS[c.key] = c.label; });
+        var PER_PAGE = 9;
+        var BRAND = 'UCHI';
+
+        var allItems = [], curCat = CATS[0].key, curMode = 'new', curPage = 1, pageItems = [];
+
+        function ready() { document.body.classList.add('ready'); fitShell(); }
+
+        function isNew(it) {
+          return (it.badges || []).some(function (b) {
+            var label = (b && (b.label != null ? b.label : b)) || '';
+            return String(label).trim().toUpperCase() === 'NEW';
+          });
+        }
+
+        function viewItems() {
+          if (curMode === 'new') {
+            return allItems.filter(function (i) { return i.category === curCat && isNew(i); })
+              .slice().sort(function (a, b) { return new Date(b.created_at || 0) - new Date(a.created_at || 0); });
+          }
+          return allItems.filter(function (i) { return i.category === curCat && !isNew(i); });
+        }
+
+        function buildTabs() {
+          var wrap = document.getElementById('cat-tabs');
+          wrap.innerHTML = '';
+          CATS.forEach(function (c) {
+            var cnt = allItems.filter(function (i) {
+              return i.category === c.key && (curMode === 'new' ? isNew(i) : !isNew(i));
+            }).length;
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'cat-tab' + (c.key === curCat ? ' active' : '');
+            b.innerHTML = esc(c.label) + ' <span class="cnt">' + cnt + '</span>';
+            b.onclick = function () { curCat = c.key; curPage = 1; buildTabs(); render(); };
+            wrap.appendChild(b);
+          });
+        }
+
+        function posterHTML(items) {
+          return '<div class="poster-grid">' + items.map(function (it, idx) {
+            var img = it.image_url
+              ? '<img src="' + esc(it.image_url) + '" referrerpolicy="no-referrer" alt="' + esc(it.name) + '" loading="lazy">'
+              : '<span class="ph-ph">👗</span>';
+            var cat = LABELS[it.category] ? '<span class="p-cat">' + esc(LABELS[it.category]) + '</span>' : '';
+            var date = it.created_at ? '<div class="p-meta">' + fmtDate(it.created_at) + '</div>' : '';
+            return '<div class="poster' + (it.image_url ? '' : ' no-img') + '" data-idx="' + idx + '">' + img +
+              '<div class="p-top"><span class="p-brand">' + BRAND + '</span><span class="p-new">✦ NEW</span></div>' +
+              '<div class="p-bottom">' + cat + '<div class="p-name">' + esc(it.name) + '</div>' + date +
+              (it.description ? '<div class="p-desc">' + esc(it.description) + '</div>' : '') +
+              '</div></div>';
+          }).join('') + '</div>';
+        }
+
+        function gridHTML(items) {
+          return '<div class="item-grid">' + items.map(function (it, idx) {
+            var inner = it.image_url
+              ? '<img src="' + esc(it.image_url) + '" referrerpolicy="no-referrer" alt="' + esc(it.name) + '" loading="lazy">'
+              : '<span class="ph">👗</span>';
+            return '<div class="item-card' + (it.image_url ? '' : ' no-img') + '" data-idx="' + idx + '">' + inner +
+              '<div class="item-cap"><div class="name">' + esc(it.name) + '</div>' +
+              (it.description ? '<div class="desc">' + esc(it.description) + '</div>' : '') + '</div></div>';
+          }).join('') + '</div>';
+        }
+
+        function render() {
+          var body = document.getElementById('dress-body');
+          var items = viewItems();
+          if (!items.length) {
+            body.innerHTML = '<div class="empty"><span class="empty-icon">👗</span>' +
+              (curMode === 'new'
+                ? esc(LABELS[curCat] || '') + ' 새 옷이 아직 없어요<br><span class="empty-sub">관리자에서 옷을 올릴 때 "새 옷으로 올리기"를 체크하면 포스터로 나옵니다</span>'
+                : esc(LABELS[curCat] || '') + ' 항목이 아직 없어요') + '</div>';
+            fitShell();
+            return;
+          }
+          var totalPages = Math.max(1, Math.ceil(items.length / PER_PAGE));
+          if (curPage > totalPages) curPage = 1;
+          pageItems = items.slice((curPage - 1) * PER_PAGE, curPage * PER_PAGE);
+          var main = (curMode === 'new') ? posterHTML(pageItems) : gridHTML(pageItems);
+          var pager = '';
+          if (totalPages > 1) {
+            pager = '<div class="dress-pager">';
+            for (var i = 1; i <= totalPages; i++) {
+              pager += '<button class="pg' + (i === curPage ? ' active' : '') + '" type="button" data-pg="' + i + '">' + i + '</button>';
+            }
+            pager += '</div>';
+          }
+          body.innerHTML = main + pager;
+          body.querySelectorAll('[data-idx]').forEach(function (el) {
+            el.addEventListener('click', function () {
+              var it = pageItems[Number(el.dataset.idx)];
+              if (it && it.image_url) openLb(it);
+            });
+          });
+          body.querySelectorAll('.pg').forEach(function (btn) {
+            btn.addEventListener('click', function () { curPage = Number(btn.dataset.pg); render(); window.scrollTo(0, 0); });
+          });
+          enableIframeAutoHeight();
+          fitShell();
+        }
+
+        function openLb(item) {
+          document.getElementById('lb-img').src = item.image_url;
+          document.getElementById('lb-name').textContent = item.name || '';
+          var d = document.getElementById('lb-desc');
+          d.textContent = item.description || '';
+          d.style.display = item.description ? 'block' : 'none';
+          var lb = document.getElementById('lightbox');
+          lb.classList.add('open');
+          placeOverlay(lb);
+        }
+        window.closeLb = function () { document.getElementById('lightbox').classList.remove('open'); };
+
+        document.getElementById('lightbox').addEventListener('click', function (e) {
+          if (e.target.id === 'lightbox') closeLb();
+        });
+
+        async function load() {
+          try {
+            allItems = await fetchAll('dress_items', { order: 'sort_order', asc: true });
+          } catch (e) { allItems = []; }
+          document.querySelectorAll('#mode-seg .seg-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              curMode = btn.dataset.mode;
+              curPage = 1;
+              document.querySelectorAll('#mode-seg .seg-btn').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.mode === curMode);
+              });
+              buildTabs();
+              render();
+            });
+          });
+          buildTabs();
+          render();
+        }
+
+        window.profileData.then(function (d) {
+          if (typeof d['info-reading'] === 'string' && d['info-reading'].trim()) {
+            var parts = d['info-reading'].split('/');
+            BRAND = (parts[parts.length - 1] || BRAND).trim().toUpperCase();
+          }
+        });
+
+        wireHeading('dress');
+        load().catch(function () { }).then(ready, ready);
+        setTimeout(ready, 1200);
+      })();
+    </script>
+    <script src="../fx.js"></script>
+    <script>
+      (function () {
+        var a = document.getElementById('navSoop');
+        if (!a || typeof window.fxHearts !== 'function') return;
+        a.addEventListener('click', function (e) { window.fxHearts(e.clientX, e.clientY, 8); });
+      })();
+    </script>
+  </body>
+</html>
