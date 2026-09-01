@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200, user-scalable=yes" />
+    <meta name="theme-color" content="#fefcfc" />
+    <title>UCHI OFFICIAL | 미니게임</title>
+    <meta name="description" content="우치(UCHI) 미니게임 — 돌림판 · UCHI OFFICIAL" />
+    <meta property="og:title" content="UCHI OFFICIAL | 미니게임" />
+    <meta property="og:description" content="우치(UCHI) 미니게임 — 돌림판 · UCHI OFFICIAL" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/uc/uchi5757/uchi5757.jpg" />
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+      try { if (window.self !== window.top) document.body.classList.add('embed'); }
+      catch (e) { document.body.classList.add('embed'); }
+    </script>
+
+    <a class="open-full" href="./" target="_blank" rel="noreferrer">전체 화면 ↗</a>
+
+    <div class="fit-outer" id="fitOuter">
+      <div class="fit-inner" id="fitInner">
+        <main class="page-shell page-shell--sub wrap">
+          <header class="topbar" aria-label="메인 메뉴">
+            <div class="topbar-actions">
+              <a class="square-button square-button--dark" id="navSoop" href="https://www.sooplive.com/station/uchi5757" target="_blank" rel="noreferrer" aria-label="우치 SOOP 방송국">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="8" r="3.3" />
+                  <path d="M5.2 20c.5-4.4 2.8-6.7 6.8-6.7s6.3 2.3 6.8 6.7" />
+                </svg>
+                <img class="nav-av" id="navAvatar" src="../assets/av-nav.gif" alt="" referrerpolicy="no-referrer" />
+              </a>
+              <button class="square-button square-button--light" id="dkbox" type="button" aria-label="다크 모드" title="다크 모드">
+                <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z" /></svg>
+                <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6" /></svg>
+              </button>
+            </div>
+
+            <nav class="category-nav" aria-label="카테고리">
+              <a href="../">메인</a>
+              <a href="../profile/">프로필</a>
+              <a href="../notice/">공지</a>
+              <a href="../work/">업보</a>
+              <a href="../dress/">옷장</a>
+              <a class="is-current" href="../minigame/" aria-current="page">미니게임</a>
+            </nav>
+
+            <div class="member-actions">
+              <button class="member-button member-button--fill" type="button" onclick="openAsk()">문의하기</button>
+            </div>
+          </header>
+
+          <div class="page-heading">
+            <span class="hd-kicker" id="hd-kicker">MINIGAME</span>
+            <h1 class="page-title"><span id="hd-title">미니게임</span><span class="hd-sub" id="hd-sub"></span></h1>
+            <p class="page-lead" id="page-lead">방송에서 쓰는 돌림판이에요. 눌러서 같이 돌려봐요.</p>
+          </div>
+
+          <div class="mg-layout">
+            <section class="card wheel-wrap">
+              <div class="wheel-stage">
+                <span class="wheel-pin" aria-hidden="true"></span>
+                <canvas id="wheel" width="720" height="720"></canvas>
+                <span class="wheel-hub" aria-hidden="true">UCHI</span>
+              </div>
+              <div class="wheel-result idle" id="wheel-result" role="status" aria-live="polite">
+                <small>RESULT</small><b>돌리기를 누르면 하나를 뽑아요</b>
+              </div>
+              <div class="wheel-actions">
+                <button class="btn btn-primary" type="button" id="spin">돌리기</button>
+                <button class="btn" type="button" id="copy">결과 복사</button>
+              </div>
+            </section>
+
+            <div class="stack">
+              <section class="card">
+                <h2 class="card-title"><small>ITEMS</small>돌림판 항목</h2>
+                <div class="mg-list" id="mg-list"></div>
+              </section>
+              <section class="card">
+                <h2 class="card-title"><small>LOG</small>최근 결과<span class="sp"></span></h2>
+                <div class="mg-log" id="mg-log"></div>
+              </section>
+            </div>
+          </div>
+
+          <footer>© 2026 UCHI OFFICIAL.<br />문의는 상단 문의 버튼을 이용해 주세요</footer>
+        </main>
+      </div>
+    </div>
+
+    <div class="askmask" id="askmask" aria-hidden="true">
+      <div class="askmodal" role="dialog" aria-modal="true" aria-label="문의하기">
+        <h3>문의하기</h3>
+        <p class="hint">남긴 내용은 관리자만 확인합니다.</p>
+        <div class="form-field">
+          <input class="input" id="asknick" placeholder="닉네임 (선택)" maxlength="20" />
+        </div>
+        <textarea class="input" id="askmsg" rows="5" placeholder="문의 내용"></textarea>
+        <div class="ask-actions">
+          <button class="btn" type="button" onclick="closeAsk()">닫기</button>
+          <button class="btn btn-primary" type="button" onclick="sendAsk()">보내기</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="../supabase.js"></script>
+    <script src="../site.js"></script>
+    <script>
+      (function () {
+        var DEFAULT_LIST = '마인크래프트\n리그 오브 레전드\n소통\n풀트\n종합게임';
+        var LOG_KEY = 'uchi-mg-log';
+        var OPTS = [], COLORS = [], PICKED = null;
+        var rot = 0, spinning = false;
+
+        var cv = document.getElementById('wheel');
+        var ctx = cv.getContext('2d');
+        var S = cv.width;                       /* backing store is 2x the CSS size */
+
+        function ready() { document.body.classList.add('ready'); fitShell(); }
+
+        function cssVar(n, fb) {
+          var v = getComputedStyle(document.body).getPropertyValue(n).trim();
+          return v || fb;
+        }
+
+        function buildColors(n) {
+          var pal = [cssVar('--main', '#fd8495'), cssVar('--sub', '#f9b7ba'),
+                     cssVar('--main-light', '#ffe8e7'), cssVar('--main-dark', '#fa7186')];
+          var out = [];
+          for (var i = 0; i < n; i++) {
+            var c = pal[i % pal.length];
+            if (n > 1 && i === n - 1 && c === out[0]) c = pal[1];
+            out.push(c);
+          }
+          return out;
+        }
+
+        function drawWheel() {
+          var n = OPTS.length;
+          ctx.clearRect(0, 0, S, S);
+          if (!n) return;
+          var seg = Math.PI * 2 / n, R = S / 2, cx = R, cy = R;
+          for (var i = 0; i < n; i++) {
+            var a0 = i * seg + rot, a1 = a0 + seg;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.arc(cx, cy, R - 6, a0, a1);
+            ctx.closePath();
+            ctx.fillStyle = COLORS[i];
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255,255,255,.85)';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            var mid = a0 + seg / 2;
+            var label = OPTS[i];
+            if (label.length > 11) label = label.slice(0, 10) + '…';
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(mid);
+            ctx.fillStyle = '#3f3a40';
+            ctx.font = '700 30px "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif';
+            ctx.textBaseline = 'middle';
+            if (Math.cos(mid) < 0) {          /* left half: flip so the label is not upside down */
+              ctx.rotate(Math.PI);
+              ctx.textAlign = 'left';
+              ctx.fillText(label, -(R - 34), 0);
+            } else {
+              ctx.textAlign = 'right';
+              ctx.fillText(label, R - 34, 0);
+            }
+            ctx.restore();
+          }
+        }
+
+        /* The winner is drawn uniformly first, then the wheel is rotated so that
+           segment sits under the pin — the animation never decides the result. */
+        function targetRotFor(k) {
+          var n = OPTS.length, seg = Math.PI * 2 / n;
+          var jitter = (Math.random() - 0.5) * seg * 0.7;
+          var want = -Math.PI / 2 - (k * seg + seg / 2) + jitter;
+          var turns = 5 + Math.floor(Math.random() * 3);
+          var base = rot % (Math.PI * 2);
+          var delta = ((want - base) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+          return rot + turns * Math.PI * 2 + delta;
+        }
+
+        function spin() {
+          if (spinning || !OPTS.length) return;
+          if (OPTS.length === 1) { finish(0); return; }
+          spinning = true;
+          document.getElementById('spin').disabled = true;
+          var k = Math.floor(Math.random() * OPTS.length);
+          var from = rot, to = targetRotFor(k), t0 = performance.now(), dur = 3800;
+          (function step(now) {
+            var p = Math.min(1, (now - t0) / dur);
+            var e = 1 - Math.pow(1 - p, 3);
+            rot = from + (to - from) * e;
+            drawWheel();
+            if (p < 1) requestAnimationFrame(step);
+            else { spinning = false; document.getElementById('spin').disabled = false; finish(k); }
+          })(t0);
+        }
+
+        function finish(k) {
+          PICKED = OPTS[k];
+          var box = document.getElementById('wheel-result');
+          box.classList.remove('idle');
+          box.innerHTML = '<small>RESULT</small><b>' + esc(PICKED) + '</b>';
+          if (typeof window.fxHearts === 'function') {
+            var r = box.getBoundingClientRect();
+            window.fxHearts(r.left + r.width / 2, r.top + r.height / 2, 12);
+          }
+          pushLog(PICKED);
+        }
+
+        function pushLog(v) {
+          var list = readLog();
+          list.unshift({ v: v, t: Date.now() });
+          list = list.slice(0, 8);
+          try { localStorage.setItem(LOG_KEY, JSON.stringify(list)); } catch (e) { }
+          renderLog(list);
+        }
+        function readLog() {
+          try { return JSON.parse(localStorage.getItem(LOG_KEY) || '[]'); } catch (e) { return []; }
+        }
+        function renderLog(list) {
+          var el = document.getElementById('mg-log');
+          if (!list.length) { el.innerHTML = '<div class="empty">아직 돌린 결과가 없어요</div>'; return; }
+          el.innerHTML = list.map(function (r) {
+            var d = new Date(r.t);
+            var hm = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+            return '<div><b>' + esc(r.v) + '</b><span>' + hm + '</span></div>';
+          }).join('');
+        }
+
+        function renderList() {
+          document.getElementById('mg-list').innerHTML = OPTS.length
+            ? OPTS.map(function (o, i) {
+                return '<div class="mg-item"><i style="background:' + COLORS[i] + '"></i>' + esc(o) + '</div>';
+              }).join('')
+            : '<div class="empty">항목이 아직 없어요</div>';
+        }
+
+        function apply(v) {
+          OPTS = String(v == null ? '' : v).split('\n')
+            .map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 16);
+          COLORS = buildColors(OPTS.length);
+          renderList();
+          drawWheel();
+        }
+
+        document.getElementById('spin').addEventListener('click', spin);
+        document.getElementById('copy').addEventListener('click', function () {
+          if (!PICKED) { showToast('먼저 돌림판을 돌려 주세요'); return; }
+          if (navigator.clipboard) navigator.clipboard.writeText(PICKED);
+          showToast('결과를 복사했어요');
+        });
+        document.getElementById('dkbox').addEventListener('click', function () {
+          setTimeout(function () { COLORS = buildColors(OPTS.length); renderList(); drawWheel(); }, 30);
+        });
+
+        apply(DEFAULT_LIST);
+        renderLog(readLog());
+        wireHeading('minigame');
+        window.profileData.then(function (d) {
+          if (typeof d['roulette-list'] === 'string' && d['roulette-list'].trim()) apply(d['roulette-list']);
+        }).catch(function () { }).then(ready, ready);
+        setTimeout(ready, 1200);
+      })();
+    </script>
+    <script src="../fx.js"></script>
+    <script>
+      (function () {
+        var a = document.getElementById('navSoop');
+        if (!a || typeof window.fxHearts !== 'function') return;
+        a.addEventListener('click', function (e) { window.fxHearts(e.clientX, e.clientY, 8); });
+      })();
+    </script>
+  </body>
+</html>

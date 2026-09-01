@@ -32,7 +32,7 @@
                   <circle cx="12" cy="8" r="3.3" />
                   <path d="M5.2 20c.5-4.4 2.8-6.7 6.8-6.7s6.3 2.3 6.8 6.7" />
                 </svg>
-                <img class="nav-av" id="navAvatar" alt="" referrerpolicy="no-referrer" />
+                <img class="nav-av" id="navAvatar" src="../assets/av-nav.gif" alt="" referrerpolicy="no-referrer" />
               </a>
               <button class="square-button square-button--light" id="dkbox" type="button" aria-label="다크 모드" title="다크 모드">
                 <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z" /></svg>
@@ -46,6 +46,7 @@
               <a href="../notice/">공지</a>
               <a href="../work/">업보</a>
               <a href="../dress/">옷장</a>
+              <a href="../minigame/">미니게임</a>
             </nav>
 
             <div class="member-actions">
@@ -63,7 +64,7 @@
             <div class="pf-top">
               <section class="card pf-idcard">
                 <div id="avatarWrap">
-                  <img class="avatar" id="avatarImg" alt="우치 프로필 사진" referrerpolicy="no-referrer" />
+                  <img class="avatar" id="avatarImg" src="../assets/av-profile.gif" alt="우치 프로필 사진" referrerpolicy="no-referrer" />
                   <span class="avatar-fb" id="avatarEmoji">우</span>
                 </div>
                 <div class="pf-name" id="pf-name">우치</div>
@@ -119,17 +120,9 @@
               <div class="game-grid" id="game-list"></div>
             </section>
 
-            <section class="card" id="card-days">
-              <h2 class="card-title"><small>WEEK</small>방송 요일</h2>
-              <div class="day-strip">
-                <div class="day-cell" id="day-0"><b>월</b><span>미정</span></div>
-                <div class="day-cell" id="day-1"><b>화</b><span>미정</span></div>
-                <div class="day-cell" id="day-2"><b>수</b><span>미정</span></div>
-                <div class="day-cell" id="day-3"><b>목</b><span>미정</span></div>
-                <div class="day-cell" id="day-4"><b>금</b><span>미정</span></div>
-                <div class="day-cell" id="day-5"><b>토</b><span>미정</span></div>
-                <div class="day-cell" id="day-6"><b>일</b><span>미정</span></div>
-              </div>
+            <section class="card" id="card-week">
+              <h2 class="card-title"><small>WEEK</small>이번주 일정</h2>
+              <div class="day-strip" id="week-strip"></div>
             </section>
 
             <div class="grid-2">
@@ -196,7 +189,7 @@
           quote: '뭄', msg: '', now: '',
           'like-list': '게임, 승리, 매운거',
           'dislike-list': '야채, 운동, 패배',
-          stats: '', milestones: '', days: '',
+          stats: '', milestones: '', 'week-schedule': WEEK_DEFAULT,
           'tmi-list': '모티프|하트\n시그니처 오브젝트|반창고 (x자)',
           'game-list': '마인크래프트\n리그 오브 레전드'
         };
@@ -283,12 +276,14 @@
         function apply(saved) {
           var d = Object.assign({}, defaults, saved || {});
 
-          var avatarUrl = txt(d.avatar) || soopAvatar(txt(d['soop-id']) || 'uchi5757');
+          /* The bundled GIF is the default; only an explicit admin value replaces it. */
           var img = document.getElementById('avatarImg');
           var fb = document.getElementById('avatarEmoji');
-          if (avatarUrl && img) {
-            img.onload = function () { img.style.display = 'block'; if (fb) fb.style.display = 'none'; };
-            img.src = avatarUrl;
+          if (img) {
+            var url = txt(d.avatar);
+            if (url) img.src = url;
+            var show = function () { img.style.display = 'block'; if (fb) fb.style.display = 'none'; };
+            if (img.complete && img.naturalWidth) show(); else img.onload = show;
           }
 
           TEXT_KEYS.forEach(function (k) {
@@ -314,16 +309,7 @@
           renderPairs('tmi-list', d['tmi-list'], 'tmi');
           renderPairs('game-list', d['game-list'], 'game');
 
-          /* days CSV is 0=Mon ... 6=Sun, matching the admin checkboxes. */
-          var active = String(d.days || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
-          for (var i = 0; i <= 6; i++) {
-            var cell = document.getElementById('day-' + i);
-            if (!cell) continue;
-            var on = active.indexOf(String(i)) !== -1;
-            cell.classList.toggle('on', on);
-            var lbl = cell.querySelector('span');
-            if (lbl) lbl.textContent = active.length ? (on ? '방송' : '휴방') : '미정';
-          }
+          renderWeekChips('week-strip', d['week-schedule']);
 
 
           ['link-soop', 'link-youtube', 'link-x', 'link-cafe', 'link-etc'].forEach(function (k) {

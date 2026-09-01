@@ -37,6 +37,42 @@ function fmtDate(s) {
   } catch (e) { return ''; }
 }
 
+/* Weekly on-air table. One line per day, 월 first; the line is the on-air time,
+   or "OFF" / empty for a rest day. Shared by the main week card and the profile WEEK card. */
+var WEEK_DAYS = ['월', '화', '수', '목', '금', '토', '일'];
+var WEEK_DEFAULT = '2:00\n2:00\nOFF\nOFF\n2:00\n2:00\n6:00';
+
+function parseWeek(v) {
+  var lines = (typeof v === 'string' ? v.split('\n') : []);
+  var out = [];
+  for (var i = 0; i < 7; i++) {
+    var t = String(lines[i] == null ? '' : lines[i]).trim();
+    var u = t.toUpperCase();
+    var off = !t || u === 'OFF' || t === '휴방';
+    out.push({ day: WEEK_DAYS[i], on: !off, time: (off || u === 'ON') ? '' : t });
+  }
+  return out;
+}
+
+function renderWeekRows(id, v) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = parseWeek(v).map(function (d) {
+    return '<div class="week-row' + (d.on ? ' on' : '') + '"><b>' + d.day + '</b>' +
+      '<span class="wk-state">' + (d.on ? 'ON' : 'OFF') + '</span>' +
+      '<span class="wk-time">' + esc(d.time) + '</span></div>';
+  }).join('');
+}
+
+function renderWeekChips(id, v) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = parseWeek(v).map(function (d) {
+    return '<div class="day-cell' + (d.on ? ' on' : '') + '"><b>' + d.day + '</b>' +
+      '<span>' + (d.on ? (esc(d.time) || '방송') : '휴방') + '</span></div>';
+  }).join('');
+}
+
 /* Days until the next MM-DD. Lives here so pages do not have to wait for fx.js. */
 function siteDday(mmdd) {
   try {
@@ -105,12 +141,11 @@ function wireNavAvatar() {
   window.profileData.then(function (d) {
     var img = document.getElementById('navAvatar');
     if (!img) return;
-    var url = (typeof d.avatar === 'string' && d.avatar.trim())
-      ? d.avatar.trim()
-      : soopAvatar((typeof d['soop-id'] === 'string' && d['soop-id'].trim()) || SOOP_ID);
-    if (!url) return;
-    img.onload = function () { img.style.display = 'block'; };
-    img.src = url;
+    /* The bundled GIF is the default; only an explicit admin value replaces it. */
+    var url = (typeof d['nav-avatar'] === 'string' && d['nav-avatar'].trim()) ? d['nav-avatar'].trim() : '';
+    if (url) img.src = url;
+    if (img.complete && img.naturalWidth) img.style.display = 'block';
+    else img.onload = function () { img.style.display = 'block'; };
   });
   window.profileData.then(function (d) {
     var a = document.getElementById('navSoop');

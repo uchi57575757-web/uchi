@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=1200, user-scalable=yes" />
     <meta name="theme-color" content="#fefcfc" />
     <title>UCHI OFFICIAL | 메인</title>
-    <meta name="description" content="우치(UCHI) 방송 정보 · 공지 · 업보 · 옷장 — UCHI OFFICIAL" />
+    <meta name="description" content="우치(UCHI) 방송 정보 · 공지 · 업보 · 옷장 · 미니게임 — UCHI OFFICIAL" />
     <meta property="og:title" content="UCHI OFFICIAL" />
-    <meta property="og:description" content="우치(UCHI) 방송 정보 · 공지 · 업보 · 옷장" />
+    <meta property="og:description" content="우치(UCHI) 방송 정보 · 공지 · 업보 · 옷장 · 미니게임" />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/uc/uchi5757/uchi5757.jpg" />
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
@@ -32,7 +32,7 @@
                   <circle cx="12" cy="8" r="3.3" />
                   <path d="M5.2 20c.5-4.4 2.8-6.7 6.8-6.7s6.3 2.3 6.8 6.7" />
                 </svg>
-                <img class="nav-av" id="navAvatar" alt="" referrerpolicy="no-referrer" />
+                <img class="nav-av" id="navAvatar" src="./assets/av-nav.gif" alt="" referrerpolicy="no-referrer" />
               </a>
               <button class="square-button square-button--light" id="dkbox" type="button" aria-label="다크 모드" title="다크 모드">
                 <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z" /></svg>
@@ -46,6 +46,7 @@
               <a href="./notice/">공지</a>
               <a href="./work/">업보</a>
               <a href="./dress/">옷장</a>
+              <a href="./minigame/">미니게임</a>
             </nav>
 
             <div class="member-actions">
@@ -53,27 +54,22 @@
             </div>
           </header>
 
-          <section class="hero" aria-labelledby="hero-title">
+          <section class="hero" aria-labelledby="main-title">
+            <div class="hero-deco" aria-hidden="true"></div>
+            <div class="hero-hearts" aria-hidden="true"></div>
             <div class="hero-copy">
-              <h1 id="main-title">어서 와요</h1>
+              <h1 id="main-title">안녕!우치!</h1>
               <p class="hero-description" id="main-lead">
-                게임하고 소통하는 우치의 아지트예요.<br />만나서 반가워요, 뭄치!
+                종겜 소통 풀트 등 다양한 방송을 하는 우치입니다<br />만나서 반가워요 뭄치!
               </p>
             </div>
-
-            <a class="hero-link" id="main-link" href="./profile/">더 알아보기</a>
-
-            <div class="hero-sparkles" aria-hidden="true">
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-            </div>
-            <div class="hero-pagination" aria-hidden="true">
-              <span class="is-active"></span><span></span><span></span>
-            </div>
+            <svg class="hero-wave" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,83.5C4.2,83.0 16.7,81.5 25,80.7C33.3,79.9 41.7,79.2 50,78.5C58.3,77.8 66.7,77.3 75,76.8C83.3,76.3 91.7,76.0 100,75.7C108.3,75.4 116.7,75.0 125,74.7C133.3,74.5 141.7,74.3 150,74.2C158.3,74.1 166.7,74.2 175,74.3C183.3,74.4 191.7,74.7 200,75.0C208.3,75.3 216.7,75.6 225,76.0C233.3,76.4 241.7,77.0 250,77.5C258.3,78.0 266.7,78.6 275,79.2C283.3,79.8 291.7,80.4 300,81.0C308.3,81.6 316.7,82.4 325,83.0C333.3,83.6 341.7,84.2 350,84.7C358.3,85.2 366.7,85.6 375,86.0C383.3,86.4 391.7,86.7 400,87.0C408.3,87.3 416.7,87.7 425,88.0C433.3,88.3 441.7,88.5 450,88.7C458.3,88.9 466.7,89.1 475,89.3C483.3,89.5 491.7,89.7 500,89.8C508.3,89.9 516.7,90.0 525,90.0C533.3,90.0 541.7,89.9 550,89.8C558.3,89.7 566.7,89.7 575,89.5C583.3,89.3 591.7,88.9 600,88.5C608.3,88.1 616.7,87.7 625,87.2C633.3,86.7 641.7,86.1 650,85.5C658.3,84.9 666.7,84.4 675,83.8C683.3,83.2 691.7,82.5 700,82.0C708.3,81.5 716.7,80.9 725,80.5C733.3,80.1 741.7,79.8 750,79.5C758.3,79.2 766.7,78.8 775,78.8C783.3,78.8 791.7,79.0 800,79.2C808.3,79.4 816.7,79.5 825,79.8C833.3,80.1 841.7,80.4 850,80.8C858.3,81.2 866.7,81.7 875,82.2C883.3,82.7 891.7,83.2 900,83.7C908.3,84.2 916.7,84.6 925,85.0C933.3,85.4 941.7,85.9 950,86.2C958.3,86.5 966.7,86.7 975,86.8C983.3,86.9 995.8,86.7 1000,86.7L1000,100L0,100Z" />
+            </svg>
           </section>
 
           <figure class="hero-character-slot image-slot">
-            <img class="hero-plate" id="main-hero" src="./assets/hero.jpg" alt="" draggable="false" referrerpolicy="no-referrer" />
-            <img class="hero-cut" id="main-hero-dark" src="./assets/hero-dark.png" alt="우치" draggable="false" referrerpolicy="no-referrer" />
+            <img id="main-hero" src="./assets/hero-char.png" alt="우치" draggable="false" referrerpolicy="no-referrer" />
           </figure>
 
           <section class="home-grid" aria-label="메인 콘텐츠">
@@ -89,28 +85,24 @@
               <a class="wide-button" href="./dress/">더 보기 <span aria-hidden="true">›</span></a>
             </div>
 
-            <section class="search-panel" aria-labelledby="quick-menu-title">
+            <section class="search-panel" aria-labelledby="main-quick-title">
               <div class="section-title-row">
                 <h2 id="main-quick-title">바로가기</h2>
                 <span class="round-mark" aria-hidden="true">×</span>
               </div>
               <div class="search-list">
-                <a class="search-pill search-pill--active" href="./profile/"><span class="search-icon"></span>프로필<span class="pill-x">×</span></a>
-                <a class="search-pill search-pill--active" href="./notice/"><span class="search-icon"></span>공지<span class="pill-x">×</span></a>
-                <a class="search-pill search-pill--active" href="./work/"><span class="search-icon"></span>업보<span class="pill-x">×</span></a>
-                <a class="search-pill" href="./dress/"><span class="search-icon"></span>옷장</a>
-                <a class="search-pill" id="link-cafe" href="https://cafe.naver.com/mumchiagit" target="_blank" rel="noreferrer"><span class="search-icon"></span>팬카페</a>
+                <a class="search-pill search-pill--active" id="link-etc" href="https://jeripopo.kr/streamers/uchi/calendar" target="_blank" rel="noreferrer"><span class="search-icon"></span>방송 일정표<span class="pill-x">×</span></a>
+                <a class="search-pill" id="link-cafe" href="https://cafe.naver.com/mumchiagit" target="_blank" rel="noreferrer"><span class="search-icon"></span>팬카페<span class="pill-x">×</span></a>
+                <a class="search-pill search-pill--active" id="link-youtube" href="https://www.youtube.com/@%EC%9A%B0%EC%B9%98UCHI" target="_blank" rel="noreferrer"><span class="search-icon"></span>유튜브<span class="pill-x">×</span></a>
+                <a class="search-pill" id="link-soop" href="https://www.sooplive.com/station/uchi5757" target="_blank" rel="noreferrer"><span class="search-icon"></span>방송국<span class="pill-x">×</span></a>
+                <a class="search-pill search-pill--active" id="link-fansim" href="#" target="_blank" rel="noreferrer" hidden><span class="search-icon"></span>팬심<span class="pill-x">×</span></a>
               </div>
             </section>
 
-            <div class="portrait-panel" aria-label="우치 미리보기">
-              <figure class="portrait-card image-slot">
-                <img id="main-port-1" src="./assets/portrait-1.jpg" alt="우치 미리보기 1" draggable="false" referrerpolicy="no-referrer" />
-              </figure>
-              <figure class="portrait-card image-slot">
-                <img id="main-port-2" src="./assets/portrait-2.jpg" alt="우치 미리보기 2" draggable="false" referrerpolicy="no-referrer" />
-              </figure>
-            </div>
+            <section class="week-panel" aria-label="이번주 일정">
+              <h2 class="week-title"><small>WEEK</small><b id="main-week-title">이번주 일정</b></h2>
+              <div class="week-rows" id="week-rows"></div>
+            </section>
 
             <div class="feature-panel" aria-label="카테고리 안내">
               <a class="feature-card" href="./profile/">
@@ -159,13 +151,16 @@
     <script src="./supabase.js"></script>
     <script src="./site.js"></script>
     <script>
-      /* Main page loader. Keys must exist in admin profileKeys — see README. */
+      /* Main page loader. Keys must exist in admin GROUPS — see README. */
       (function () {
-        var TEXT = ['main-title', 'main-link', 'main-quick-title'];
+        var TEXT = ['main-title', 'main-quick-title', 'main-week-title'];
         var HTMLKEYS = ['main-lead', 'main-cap-profile', 'main-cap-notice', 'main-cap-dress'];
-        var IMAGES = ['main-hero', 'main-hero-dark', 'main-photo-1', 'main-photo-2', 'main-port-1', 'main-port-2'];
+        var IMAGES = ['main-hero', 'main-photo-1', 'main-photo-2'];
+        var LINKS = ['link-etc', 'link-cafe', 'link-youtube', 'link-soop', 'link-fansim'];
 
         function ready() { document.body.classList.add('ready'); fitShell(); }
+
+        renderWeekRows('week-rows', WEEK_DEFAULT);
 
         window.profileData.then(function (d) {
           TEXT.forEach(function (k) {
@@ -180,8 +175,14 @@
             var el = document.getElementById(k);
             if (el && typeof d[k] === 'string' && d[k].trim()) el.src = d[k].trim();
           });
-          var cafe = document.getElementById('link-cafe');
-          if (cafe && typeof d['link-cafe'] === 'string' && d['link-cafe'].trim()) cafe.href = d['link-cafe'].trim();
+          LINKS.forEach(function (k) {
+            var a = document.getElementById(k);
+            if (!a) return;
+            if (typeof d[k] === 'string' && d[k].trim()) { a.href = d[k].trim(); a.hidden = false; }
+            else if (!a.getAttribute('href') || a.getAttribute('href') === '#') a.hidden = true;
+          });
+          renderWeekRows('week-rows', typeof d['week-schedule'] === 'string' && d['week-schedule'].trim()
+            ? d['week-schedule'] : WEEK_DEFAULT);
         }).catch(function () { }).then(ready, ready);
 
         setTimeout(ready, 1600);
@@ -189,12 +190,6 @@
     </script>
     <script src="./fx.js"></script>
     <script>
-      /* Standalone preview fallback. Must stay after fx.js: the guard needs fxHearts to exist. */
-      (function () {
-        if (typeof window.fxHearts === 'function') return;
-        var a = document.getElementById('navSoop');
-        if (a) a.style.cursor = 'pointer';
-      })();
       (function () {
         var a = document.getElementById('navSoop');
         if (!a || typeof window.fxHearts !== 'function') return;
