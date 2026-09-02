@@ -78,17 +78,17 @@
                 <div class="info-grid">
                 <div class="info-row" data-row="info-name"><dt>이름</dt><dd id="info-name">우치</dd></div>
                 <div class="info-row" data-row="info-reading"><dt>읽는 법</dt><dd id="info-reading">우치 / UCHI</dd></div>
-                <div class="info-row" data-row="info-catchphrase"><dt>입버릇</dt><dd id="info-catchphrase">뭄</dd></div>
-                <div class="info-row" data-row="info-debut"><dt>데뷔</dt><dd id="info-debut">2026.07.25</dd></div>
                 <div class="info-row" data-row="info-birth"><dt>생일</dt><dd id="info-birth">12월 20일</dd></div>
+                <div class="info-row" data-row="info-debut"><dt>데뷔</dt><dd id="info-debut">2026.07.25</dd></div>
+                <div class="info-row" data-row="info-age"><dt>나이</dt><dd id="info-age"></dd></div>
+                <div class="info-row" data-row="info-species"><dt>종족</dt><dd id="info-species"></dd></div>
                 <div class="info-row" data-row="info-fandom"><dt>팬 애칭</dt><dd id="info-fandom">뭄치</dd></div>
-                <div class="info-row" data-row="info-agency"><dt>소속</dt><dd id="info-agency">개인세</dd></div>
-                <div class="info-row" data-row="info-mbti"><dt>MBTI</dt><dd id="info-mbti"></dd></div>
                 <div class="info-row" data-row="info-airtime"><dt>방송 시간</dt><dd id="info-airtime">오후 2시</dd></div>
                 <div class="info-row" data-row="info-game"><dt>주력 게임</dt><dd id="info-game">마인크래프트 · 롤 · 종합게임</dd></div>
                 <div class="info-row" data-row="info-content"><dt>방송 콘텐츠</dt><dd id="info-content">소통 · 종겜 · 풀트</dd></div>
-                <div class="info-row" data-row="info-song"><dt>노래</dt><dd id="info-song">가끔 함</dd></div>
+                <div class="info-row" data-row="info-agency"><dt>소속</dt><dd id="info-agency">개인세</dd></div>
                 <div class="info-row" data-row="info-item"><dt>시그니처</dt><dd id="info-item">반창고 머리핀</dd></div>
+                <div class="info-row" data-row="info-mbti"><dt>MBTI</dt><dd id="info-mbti"></dd></div>
                 </div>
                 <div class="chip-row" id="info-tags" style="margin-top:18px"></div>
               </section>
@@ -194,9 +194,9 @@
           'game-list': '마인크래프트\n리그 오브 레전드'
         };
 
-        var TEXT_KEYS = ['info-name', 'info-reading', 'info-catchphrase', 'info-debut', 'info-birth',
-          'info-fandom', 'info-agency', 'info-mbti', 'info-airtime', 'info-game', 'info-content',
-          'info-song', 'info-item'];
+        var TEXT_KEYS = ['info-name', 'info-reading', 'info-birth', 'info-debut', 'info-age',
+          'info-species', 'info-fandom', 'info-airtime', 'info-game', 'info-content',
+          'info-agency', 'info-item', 'info-mbti'];
 
         function txt(v) { return typeof v === 'string' ? v.trim() : ''; }
 
@@ -339,9 +339,9 @@
           }
         }
 
-        var INFO_ROWS = ['info-name', 'info-reading', 'info-catchphrase', 'info-debut', 'info-birth',
-          'info-fandom', 'info-agency', 'info-mbti', 'info-airtime', 'info-game', 'info-content',
-          'info-song', 'info-item'];
+        var INFO_ROWS = ['info-name', 'info-reading', 'info-birth', 'info-debut', 'info-age',
+          'info-species', 'info-fandom', 'info-airtime', 'info-game', 'info-content',
+          'info-agency', 'info-item', 'info-mbti'];
 
         async function loadVod() {
           var card = document.getElementById('songs-card');
