@@ -203,6 +203,7 @@
       <section class="tab-panel" id="tab-profile" data-auto="profile">
         <div class="card">
           <div class="card-title"><small>VOD</small>다시보기<span class="sp"></span>
+            <button class="btn sm" type="button" id="vod-cancel" hidden>취소</button>
             <button class="btn sm solid" type="button" id="vod-add">추가</button>
           </div>
           <p class="where">나오는 곳 — 프로필 페이지 다시보기 카드. 등록이 0개면 카드가 숨겨집니다</p>
@@ -216,13 +217,14 @@
               <p class="hint">SOOP 다시보기 주소 vod.sooplive.co.kr/player/<b>번호</b> 의 숫자만</p>
             </div>
           </div>
-          <div class="table-wrap"><table><thead><tr><th>제목</th><th>VOD 번호</th><th>삭제</th></tr></thead><tbody id="vod-rows"></tbody></table></div>
+          <div class="table-wrap"><table><thead><tr><th>제목</th><th>VOD 번호</th><th>관리</th></tr></thead><tbody id="vod-rows"></tbody></table></div>
         </div>
       </section>
 
       <section class="tab-panel" id="tab-notice">
         <div class="card">
           <div class="card-title"><small>NOTICE</small>공지 등록<span class="sp"></span>
+            <button class="btn sm" type="button" id="nt-cancel" hidden>취소</button>
             <button class="btn sm solid" type="button" id="nt-add">등록</button>
           </div>
           <p class="where">나오는 곳 — 공지 페이지 목록</p>
@@ -244,13 +246,14 @@
             <textarea class="input" id="nt-images" rows="3" placeholder="https://stimg.sooplive.com/..."></textarea>
             <p class="hint">이미지 주소(URL)를 한 줄에 하나씩. 이미지 위에서 우클릭 → 이미지 주소 복사로 얻은 주소를 넣습니다. 글 주소가 아닙니다</p>
           </div>
-          <div class="table-wrap"><table><thead><tr><th>제목</th><th>고정</th><th>날짜</th><th>삭제</th></tr></thead><tbody id="nt-rows"></tbody></table></div>
+          <div class="table-wrap"><table><thead><tr><th>제목</th><th>고정</th><th>날짜</th><th>관리</th></tr></thead><tbody id="nt-rows"></tbody></table></div>
         </div>
       </section>
 
       <section class="tab-panel" id="tab-work">
         <div class="card">
           <div class="card-title"><small>VIEWERS</small>시청자<span class="sp"></span>
+            <button class="btn sm" type="button" id="vw-cancel" hidden>취소</button>
             <button class="btn sm solid" type="button" id="vw-add">추가</button>
           </div>
           <p class="where">나오는 곳 — 업보 페이지 카드 그리드</p>
@@ -268,11 +271,12 @@
               <p class="hint">숫자가 작을수록 앞</p>
             </div>
           </div>
-          <div class="table-wrap"><table><thead><tr><th>닉네임</th><th>아이디</th><th>순서</th><th>삭제</th></tr></thead><tbody id="vw-rows"></tbody></table></div>
+          <div class="table-wrap"><table><thead><tr><th>닉네임</th><th>아이디</th><th>순서</th><th>관리</th></tr></thead><tbody id="vw-rows"></tbody></table></div>
         </div>
 
         <div class="card">
           <div class="card-title"><small>TYPES</small>업보 종류<span class="sp"></span>
+            <button class="btn sm" type="button" id="tp-cancel" hidden>취소</button>
             <button class="btn sm solid" type="button" id="tp-add">추가</button>
           </div>
           <p class="where">나오는 곳 — 업보 상세 모달의 항목 이름</p>
@@ -290,7 +294,7 @@
               <p class="hint">숫자가 작을수록 앞</p>
             </div>
           </div>
-          <div class="table-wrap"><table><thead><tr><th>이름</th><th>분류</th><th>순서</th><th>삭제</th></tr></thead><tbody id="tp-rows"></tbody></table></div>
+          <div class="table-wrap"><table><thead><tr><th>이름</th><th>분류</th><th>순서</th><th>관리</th></tr></thead><tbody id="tp-rows"></tbody></table></div>
         </div>
 
         <div class="card">
@@ -309,13 +313,14 @@
       <section class="tab-panel" id="tab-dress">
         <div class="card">
           <div class="card-title"><small>WARDROBE</small>옷장 등록<span class="sp"></span>
+            <button class="btn sm" type="button" id="dr-cancel" hidden>취소</button>
             <button class="btn sm solid" type="button" id="dr-add">등록</button>
           </div>
           <p class="where">나오는 곳 — 옷장 페이지. 새 옷은 포스터, 나머지는 앨범 그리드</p>
           <div class="grid">
             <div class="field"><label for="dr-cat">분류</label>
-              <select class="input" id="dr-cat"><option value="hair">헤어</option><option value="outfit">의상</option><option value="lens">렌즈</option></select>
-              <p class="hint">옷장 페이지의 분류 탭과 같은 값</p>
+              <select class="input" id="dr-cat"></select>
+              <p class="hint">위 분류 목록에서 자동으로 채워집니다</p>
             </div>
             <div class="field"><label for="dr-name">이름</label>
               <input class="input" id="dr-name" placeholder="예: 반창고 트윈테일" />
@@ -338,7 +343,7 @@
             <label><input type="checkbox" id="dr-new" /> 새 옷으로 올리기</label>
             <p class="hint">체크하면 badges에 NEW가 붙어 새 옷 탭의 포스터로 나옵니다</p>
           </div>
-          <div class="table-wrap"><table><thead><tr><th>이름</th><th>분류</th><th>새 옷</th><th>순서</th><th>삭제</th></tr></thead><tbody id="dr-rows"></tbody></table></div>
+          <div class="table-wrap"><table><thead><tr><th>이름</th><th>분류</th><th>새 옷</th><th>순서</th><th>관리</th></tr></thead><tbody id="dr-rows"></tbody></table></div>
         </div>
       </section>
 
@@ -492,6 +497,10 @@
             ['stats', '능력치', 'textarea', '한 줄에 하나, 이름:숫자 형식. 숫자는 0~100이고 막대 그래프로 그려집니다', '체력:82\n집중력:64\n승부욕:97'],
             ['milestones', '목표', 'textarea', '한 줄에 하나, 상태|내용 형식. 상태를 달성 으로 쓰면 취소선이 그어집니다', '달성|첫 방송 켜기\n진행중|팔로워 1000명']
           ] },
+        { tab: 'profile', title: '카드 순서', kicker: 'ORDER',
+          where: '나오는 곳 — 프로필 페이지에서 우치 파일 아래로 이어지는 카드들의 위아래 순서',
+          fields: [['profile-order', '순서', 'textarea', '한 줄에 하나. 위에 적은 카드가 위로 갑니다. 목록에 없는 카드는 맨 뒤로. 이름은 옆 칸의 예시 그대로 써야 합니다', '하고픈 말\n지금\n좋아·싫어\n해본 게임\n이번주 일정\n능력치·목표\nTMI\n다시보기\n링크']] },
+
         { tab: 'profile', title: '관련 링크', kicker: 'LINK',
           where: '나오는 곳 — 프로필 LINK 카드 + 메인 바로가기 5줄. SOOP 주소는 상단 프사 버튼에도 함께 반영됩니다',
           fields: [
@@ -503,9 +512,42 @@
             ['link-x', 'X (트위터)', 'text', '비우면 버튼 자체가 숨겨집니다', 'https://x.com/아이디']
           ] },
 
+        { tab: 'dress', title: '옷장 분류', kicker: 'CATEGORY',
+          where: '나오는 곳 — 옷장 페이지 위쪽 분류 탭 + 아래 등록 칸의 분류 선택',
+          fields: [['dress-cats', '분류 목록', 'textarea', '한 줄에 하나. 적은 순서대로 탭이 나옵니다. 줄을 지우면 그 탭이 사라지고, 그 분류로 올린 옷은 화면에서 빠집니다. 이름을 바꾸면 이미 올린 옷의 분류를 아래 표에서 다시 골라주세요', '헤어\n의상\n렌즈']] },
+
         { tab: 'minigame', title: '돌림판 항목', kicker: 'ROULETTE',
           where: '나오는 곳 — 미니게임 페이지의 돌림판과 항목 목록. 최대 16칸까지 그려집니다',
           fields: [['roulette-list', '항목 목록', 'textarea', '한 줄에 하나가 돌림판 한 칸이 됩니다. 두 칸 이상이어야 돌아갑니다', '마인크래프트\n리그 오브 레전드\n소통\n풀트\n종합게임']] },
+
+        { tab: 'words', title: '우치 파일 항목 이름', kicker: 'DOSSIER',
+          where: '나오는 곳 — 프로필 우치 파일 카드에서 값 왼쪽에 붙는 분홍 글자',
+          fields: [
+            ['lbl-info-name', '이름', 'text', '비우면 이름 로 나옵니다', '이름'],
+            ['lbl-info-reading', '읽는 법', 'text', '비우면 읽는 법 로 나옵니다', '읽는 법'],
+            ['lbl-info-birth', '생일', 'text', '비우면 생일 로 나옵니다', '생일'],
+            ['lbl-info-debut', '데뷔', 'text', '비우면 데뷔 로 나옵니다', '데뷔'],
+            ['lbl-info-age', '나이', 'text', '비우면 나이 로 나옵니다', '나이'],
+            ['lbl-info-species', '종족', 'text', '비우면 종족 로 나옵니다', '종족'],
+            ['lbl-info-fandom', '팬 애칭', 'text', '비우면 팬 애칭 로 나옵니다', '팬 애칭'],
+            ['lbl-info-airtime', '방송 시간', 'text', '비우면 방송 시간 로 나옵니다', '방송 시간'],
+            ['lbl-info-game', '주력 게임', 'text', '비우면 주력 게임 로 나옵니다', '주력 게임'],
+            ['lbl-info-content', '방송 콘텐츠', 'text', '비우면 방송 콘텐츠 로 나옵니다', '방송 콘텐츠'],
+            ['lbl-info-agency', '소속', 'text', '비우면 소속 로 나옵니다', '소속'],
+            ['lbl-info-item', '시그니처', 'text', '비우면 시그니처 로 나옵니다', '시그니처'],
+            ['lbl-info-mbti', 'MBTI', 'text', '비우면 MBTI 로 나옵니다', 'MBTI']
+          ] },
+
+        { tab: 'minigame', title: '사다리타기', kicker: 'LADDER',
+          where: '나오는 곳 — 미니게임 페이지의 사다리타기 탭. 위 줄이 참가자, 아래 줄이 결과',
+          fields: [
+            ['ladder-players', '참가자', 'textarea', '한 줄에 하나. 최대 10명', '우치\n뭄치1\n뭄치2\n뭄치3'],
+            ['ladder-prizes', '결과', 'textarea', '한 줄에 하나. 참가자보다 적으면 남는 자리는 꽝으로 채웁니다', '당첨\n꽝\n꽝\n꽝']
+          ] },
+
+        { tab: 'minigame', title: '제비뽑기', kicker: 'DRAW',
+          where: '나오는 곳 — 미니게임 페이지의 제비뽑기 탭. 순서를 섞어서 뒤집힌 채로 놓습니다',
+          fields: [['draw-list', '제비 내용', 'textarea', '한 줄에 제비 하나. 최대 16장', '당첨\n꽝\n꽝\n꽝\n꽝\n꽝']] },
 
         { tab: 'words', title: '미니게임 머리글', kicker: 'MINIGAME',
           where: '나오는 곳 — 미니게임 페이지 맨 위. 비우면 흐리게 보이는 기본 문구가 그대로 나옵니다',
@@ -914,6 +956,7 @@
         previewPalette();
         tsPreview();
         IMG_FIELDS.forEach(function (k) { var i = el('f-' + k); if (i && i._paintThumb) i._paintThumb(); });
+        paintCatSelect();
       }
 
       async function saveProfile() {
@@ -967,27 +1010,144 @@
         fr.readAsText(file);
       }
 
+      /* ---- list editors: one form per list handles both add and edit ---- */
+
+      var ROWS = {};
+
+      var EDITORS = {
+        notice: {
+          prefix: 'nt', addLabel: '등록', editId: null,
+          fill: function (n) {
+            el('nt-title').value = n.title || '';
+            el('nt-content').value = n.content || '';
+            el('nt-pin').value = n.pinned ? '1' : '0';
+            el('nt-images').value = (n.images || []).join('\n');
+          },
+          clear: function () {
+            el('nt-title').value = ''; el('nt-content').value = '';
+            el('nt-pin').value = '0'; el('nt-images').value = '';
+          },
+          payload: function () {
+            var title = el('nt-title').value.trim();
+            if (!title) { toast('제목을 입력하세요'); return null; }
+            return {
+              title: title, content: el('nt-content').value,
+              pinned: el('nt-pin').value === '1',
+              images: el('nt-images').value.split('\n').map(function (x) { return x.trim(); }).filter(Boolean)
+            };
+          }
+        },
+        viewers: {
+          prefix: 'vw', addLabel: '추가', editId: null,
+          fill: function (v) {
+            el('vw-nick').value = v.nickname || '';
+            el('vw-soop').value = v.soop_id || '';
+            el('vw-order').value = v.sort_order || 0;
+          },
+          clear: function () { el('vw-nick').value = ''; el('vw-soop').value = ''; el('vw-order').value = 0; },
+          payload: function () {
+            var n = el('vw-nick').value.trim();
+            if (!n) { toast('닉네임을 입력하세요'); return null; }
+            return { nickname: n, soop_id: el('vw-soop').value.trim(), sort_order: Number(el('vw-order').value) || 0 };
+          }
+        },
+        upbo_types: {
+          prefix: 'tp', addLabel: '추가', editId: null,
+          fill: function (t) {
+            el('tp-name').value = t.name || '';
+            el('tp-cat').value = t.category || '일반';
+            el('tp-order').value = t.sort_order || 0;
+          },
+          clear: function () { el('tp-name').value = ''; el('tp-cat').value = '일반'; el('tp-order').value = 0; },
+          payload: function () {
+            var n = el('tp-name').value.trim();
+            if (!n) { toast('이름을 입력하세요'); return null; }
+            return { name: n, category: el('tp-cat').value, sort_order: Number(el('tp-order').value) || 0 };
+          }
+        },
+        dress_items: {
+          prefix: 'dr', addLabel: '등록', editId: null,
+          fill: function (d) {
+            el('dr-cat').value = d.category || '';
+            el('dr-name').value = d.name || '';
+            el('dr-order').value = d.sort_order || 0;
+            el('dr-desc').value = d.description || '';
+            el('dr-img').value = d.image_url || '';
+            el('dr-new').checked = (d.badges || []).some(function (b) {
+              var l = (b && (b.label != null ? b.label : b)) || '';
+              return String(l).trim().toUpperCase() === 'NEW';
+            });
+          },
+          clear: function () {
+            el('dr-name').value = ''; el('dr-desc').value = ''; el('dr-img').value = '';
+            el('dr-new').checked = false; el('dr-order').value = 0;
+          },
+          payload: function () {
+            var name = el('dr-name').value.trim();
+            if (!name) { toast('이름을 입력하세요'); return null; }
+            return {
+              category: el('dr-cat').value, name: name, description: el('dr-desc').value.trim(),
+              image_url: el('dr-img').value.trim(),
+              badges: el('dr-new').checked ? [{ label: 'NEW' }] : [],
+              sort_order: Number(el('dr-order').value) || 0
+            };
+          }
+        },
+        original_songs: {
+          prefix: 'vod', addLabel: '추가', editId: null,
+          fill: function (v) { el('vod-title').value = v.title || ''; el('vod-id').value = v.vod_id || ''; },
+          clear: function () { el('vod-title').value = ''; el('vod-id').value = ''; },
+          payload: function () {
+            var t = el('vod-title').value.trim(), v = el('vod-id').value.trim();
+            if (!t || !v) { toast('제목과 VOD 번호를 모두 입력하세요'); return null; }
+            return { title: t, vod_id: v };
+          }
+        }
+      };
+
+      function edPaint(table) {
+        var e = EDITORS[table];
+        el(e.prefix + '-add').textContent = e.editId ? '수정 저장' : e.addLabel;
+        el(e.prefix + '-cancel').hidden = !e.editId;
+      }
+
+      function edStart(table, id) {
+        var e = EDITORS[table], list = ROWS[table] || [], row = null;
+        for (var i = 0; i < list.length; i++) if (String(list[i].id) === String(id)) row = list[i];
+        if (!row) { toast('목록을 새로 불러온 뒤 다시 눌러주세요'); return; }
+        e.editId = row.id;
+        e.fill(row);
+        edPaint(table);
+        el(e.prefix + '-add').scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+
+      function edCancel(table) {
+        var e = EDITORS[table];
+        e.editId = null; e.clear(); edPaint(table);
+      }
+
+      async function edSubmit(table) {
+        var e = EDITORS[table], data = e.payload();
+        if (!data) return;
+        var editing = e.editId;
+        var ok = editing ? await updateRow(table, editing, data) : await insertRow(table, data);
+        toast(ok ? (editing ? '수정했습니다' : '저장했습니다') : '저장 실패');
+        if (!ok) return;
+        e.editId = null; e.clear(); edPaint(table);
+        if (RELOAD[table]) RELOAD[table]();
+      }
+
       /* ---- notice ---- */
 
       async function ntLoad() {
         var rows = await fetchAll('notice', { order: 'created_at', asc: false });
+        ROWS.notice = rows;
         el('nt-rows').innerHTML = rows.length ? rows.map(function (n) {
           var d = new Date(n.created_at);
           return '<tr><td>' + escHtml(n.title) + '</td><td>' + (n.pinned ? '<span class="pill">고정</span>' : '') +
             '</td><td>' + (isNaN(d) ? '' : d.toISOString().slice(0, 10)) + '</td>' +
-            '<td><button class="btn sm danger" type="button" data-del="notice" data-id="' + n.id + '">삭제</button></td></tr>';
+            '<td><button class="btn sm" type="button" data-edit="notice" data-id="' + n.id + '">수정</button> <button class="btn sm danger" type="button" data-del="notice" data-id="' + n.id + '">삭제</button></td></tr>';
         }).join('') : '<tr><td colspan="4" class="empty">등록된 공지가 없습니다</td></tr>';
-      }
-
-      async function ntAdd() {
-        var title = el('nt-title').value.trim();
-        if (!title) { toast('제목을 입력하세요'); return; }
-        var imgs = el('nt-images').value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
-        var ok = await insertRow('notice', {
-          title: title, content: el('nt-content').value, pinned: el('nt-pin').value === '1', images: imgs
-        });
-        toast(ok ? '등록했습니다' : '등록 실패');
-        if (ok) { el('nt-title').value = ''; el('nt-content').value = ''; el('nt-images').value = ''; ntLoad(); }
       }
 
       /* ---- viewers / types / counts ---- */
@@ -996,10 +1156,10 @@
 
       async function vwLoad() {
         VIEWERS = await fetchAll('viewers', { order: 'sort_order', asc: true });
+        ROWS.viewers = VIEWERS;
         el('vw-rows').innerHTML = VIEWERS.length ? VIEWERS.map(function (v) {
           return '<tr><td>' + escHtml(v.nickname) + '</td><td>' + escHtml(v.soop_id || '') + '</td><td>' +
-            (v.sort_order || 0) + '</td><td><button class="btn sm danger" type="button" data-del="viewers" data-id="' +
-            v.id + '">삭제</button></td></tr>';
+            (v.sort_order || 0) + '</td><td><button class="btn sm" type="button" data-edit="viewers" data-id="' + v.id + '">수정</button> <button class="btn sm danger" type="button" data-del="viewers" data-id="' + v.id + '">삭제</button></td></tr>';
         }).join('') : '<tr><td colspan="4" class="empty">등록된 시청자가 없습니다</td></tr>';
         el('ct-viewer').innerHTML = VIEWERS.map(function (v) {
           return '<option value="' + v.id + '">' + escHtml(v.nickname) + '</option>';
@@ -1009,10 +1169,10 @@
 
       async function tpLoad() {
         TYPES = await fetchAll('upbo_types', { order: 'sort_order', asc: true });
+        ROWS.upbo_types = TYPES;
         el('tp-rows').innerHTML = TYPES.length ? TYPES.map(function (t) {
           return '<tr><td>' + escHtml(t.name) + '</td><td>' + escHtml(t.category || '일반') + '</td><td>' +
-            (t.sort_order || 0) + '</td><td><button class="btn sm danger" type="button" data-del="upbo_types" data-id="' +
-            t.id + '">삭제</button></td></tr>';
+            (t.sort_order || 0) + '</td><td><button class="btn sm" type="button" data-edit="upbo_types" data-id="' + t.id + '">수정</button> <button class="btn sm danger" type="button" data-del="upbo_types" data-id="' + t.id + '">삭제</button></td></tr>';
         }).join('') : '<tr><td colspan="4" class="empty">등록된 종류가 없습니다</td></tr>';
         ctPaint();
       }
@@ -1054,51 +1214,50 @@
 
       /* ---- dress ---- */
 
-      var DRESS_CATS = ['hair', 'outfit', 'lens'];   /* same values as dress page CATS and select#dr-cat */
-      var DRESS_LABEL = { hair: '헤어', outfit: '의상', lens: '렌즈' };
+      /* Categories come from profile.data['dress-cats']; the dress page reads the same key. */
+      var DRESS_DEFAULT = '헤어\n의상\n렌즈';
+      var DRESS_CATS = [];
+
+      function parseCats(v) {
+        var out = String(v == null || !String(v).trim() ? DRESS_DEFAULT : v)
+          .split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+        return out.length ? out : DRESS_DEFAULT.split('\n');
+      }
+
+      function paintCatSelect() {
+        DRESS_CATS = parseCats(el('f-dress-cats') ? el('f-dress-cats').value : '');
+        var sel = el('dr-cat');
+        if (!sel) return;
+        var keep = sel.value;
+        sel.innerHTML = DRESS_CATS.map(function (c) {
+          return '<option value="' + escHtml(c) + '">' + escHtml(c) + '</option>';
+        }).join('');
+        if (DRESS_CATS.indexOf(keep) >= 0) sel.value = keep;
+      }
 
       async function drLoad() {
         var rows = await fetchAll('dress_items', { order: 'sort_order', asc: true });
+        ROWS.dress_items = rows;
         el('dr-rows').innerHTML = rows.length ? rows.map(function (d) {
           var isNew = (d.badges || []).some(function (b) {
             var l = (b && (b.label != null ? b.label : b)) || '';
             return String(l).trim().toUpperCase() === 'NEW';
           });
-          return '<tr><td>' + escHtml(d.name) + '</td><td>' + escHtml(DRESS_LABEL[d.category] || d.category) +
+          return '<tr><td>' + escHtml(d.name) + '</td><td>' + escHtml(d.category || '') +
             '</td><td>' + (isNew ? '<span class="pill">NEW</span>' : '') + '</td><td>' + (d.sort_order || 0) +
-            '</td><td><button class="btn sm danger" type="button" data-del="dress_items" data-id="' + d.id + '">삭제</button></td></tr>';
+            '</td><td><button class="btn sm" type="button" data-edit="dress_items" data-id="' + d.id + '">수정</button> <button class="btn sm danger" type="button" data-del="dress_items" data-id="' + d.id + '">삭제</button></td></tr>';
         }).join('') : '<tr><td colspan="5" class="empty">등록된 항목이 없습니다</td></tr>';
-      }
-
-      async function drAdd() {
-        var name = el('dr-name').value.trim();
-        if (!name) { toast('이름을 입력하세요'); return; }
-        var ok = await insertRow('dress_items', {
-          category: el('dr-cat').value, name: name, description: el('dr-desc').value.trim(),
-          image_url: el('dr-img').value.trim(), badges: el('dr-new').checked ? [{ label: 'NEW' }] : [],
-          sort_order: Number(el('dr-order').value) || 0
-        });
-        toast(ok ? '등록했습니다' : '등록 실패');
-        if (ok) { el('dr-name').value = ''; el('dr-desc').value = ''; el('dr-img').value = ''; el('dr-new').checked = false; drLoad(); }
       }
 
       /* ---- vod ---- */
 
       async function vodLoad() {
         var rows = await fetchAll('original_songs', { order: 'id', asc: false });
+        ROWS.original_songs = rows;
         el('vod-rows').innerHTML = rows.length ? rows.map(function (s) {
           return '<tr><td>' + escHtml(s.title) + '</td><td>' + escHtml(s.vod_id || '') +
-            '</td><td><button class="btn sm danger" type="button" data-del="original_songs" data-id="' + s.id + '">삭제</button></td></tr>';
+            '</td><td><button class="btn sm" type="button" data-edit="original_songs" data-id="' + s.id + '">수정</button> <button class="btn sm danger" type="button" data-del="original_songs" data-id="' + s.id + '">삭제</button></td></tr>';
         }).join('') : '<tr><td colspan="3" class="empty">등록된 다시보기가 없습니다</td></tr>';
-      }
-
-      async function vodAdd() {
-        var title = el('vod-title').value.trim();
-        var vid = el('vod-id').value.trim();
-        if (!title || !vid) { toast('제목과 VOD 번호를 모두 입력하세요'); return; }
-        var ok = await insertRow('original_songs', { title: title, vod_id: vid });
-        toast(ok ? '등록했습니다' : '등록 실패');
-        if (ok) { el('vod-title').value = ''; el('vod-id').value = ''; vodLoad(); }
       }
 
       /* ---- inquiries ---- */
@@ -1129,12 +1288,15 @@
         document.addEventListener('click', function (e) {
           var save = e.target.closest('[data-save="profile"]');
           if (save) { saveProfile(); return; }
+          var ed = e.target.closest('[data-edit]');
+          if (ed) { edStart(ed.dataset.edit, ed.dataset.id); return; }
           var del = e.target.closest('[data-del]');
           if (del) {
             var table = del.dataset.del;
             if (!confirm('삭제할까요? 되돌릴 수 없습니다')) return;
             deleteRow(table, del.dataset.id).then(function (ok) {
               toast(ok ? '삭제했습니다' : '삭제 실패');
+              if (ok && EDITORS[table] && String(EDITORS[table].editId) === String(del.dataset.id)) edCancel(table);
               if (ok && RELOAD[table]) RELOAD[table]();
             });
           }
@@ -1142,27 +1304,16 @@
 
         document.addEventListener('input', function (e) {
           if (e.target.id && e.target.id.indexOf('f-') === 0) markDirty();
+          if (e.target.id === 'f-dress-cats') paintCatSelect();
         });
 
-        el('nt-add').addEventListener('click', ntAdd);
-        el('vw-add').addEventListener('click', async function () {
-          var n = el('vw-nick').value.trim();
-          if (!n) { toast('닉네임을 입력하세요'); return; }
-          var ok = await insertRow('viewers', { nickname: n, soop_id: el('vw-soop').value.trim(), sort_order: Number(el('vw-order').value) || 0 });
-          toast(ok ? '추가했습니다' : '추가 실패');
-          if (ok) { el('vw-nick').value = ''; el('vw-soop').value = ''; vwLoad(); }
-        });
-        el('tp-add').addEventListener('click', async function () {
-          var n = el('tp-name').value.trim();
-          if (!n) { toast('이름을 입력하세요'); return; }
-          var ok = await insertRow('upbo_types', { name: n, category: el('tp-cat').value, sort_order: Number(el('tp-order').value) || 0 });
-          toast(ok ? '추가했습니다' : '추가 실패');
-          if (ok) { el('tp-name').value = ''; tpLoad(); }
+        Object.keys(EDITORS).forEach(function (table) {
+          var e = EDITORS[table];
+          el(e.prefix + '-add').addEventListener('click', function () { edSubmit(table); });
+          el(e.prefix + '-cancel').addEventListener('click', function () { edCancel(table); });
         });
         el('ct-viewer').addEventListener('change', ctPaint);
         el('ct-save').addEventListener('click', ctSave);
-        el('dr-add').addEventListener('click', drAdd);
-        el('vod-add').addEventListener('click', vodAdd);
         el('iq-reload').addEventListener('click', iqLoad);
       }
 

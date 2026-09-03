@@ -421,21 +421,6 @@ body.dark .hero-deco { opacity: .5; }
 .section-title-row { display: flex; align-items: center; justify-content: space-between; height: 43px; margin-bottom: 9px; }
 .section-title-row h2 { margin: 0; font-size: calc(25px * var(--fs-title)); font-weight: 900; letter-spacing: -0.045em; }
 
-.round-mark {
-  position: relative;
-  left: 20px;
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border-radius: 50%;
-  color: #fff;
-  background: var(--main);
-  font-size: 28px;
-  font-weight: 260;
-  line-height: 1;
-}
-
 .search-list { display: grid; gap: 9px; }
 
 .search-pill {
@@ -998,3 +983,53 @@ body.embed .open-full { display: inline-flex; }
 .mg-log { display: grid; gap: 6px; }
 .mg-log div { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 8px 12px; border-radius: 12px; background: var(--gray-pill); font-size: calc(12.5px * var(--fs-body)); font-weight: 750; }
 .mg-log span { color: var(--text-soft); font-weight: 700; }
+
+.mg-modes { margin-bottom: 14px; }
+
+.ladder-wrap, .draw-wrap { display: grid; gap: 14px; padding: 22px 20px 24px; }
+
+.ld-row { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; }
+.ld-name {
+  display: grid;
+  min-height: 38px;
+  padding: 6px 4px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--gray-pill);
+  color: var(--text-mid);
+  font-size: calc(12.5px * var(--fs-label));
+  font-weight: 850;
+  line-height: 1.25;
+  text-align: center;
+  word-break: keep-all;
+}
+.ld-row--top .ld-name { cursor: pointer; }
+.ld-name.on { color: #fff; background: var(--main); box-shadow: var(--shadow); }
+.ld-name.hit { color: var(--main-deep); background: var(--main-light); }
+
+.ld-stage { width: 100%; }
+.ld-stage canvas { display: block; width: 100%; height: 340px; }
+
+.draw-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.draw-card {
+  display: grid;
+  min-height: 108px;
+  padding: 12px 10px;
+  place-items: center;
+  border: 3px solid var(--card);
+  border-radius: 18px;
+  background: var(--main-light);
+  color: var(--main-deep);
+  box-shadow: var(--shadow);
+  font-size: calc(13px * var(--fs-body));
+  font-weight: 900;
+  line-height: 1.3;
+  text-align: center;
+  word-break: keep-all;
+  cursor: pointer;
+  transition: transform .18s ease;
+}
+.draw-card:hover { transform: translateY(-3px); }
+.draw-card.open { background: var(--card); color: var(--text); border-color: var(--main); cursor: default; }
+.draw-card.open:hover { transform: none; }
+.draw-card .dw-face { font-size: calc(26px * var(--fs-title)); }

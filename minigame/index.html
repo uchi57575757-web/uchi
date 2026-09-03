@@ -57,11 +57,17 @@
           <div class="page-heading">
             <span class="hd-kicker" id="hd-kicker">MINIGAME</span>
             <h1 class="page-title"><span id="hd-title">미니게임</span><span class="hd-sub" id="hd-sub"></span></h1>
-            <p class="page-lead" id="page-lead">방송에서 쓰는 돌림판이에요. 눌러서 같이 돌려봐요.</p>
+            <p class="page-lead" id="page-lead">방송에서 쓰는 돌림판·사다리타기·제비뽑기예요. 위에서 골라 주세요.</p>
+          </div>
+
+          <div class="seg mg-modes" id="mg-modes" role="tablist" aria-label="미니게임 종류">
+            <button class="seg-btn active" type="button" data-mg="wheel">돌림판</button>
+            <button class="seg-btn" type="button" data-mg="ladder">사다리타기</button>
+            <button class="seg-btn" type="button" data-mg="draw">제비뽑기</button>
           </div>
 
           <div class="mg-layout">
-            <section class="card wheel-wrap">
+            <section class="card wheel-wrap" data-stage="wheel">
               <div class="wheel-stage">
                 <span class="wheel-pin" aria-hidden="true"></span>
                 <canvas id="wheel" width="720" height="720"></canvas>
@@ -76,9 +82,32 @@
               </div>
             </section>
 
+            <section class="card ladder-wrap" data-stage="ladder" hidden>
+              <div class="ld-row" id="ld-top"></div>
+              <div class="ld-stage"><canvas id="ladder" width="1360" height="720"></canvas></div>
+              <div class="ld-row" id="ld-bottom"></div>
+              <div class="wheel-result idle" id="ld-result" role="status" aria-live="polite">
+                <small>RESULT</small><b>위쪽 이름을 누르면 줄을 타고 내려가요</b>
+              </div>
+              <div class="wheel-actions">
+                <button class="btn btn-primary" type="button" id="ld-new">사다리 새로 만들기</button>
+                <button class="btn" type="button" id="ld-all">전부 타기</button>
+              </div>
+            </section>
+
+            <section class="card draw-wrap" data-stage="draw" hidden>
+              <div class="draw-grid" id="dw-grid"></div>
+              <div class="wheel-result idle" id="dw-result" role="status" aria-live="polite">
+                <small>RESULT</small><b>제비를 하나 누르면 뒤집혀요</b>
+              </div>
+              <div class="wheel-actions">
+                <button class="btn btn-primary" type="button" id="dw-reset">다시 섞기</button>
+              </div>
+            </section>
+
             <div class="stack">
               <section class="card">
-                <h2 class="card-title"><small>ITEMS</small>돌림판 항목</h2>
+                <h2 class="card-title"><small>ITEMS</small><span id="mg-list-title">돌림판 항목</span></h2>
                 <div class="mg-list" id="mg-list"></div>
               </section>
               <section class="card">
@@ -256,6 +285,288 @@
           drawWheel();
         }
 
+        /* ---------- ladder ---------- */
+
+        var LD_DEF_P = '우치\n뭄치1\n뭄치2\n뭄치3';
+        var LD_DEF_R = '당첨\n꽝\n꽝\n꽝';
+        var ldNames = [], ldPrizes = [], ldRows = [], ldPerm = [], ldBusy = false;
+
+        var ldCv = document.getElementById('ladder');
+        var ldCtx = ldCv.getContext('2d');
+
+        function shuffled(n) {
+          var a = [];
+          for (var i = 0; i < n; i++) a.push(i);
+          for (var j = n - 1; j > 0; j--) {
+            var k = Math.floor(Math.random() * (j + 1));
+            var t = a[j]; a[j] = a[k]; a[k] = t;
+          }
+          return a;
+        }
+
+        /* The destination permutation is drawn uniformly first, then a ladder that
+           realises it is built with odd-even transposition sort. Every arrangement is
+           therefore equally likely no matter how the rungs end up looking. */
+        function buildLadder() {
+          var n = ldNames.length;
+          ldRows = [];
+          ldPerm = shuffled(n);
+          if (n < 2) return;
+          var target = [];
+          for (var i = 0; i < n; i++) target[ldPerm[i]] = i;
+          var cur = target.slice(), phases = [], guard = 0;
+          while (guard++ < n * n + 10) {
+            var sorted = cur.every(function (v, i) { return v === i; });
+            if (sorted) break;
+            for (var parity = 0; parity < 2; parity++) {
+              var row = [];
+              for (var c = parity; c + 1 < n; c += 2) {
+                if (cur[c] > cur[c + 1]) {
+                  var t = cur[c]; cur[c] = cur[c + 1]; cur[c + 1] = t;
+                  row.push(c);
+                }
+              }
+              if (row.length) phases.push(row);
+            }
+          }
+          ldRows = phases.reverse();
+          while (ldRows.length < 6) {           /* a pair of identical rows cancels out */
+            var pad = [], start = Math.random() < 0.5 ? 0 : 1;
+            for (var q = start; q + 1 < n; q += 2) if (Math.random() < 0.65) pad.push(q);
+            if (!pad.length) pad.push(Math.floor(Math.random() * (n - 1)));
+            var at = Math.floor(Math.random() * (ldRows.length + 1));
+            ldRows.splice(at, 0, pad, pad.slice());
+          }
+        }
+
+        function ldGeom() {
+          var n = ldNames.length, W = ldCv.width, H = ldCv.height;
+          var padX = W / (n * 2), padY = 26;
+          var step = n > 1 ? (W - padX * 2) / (n - 1) : 0;
+          var rowH = (H - padY * 2) / (ldRows.length + 1);
+          return { n: n, W: W, H: H, padX: padX, padY: padY, step: step, rowH: rowH };
+        }
+
+        function ldX(g, c) { return g.padX + g.step * c; }
+        function ldY(g, r) { return g.padY + g.rowH * (r + 1); }
+
+        function drawLadder(path) {
+          var g = ldGeom();
+          ldCtx.clearRect(0, 0, g.W, g.H);
+          if (g.n < 2) return;
+          ldCtx.lineCap = 'round';
+          ldCtx.strokeStyle = cssVar('--gray-pill', '#eee');
+          ldCtx.lineWidth = 10;
+          for (var c = 0; c < g.n; c++) {
+            ldCtx.beginPath();
+            ldCtx.moveTo(ldX(g, c), g.padY);
+            ldCtx.lineTo(ldX(g, c), g.H - g.padY);
+            ldCtx.stroke();
+          }
+          ldRows.forEach(function (row, r) {
+            row.forEach(function (c) {
+              ldCtx.beginPath();
+              ldCtx.moveTo(ldX(g, c), ldY(g, r));
+              ldCtx.lineTo(ldX(g, c + 1), ldY(g, r));
+              ldCtx.stroke();
+            });
+          });
+          if (path && path.length > 1) {
+            ldCtx.strokeStyle = cssVar('--main', '#fd8495');
+            ldCtx.lineWidth = 12;
+            ldCtx.beginPath();
+            ldCtx.moveTo(path[0][0], path[0][1]);
+            for (var i = 1; i < path.length; i++) ldCtx.lineTo(path[i][0], path[i][1]);
+            ldCtx.stroke();
+          }
+        }
+
+        function ldPath(startCol) {
+          var g = ldGeom(), col = startCol, pts = [[ldX(g, col), g.padY]];
+          for (var r = 0; r < ldRows.length; r++) {
+            var y = ldY(g, r), row = ldRows[r], moved = -1;
+            for (var i = 0; i < row.length; i++) {
+              if (row[i] === col) moved = col + 1;
+              else if (row[i] === col - 1) moved = col - 1;
+            }
+            pts.push([ldX(g, col), y]);
+            if (moved >= 0) { col = moved; pts.push([ldX(g, col), y]); }
+          }
+          pts.push([ldX(g, col), g.H - g.padY]);
+          return { pts: pts, end: col };
+        }
+
+        function ldPaintNames(activeStart, endCol) {
+          document.getElementById('ld-top').innerHTML = ldNames.map(function (n, i) {
+            return '<button class="ld-name' + (i === activeStart ? ' on' : '') +
+              '" type="button" data-ld="' + i + '">' + esc(n) + '</button>';
+          }).join('');
+          document.getElementById('ld-bottom').innerHTML = ldPrizes.map(function (n, i) {
+            return '<div class="ld-name' + (i === endCol ? ' hit' : '') + '">' + esc(n) + '</div>';
+          }).join('');
+        }
+
+        function ldRun(startCol) {
+          if (ldBusy || ldNames.length < 2) return;
+          var r = ldPath(startCol);
+          ldBusy = true;
+          ldPaintNames(startCol, -1);
+          var total = 0, segs = [];
+          for (var i = 1; i < r.pts.length; i++) {
+            var d = Math.abs(r.pts[i][0] - r.pts[i - 1][0]) + Math.abs(r.pts[i][1] - r.pts[i - 1][1]);
+            segs.push(d); total += d;
+          }
+          var t0 = performance.now(), dur = 900 + ldRows.length * 90;
+          (function step(now) {
+            var p = Math.min(1, (now - t0) / dur), want = total * p, acc = 0, out = [r.pts[0]];
+            for (var i = 0; i < segs.length; i++) {
+              if (acc + segs[i] <= want) { out.push(r.pts[i + 1]); acc += segs[i]; }
+              else {
+                var f = segs[i] ? (want - acc) / segs[i] : 0;
+                out.push([r.pts[i][0] + (r.pts[i + 1][0] - r.pts[i][0]) * f,
+                          r.pts[i][1] + (r.pts[i + 1][1] - r.pts[i][1]) * f]);
+                break;
+              }
+            }
+            drawLadder(out);
+            if (p < 1) requestAnimationFrame(step);
+            else {
+              ldBusy = false;
+              ldPaintNames(startCol, r.end);
+              var msg = ldNames[startCol] + ' → ' + (ldPrizes[r.end] || '');
+              var box = document.getElementById('ld-result');
+              box.classList.remove('idle');
+              box.innerHTML = '<small>RESULT</small><b>' + esc(msg) + '</b>';
+              PICKED = msg;
+              pushLog(msg);
+              if (typeof window.fxHearts === 'function') {
+                var b = box.getBoundingClientRect();
+                window.fxHearts(b.left + b.width / 2, b.top + b.height / 2, 12);
+              }
+            }
+          })(t0);
+        }
+
+        function ldApply(players, prizes) {
+          ldNames = String(players == null ? '' : players).split('\n')
+            .map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 10);
+          ldPrizes = String(prizes == null ? '' : prizes).split('\n')
+            .map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 10);
+          if (!ldNames.length) ldNames = LD_DEF_P.split('\n');
+          while (ldPrizes.length < ldNames.length) ldPrizes.push('꽝');
+          ldPrizes = ldPrizes.slice(0, ldNames.length);
+          buildLadder();
+          ldPaintNames(-1, -1);
+          drawLadder(null);
+        }
+
+        document.getElementById('ld-top').addEventListener('click', function (e) {
+          var b = e.target.closest('[data-ld]');
+          if (b) ldRun(Number(b.dataset.ld));
+        });
+        document.getElementById('ld-new').addEventListener('click', function () {
+          if (ldBusy) return;
+          buildLadder();
+          ldPaintNames(-1, -1);
+          drawLadder(null);
+          var box = document.getElementById('ld-result');
+          box.classList.add('idle');
+          box.innerHTML = '<small>RESULT</small><b>위쪽 이름을 누르면 줄을 타고 내려가요</b>';
+        });
+        document.getElementById('ld-all').addEventListener('click', function () {
+          if (ldBusy || ldNames.length < 2) return;
+          var lines = ldNames.map(function (n, i) { return n + ' → ' + (ldPrizes[ldPath(i).end] || ''); });
+          var box = document.getElementById('ld-result');
+          box.classList.remove('idle');
+          box.innerHTML = '<small>RESULT</small><b>' + esc(lines.join(' · ')) + '</b>';
+          PICKED = lines.join('\n');
+          drawLadder(null);
+          ldPaintNames(-1, -1);
+        });
+
+        /* ---------- draw lots ---------- */
+
+        var DW_DEF = '당첨\n꽝\n꽝\n꽝\n꽝\n꽝';
+        var dwItems = [], dwOrder = [], dwOpen = [];
+
+        function dwShuffle() {
+          var idx = shuffled(dwItems.length);
+          dwOrder = idx.map(function (i) { return dwItems[i]; });
+          dwOpen = dwOrder.map(function () { return false; });
+          dwPaint();
+          var box = document.getElementById('dw-result');
+          box.classList.add('idle');
+          box.innerHTML = '<small>RESULT</small><b>제비를 하나 누르면 뒤집혀요</b>';
+        }
+
+        function dwPaint() {
+          document.getElementById('dw-grid').innerHTML = dwOrder.length
+            ? dwOrder.map(function (v, i) {
+                return '<button class="draw-card' + (dwOpen[i] ? ' open' : '') + '" type="button" data-dw="' + i + '">' +
+                  (dwOpen[i] ? esc(v) : '<span class="dw-face">?</span>') + '</button>';
+              }).join('')
+            : '<div class="empty">제비가 아직 없어요</div>';
+        }
+
+        document.getElementById('dw-grid').addEventListener('click', function (e) {
+          var b = e.target.closest('[data-dw]');
+          if (!b) return;
+          var i = Number(b.dataset.dw);
+          if (dwOpen[i]) return;
+          dwOpen[i] = true;
+          dwPaint();
+          var box = document.getElementById('dw-result');
+          box.classList.remove('idle');
+          box.innerHTML = '<small>RESULT</small><b>' + esc(dwOrder[i]) + '</b>';
+          PICKED = dwOrder[i];
+          pushLog(dwOrder[i]);
+          if (typeof window.fxHearts === 'function') window.fxHearts(e.clientX, e.clientY, 10);
+        });
+        document.getElementById('dw-reset').addEventListener('click', dwShuffle);
+
+        function dwApply(v) {
+          dwItems = String(v == null ? '' : v).split('\n')
+            .map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 16);
+          if (!dwItems.length) dwItems = DW_DEF.split('\n');
+          dwShuffle();
+        }
+
+        /* ---------- mode switch ---------- */
+
+        var MODE = 'wheel';
+        var LIST_TITLE = { wheel: '돌림판 항목', ladder: '사다리 참가자', draw: '제비 목록' };
+
+        function paintSideList() {
+          var t = document.getElementById('mg-list-title');
+          if (t) t.textContent = LIST_TITLE[MODE];
+          var box = document.getElementById('mg-list');
+          if (MODE === 'wheel') { renderList(); return; }
+          var items = MODE === 'ladder' ? ldNames.slice() : dwItems.slice();
+          box.innerHTML = items.length
+            ? items.map(function (o) { return '<div class="mg-item"><i style="background:' +
+                cssVar('--main', '#fd8495') + '"></i>' + esc(o) + '</div>'; }).join('')
+            : '<div class="empty">항목이 아직 없어요</div>';
+        }
+
+        function setMode(m) {
+          MODE = m;
+          document.querySelectorAll('#mg-modes .seg-btn').forEach(function (b) {
+            b.classList.toggle('active', b.dataset.mg === m);
+          });
+          document.querySelectorAll('[data-stage]').forEach(function (n) {
+            n.hidden = n.dataset.stage !== m;
+          });
+          paintSideList();
+          if (m === 'ladder') drawLadder(null);
+          if (m === 'wheel') drawWheel();
+          fitShell();
+        }
+
+        document.getElementById('mg-modes').addEventListener('click', function (e) {
+          var b = e.target.closest('[data-mg]');
+          if (b) setMode(b.dataset.mg);
+        });
+
         document.getElementById('spin').addEventListener('click', spin);
         document.getElementById('copy').addEventListener('click', function () {
           if (!PICKED) { showToast('먼저 돌림판을 돌려 주세요'); return; }
@@ -263,14 +574,24 @@
           showToast('결과를 복사했어요');
         });
         document.getElementById('dkbox').addEventListener('click', function () {
-          setTimeout(function () { COLORS = buildColors(OPTS.length); renderList(); drawWheel(); }, 30);
+          setTimeout(function () {
+            COLORS = buildColors(OPTS.length);
+            paintSideList();
+            drawWheel();
+            drawLadder(null);
+          }, 30);
         });
 
         apply(DEFAULT_LIST);
+        ldApply(LD_DEF_P, LD_DEF_R);
+        dwApply(DW_DEF);
         renderLog(readLog());
         wireHeading('minigame');
         window.profileData.then(function (d) {
           if (typeof d['roulette-list'] === 'string' && d['roulette-list'].trim()) apply(d['roulette-list']);
+          ldApply(d['ladder-players'], d['ladder-prizes']);
+          if (typeof d['draw-list'] === 'string' && d['draw-list'].trim()) dwApply(d['draw-list']);
+          paintSideList();
         }).catch(function () { }).then(ready, ready);
         setTimeout(ready, 1200);
       })();

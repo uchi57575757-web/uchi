@@ -76,35 +76,35 @@
               <section class="card">
                 <h2 class="card-title"><small>DOSSIER</small>우치 파일</h2>
                 <div class="info-grid">
-                <div class="info-row" data-row="info-name"><dt>이름</dt><dd id="info-name">우치</dd></div>
-                <div class="info-row" data-row="info-reading"><dt>읽는 법</dt><dd id="info-reading">우치 / UCHI</dd></div>
-                <div class="info-row" data-row="info-birth"><dt>생일</dt><dd id="info-birth">12월 20일</dd></div>
-                <div class="info-row" data-row="info-debut"><dt>데뷔</dt><dd id="info-debut">2026.07.25</dd></div>
-                <div class="info-row" data-row="info-age"><dt>나이</dt><dd id="info-age"></dd></div>
-                <div class="info-row" data-row="info-species"><dt>종족</dt><dd id="info-species"></dd></div>
-                <div class="info-row" data-row="info-fandom"><dt>팬 애칭</dt><dd id="info-fandom">뭄치</dd></div>
-                <div class="info-row" data-row="info-airtime"><dt>방송 시간</dt><dd id="info-airtime">오후 2시</dd></div>
-                <div class="info-row" data-row="info-game"><dt>주력 게임</dt><dd id="info-game">마인크래프트 · 롤 · 종합게임</dd></div>
-                <div class="info-row" data-row="info-content"><dt>방송 콘텐츠</dt><dd id="info-content">소통 · 종겜 · 풀트</dd></div>
-                <div class="info-row" data-row="info-agency"><dt>소속</dt><dd id="info-agency">개인세</dd></div>
-                <div class="info-row" data-row="info-item"><dt>시그니처</dt><dd id="info-item">반창고 머리핀</dd></div>
-                <div class="info-row" data-row="info-mbti"><dt>MBTI</dt><dd id="info-mbti"></dd></div>
+                <div class="info-row" data-row="info-name"><dt id="lbl-info-name">이름</dt><dd id="info-name">우치</dd></div>
+                <div class="info-row" data-row="info-reading"><dt id="lbl-info-reading">읽는 법</dt><dd id="info-reading">우치 / UCHI</dd></div>
+                <div class="info-row" data-row="info-birth"><dt id="lbl-info-birth">생일</dt><dd id="info-birth">12월 20일</dd></div>
+                <div class="info-row" data-row="info-debut"><dt id="lbl-info-debut">데뷔</dt><dd id="info-debut">2026.07.25</dd></div>
+                <div class="info-row" data-row="info-age"><dt id="lbl-info-age">나이</dt><dd id="info-age"></dd></div>
+                <div class="info-row" data-row="info-species"><dt id="lbl-info-species">종족</dt><dd id="info-species"></dd></div>
+                <div class="info-row" data-row="info-fandom"><dt id="lbl-info-fandom">팬 애칭</dt><dd id="info-fandom">뭄치</dd></div>
+                <div class="info-row" data-row="info-airtime"><dt id="lbl-info-airtime">방송 시간</dt><dd id="info-airtime">오후 2시</dd></div>
+                <div class="info-row" data-row="info-game"><dt id="lbl-info-game">주력 게임</dt><dd id="info-game">마인크래프트 · 롤 · 종합게임</dd></div>
+                <div class="info-row" data-row="info-content"><dt id="lbl-info-content">방송 콘텐츠</dt><dd id="info-content">소통 · 종겜 · 풀트</dd></div>
+                <div class="info-row" data-row="info-agency"><dt id="lbl-info-agency">소속</dt><dd id="info-agency">개인세</dd></div>
+                <div class="info-row" data-row="info-item"><dt id="lbl-info-item">시그니처</dt><dd id="info-item">반창고 머리핀</dd></div>
+                <div class="info-row" data-row="info-mbti"><dt id="lbl-info-mbti">MBTI</dt><dd id="info-mbti"></dd></div>
                 </div>
                 <div class="chip-row" id="info-tags" style="margin-top:18px"></div>
               </section>
             </div>
 
-            <section class="card" id="card-msg">
+            <section class="card" id="card-msg" data-sec="하고픈 말">
               <h2 class="card-title"><small>ABOUT</small>하고픈 말</h2>
               <p class="about-text" id="msg">바우치보다 유명해지고 싶은 우치입니다 +-+<br />게임하고, 떠들고, 같이 웃는 방송을 해요.</p>
             </section>
 
-            <section class="card" id="card-now">
+            <section class="card" id="card-now" data-sec="지금">
               <h2 class="card-title"><small>NOW</small>지금 하는 것</h2>
               <p class="quote-big" id="now"></p>
             </section>
 
-            <div class="grid-2">
+            <div class="grid-2" data-sec="좋아·싫어">
               <section class="card" id="card-like">
                 <h2 class="card-title"><small>LIKE</small>좋아하는 것</h2>
                 <div class="chip-row" id="like-list"></div>
@@ -115,17 +115,17 @@
               </section>
             </div>
 
-            <section class="card" id="card-games">
+            <section class="card" id="card-games" data-sec="해본 게임">
               <h2 class="card-title"><small>PLAYED</small>해본 게임</h2>
               <div class="game-grid" id="game-list"></div>
             </section>
 
-            <section class="card" id="card-week">
+            <section class="card" id="card-week" data-sec="이번주 일정">
               <h2 class="card-title"><small>WEEK</small>이번주 일정</h2>
               <div class="day-strip" id="week-strip"></div>
             </section>
 
-            <div class="grid-2">
+            <div class="grid-2" data-sec="능력치·목표">
               <section class="card" id="card-stats">
                 <h2 class="card-title"><small>STATUS</small>능력치</h2>
                 <div id="stats"></div>
@@ -136,17 +136,17 @@
               </section>
             </div>
 
-            <section class="card" id="card-tmi">
+            <section class="card" id="card-tmi" data-sec="TMI">
               <h2 class="card-title"><small>TMI</small>사소한 것들</h2>
               <div class="tmi-grid" id="tmi-list"></div>
             </section>
 
-            <section class="card" id="songs-card" style="display:none">
+            <section class="card" id="songs-card" data-sec="다시보기" style="display:none">
               <h2 class="card-title"><small>VOD</small>다시보기</h2>
               <div class="ovod-grid" id="ovod-grid"></div>
             </section>
 
-            <section class="card">
+            <section class="card" data-sec="링크">
               <h2 class="card-title"><small>LINK</small>관련 링크</h2>
               <div class="link-row">
               <a class="link-btn" id="link-soop" href="https://www.sooplive.com/station/uchi5757" target="_blank" rel="noreferrer">SOOP 방송국</a>
@@ -320,11 +320,15 @@
           });
 
           INFO_ROWS.forEach(function (k) {
+            var lb = document.getElementById('lbl-' + k);
+            if (lb && txt(d['lbl-' + k])) lb.textContent = txt(d['lbl-' + k]);
             var el = document.getElementById(k);
             if (!el) return;
             var row = el.closest('.info-row');
             if (row) row.style.display = (el.textContent || '').trim() ? '' : 'none';
           });
+
+          orderSections(d['profile-order']);
 
           hideEmpty([['card-now', 'now'], ['card-like', 'like-list'], ['card-dislike', 'dislike-list'],
             ['card-stats', 'stats'], ['card-milestones', 'milestones'], ['card-msg', 'msg'],
@@ -337,6 +341,22 @@
             dd.textContent = n === 0 ? '오늘 생일' : '생일까지 D-' + n;
             dd.style.display = '';
           }
+        }
+
+        /* Card order comes from profile.data['profile-order']; names match data-sec. */
+        function orderSections(v) {
+          var stack = document.querySelector('.stack');
+          if (!stack || typeof v !== 'string' || !v.trim()) return;
+          var want = v.split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+          var have = {};
+          stack.querySelectorAll(':scope > [data-sec]').forEach(function (n) { have[n.dataset.sec] = n; });
+          want.forEach(function (name) {
+            var n = have[name];
+            if (n) stack.appendChild(n);
+          });
+          Object.keys(have).forEach(function (name) {
+            if (want.indexOf(name) < 0) stack.appendChild(have[name]);
+          });
         }
 
         var INFO_ROWS = ['info-name', 'info-reading', 'info-birth', 'info-debut', 'info-age',

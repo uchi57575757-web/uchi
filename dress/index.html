@@ -103,14 +103,21 @@
     <script src="../site.js"></script>
     <script>
       (function () {
-        /* Categories live in three places: CATS here, admin select#dr-cat, admin DRESS_CATS. */
-        var CATS = [{ key: 'hair', label: '헤어' }, { key: 'outfit', label: '의상' }, { key: 'lens', label: '렌즈' }];
+        /* Categories come from profile.data['dress-cats'] — the admin 옷장 탭 edits that one key. */
+        var CAT_DEFAULT = ['헤어', '의상', '렌즈'];
+        var CATS = CAT_DEFAULT.map(function (c) { return { key: c, label: c }; });
         var LABELS = {};
-        CATS.forEach(function (c) { LABELS[c.key] = c.label; });
+        function setCats(list) {
+          CATS = list.map(function (c) { return { key: c, label: c }; });
+          LABELS = {};
+          CATS.forEach(function (c) { LABELS[c.key] = c.label; });
+          if (!LABELS[curCat]) curCat = CATS.length ? CATS[0].key : '';
+        }
         var PER_PAGE = 9;
         var BRAND = 'UCHI';
 
-        var allItems = [], curCat = CATS[0].key, curMode = 'new', curPage = 1, pageItems = [];
+        var allItems = [], curCat = CAT_DEFAULT[0], curMode = 'new', curPage = 1, pageItems = [];
+        setCats(CAT_DEFAULT);
 
         function ready() { document.body.classList.add('ready'); fitShell(); }
 
@@ -226,6 +233,17 @@
 
         async function load() {
           try {
+            var d = await window.profileData;
+            if (typeof d['dress-cats'] === 'string' && d['dress-cats'].trim()) {
+              var list = d['dress-cats'].split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+              if (list.length) setCats(list);
+            }
+            if (typeof d['info-reading'] === 'string' && d['info-reading'].trim()) {
+              var parts = d['info-reading'].split('/');
+              BRAND = (parts[parts.length - 1] || BRAND).trim().toUpperCase();
+            }
+          } catch (e) { }
+          try {
             allItems = await fetchAll('dress_items', { order: 'sort_order', asc: true });
           } catch (e) { allItems = []; }
           document.querySelectorAll('#mode-seg .seg-btn').forEach(function (btn) {
@@ -242,13 +260,6 @@
           buildTabs();
           render();
         }
-
-        window.profileData.then(function (d) {
-          if (typeof d['info-reading'] === 'string' && d['info-reading'].trim()) {
-            var parts = d['info-reading'].split('/');
-            BRAND = (parts[parts.length - 1] || BRAND).trim().toUpperCase();
-          }
-        });
 
         wireHeading('dress');
         load().catch(function () { }).then(ready, ready);
